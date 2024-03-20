@@ -5,46 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Bem Vindo Faça seu login!"
+        android:text="Crie seu cadastro!"
         android:layout_gravity="center"
-        android:width="250dp"
         android:textAlignment="center"
         android:textSize="36dp"
-        android:layout_marginTop="160dp"/>
+        android:layout_marginTop="160dp"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etEmail"
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:hint="Email"/>
+        android:hint="Email"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etSenha"
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:hint="Senha"/>
+        android:hint="Crie sua senha"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSenhaConfirmation"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Confirme sua senha"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegistrar"
         android:layout_width="150dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="20dp"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCadastrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Não tem uma conta? Cadastre-se"
-        android:layout_marginTop="20dp"/>
+        android:text="Registrar"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
