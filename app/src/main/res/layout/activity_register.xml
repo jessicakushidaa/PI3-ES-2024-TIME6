@@ -31,6 +31,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Crie sua senha"
+        android:inputType="textPassword"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -39,6 +40,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Confirme sua senha"
+        android:inputType="textPassword"
         />
 
     <androidx.appcompat.widget.AppCompatButton

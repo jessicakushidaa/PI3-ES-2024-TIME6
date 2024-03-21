@@ -29,7 +29,8 @@
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:hint="Senha"/>
+        android:hint="Senha"
+        android:inputType="textPassword"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
