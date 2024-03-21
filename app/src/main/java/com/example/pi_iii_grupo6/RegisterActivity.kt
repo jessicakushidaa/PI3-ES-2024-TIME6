@@ -11,23 +11,30 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 class RegisterActivity : AppCompatActivity() {
+    //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
+    //criando variável do ViewBinding
     private var binding: ActivityRegisterBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Inflando Layout
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
         auth = Firebase.auth
 
+        //Setando o que fazer ao clicar no botão registrar
         binding?.btnRegistrar?.setOnClickListener{
             var email = binding?.etEmail?.text.toString()
             var senha = binding?.etSenha?.text.toString()
             var senhaConfirmation = binding?.etSenhaConfirmation?.text.toString()
 
+            //Checando se os campos foram preenchidos
             if(email.isNotEmpty() && senha.isNotEmpty() && senhaConfirmation.isNotEmpty()){
+                //Checando se as senhas coincidem
                 if(senha == senhaConfirmation){
-                    auth.createUserWithEmailAndPassword(email, senha)
+                    //Se está tudo certo, chamar função de criação do usuário
+                    createUserWithEmailAndPassword(email, senha)
                 }else{
                     Toast.makeText(this@RegisterActivity, "Senhas não coincidem", Toast.LENGTH_SHORT).show()
                 }
@@ -37,20 +44,30 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    //Função que cria um usuário no Firebase
     private fun createUserWithEmailAndPassword(email: String, senha: String){
         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener{ task ->
-            if(task.isSuccessful) {
-                Log.d(TAG, "createUserWithEmailAndPassword:success")
+            if(task.isSuccessful){
+                //Se a criação for um sucesso
+                Log.d(TAG, "createUserWithEmail:success")
+                Toast.makeText(baseContext, "Registro feito com sucesso", Toast.LENGTH_SHORT).show()
+                //Volta para o usuário fazer o login
                 var voltarLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(voltarLogin)
             }else{
-                Log.w(TAG, "createUserWithEmailAndPAssword:failure", task.exception)
-                Toast.makeText(baseContext, "Cadastro Falhou", Toast.LENGTH_SHORT).show()
+                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                Toast.makeText(baseContext, "Criação Falhou", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    //Criação da TAG para logar no catlog
     companion object{
         private var TAG = "EmailAndPassword"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }
