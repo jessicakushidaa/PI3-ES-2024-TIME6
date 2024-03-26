@@ -31,16 +31,23 @@ class LoginActivity : AppCompatActivity() {
             var abrirCadastro = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(abrirCadastro)
         }
+        //Definindo o que fazer ao clicar no Esqueceu a senha?
         binding?.tvForgot?.setOnClickListener{
+            //Pegando o email digitado
             var email = binding?.etEmail?.text.toString()
 
+            //Checar se realmente digitou um email válido
             if(email.isNotEmpty()){
+                //Se digitou um email, envia o email de recuperação
                 resetPassword(email)
             }else{
+                //Não digitou um email, comunicar
                 Toast.makeText(this@LoginActivity, "Preencha o email para recuperar a senha", Toast.LENGTH_SHORT).show()
             }
         }
 
+        //Avançar de tela ao clicar em entrar anonimamente
+        //isso não altera o valor de user, continua como null, portanto nao conseguirá utilizar certas funções
         binding?.tvAnonimous?.setOnClickListener{
             var avancar = Intent(this@LoginActivity, MainViewActivity::class.java)
             startActivity(avancar)
