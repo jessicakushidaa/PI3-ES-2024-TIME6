@@ -48,4 +48,19 @@
         android:text="Não tem uma conta? Cadastre-se"
         android:layout_marginTop="20dp"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Esqueceu a senha?"
+        android:layout_marginTop="20dp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAnonimous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Entrar sem login"
+        android:layout_marginTop="180dp"/>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

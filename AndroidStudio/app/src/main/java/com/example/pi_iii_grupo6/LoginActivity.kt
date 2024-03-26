@@ -16,6 +16,8 @@ class LoginActivity : AppCompatActivity() {
     //criando variável do ViewBinding
     private var binding: ActivityLoginBinding? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Inflando Layout
@@ -28,6 +30,20 @@ class LoginActivity : AppCompatActivity() {
         binding?.tvCadastrar?.setOnClickListener{
             var abrirCadastro = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(abrirCadastro)
+        }
+        binding?.tvForgot?.setOnClickListener{
+            var email = binding?.etEmail?.text.toString()
+
+            if(email.isNotEmpty()){
+                resetPassword(email)
+            }else{
+                Toast.makeText(this@LoginActivity, "Preencha o email para recuperar a senha", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding?.tvAnonimous?.setOnClickListener{
+            var avancar = Intent(this@LoginActivity, MainViewActivity::class.java)
+            startActivity(avancar)
         }
 
         //Setando o que fazer quando clicar no botao login
@@ -52,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
             //Se o login for um sucesso
             if(task.isSuccessful){
                 Log.d(TAG, "signInUserWithEmail:success")
-
                 //Avançar para tela inicial
                 var avancarTelaInicial = Intent(this@LoginActivity, MainViewActivity::class.java)
                 startActivity(avancarTelaInicial)
@@ -60,6 +75,18 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 Log.w(TAG, "singInUserWithEmail:failure", task.exception)
                 Toast.makeText(baseContext, "Autenticão Falhou", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun resetPassword(email: String){
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                Log.d(TAG, "sendPasswordResetEmail:success")
+                Toast.makeText(baseContext, "Email de recuperação enviado, cheque seu email", Toast.LENGTH_SHORT).show()
+            }else{
+                Log.w(TAG, "sendPasswordResetEmail:failure", task.exception)
+                Toast.makeText(baseContext, "Falha ao enviar email de recuperação", Toast.LENGTH_SHORT).show()
             }
         }
     }

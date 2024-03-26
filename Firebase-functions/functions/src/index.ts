@@ -13,14 +13,15 @@ const db = app.firestore(); // chamada do banco de dados
 
 
 /* tipando os atributos do objeto que será inserido na collection */
-type Pessoa = {
+interface Pessoa {
   idPessoa?: string,
   nome: string,
   sobrenome: string,
   dataNascimento: Date,
   telefone: string,
-  senha: string
-  isGerente?: boolean
+  //senha: string
+  isGerente?: boolean,
+  cpfUsuario: string
 }
 
 interface Gerente{
@@ -68,13 +69,12 @@ export const addPessoa = functions
   .https.onRequest(async (req, res) => {
     try {
       // Extrair os dados da pessoa do corpo da request
-      const {idPessoa, nome, sobrenome, dataNascimento, telefone
-        , senha}:
+      const {idPessoa, nome, sobrenome, dataNascimento, telefone, cpfUsuario}:
       Pessoa = req.body;
 
       // Criar objeto pessoa com os dados extraídos
       const pessoa:
-      Pessoa ={idPessoa, nome, sobrenome, dataNascimento, telefone, senha};
+      Pessoa ={idPessoa, nome, sobrenome, dataNascimento, telefone, cpfUsuario};
 
       // Adicionar a pessoa à coleção 'pessoas' no Firestore
       const docRef = await colPessoas.add(pessoa);
