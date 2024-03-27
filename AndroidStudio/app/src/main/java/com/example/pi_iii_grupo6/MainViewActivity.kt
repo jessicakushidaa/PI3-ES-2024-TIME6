@@ -10,7 +10,6 @@ import androidx.core.app.ActivityCompat
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -31,20 +30,17 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var auth: FirebaseAuth
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var userLocation: LatLng
 
     //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
     var user: FirebaseUser? = null
 
-    var userLatitude = 0.0
-    var userLongitude = 0.0
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
         //Atribuindo valor às variáveis criadas anteriormente
         auth = Firebase.auth
         user = auth.currentUser
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
         getCurrentLocation()
 
         //Inflando o layout e colocando a activity na tela
@@ -60,29 +56,38 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding?.btnLogout?.setOnClickListener{
             singOutFun()
         }
-
-
     }
 
-    private fun getCurrentLocation() {
-        val task = fusedLocationProviderClient.lastLocation
-
+    private fun getCurrentLocation(){
+        Log.e("debug", "Entrou na getCurrentLocation")
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
             .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
             ){
+                Log.e("debug", "Permissions")
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
-                return
             }
 
-        task.addOnSuccessListener {
-            if(it != null){
-                userLatitude = it.latitude
-                userLongitude = it.longitude
-                Toast.makeText(this@MainViewActivity, "$userLatitude $userLongitude", Toast.LENGTH_SHORT).show()
+        fusedLocationProviderClient.lastLocation.addOnCompleteListener {task ->
+            Log.e("debug", "CompleteListener")
+            var location = task.result
+            if(location != null){
+                Log.e("debug", "Sucess")
+                userLocation = LatLng(location.latitude,location.longitude)
+                //Movendo o zoom do mapa para onde o usuário está
+                moverMapa(mMap, userLocation)
+                addMarker(mMap, userLocation, "Your Location")
             }
         }
-
+        Log.e("debug", "Acabou GetLocation")
+        userLocation = LatLng(2.0,2.0)
     }
+
+    private fun addMarker(mapa: GoogleMap, position: LatLng, title:String) {
+        mapa.addMarker(MarkerOptions()
+            .position(position)
+            .title(title))
+    }
+
 
     //Criando a função para logout
     private fun singOutFun(){
@@ -101,9 +106,11 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
     }
+
     //Função que lida com a pós renderização do mapa. o que fazer quando ele estiver pronto?
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        Log.e("debug", "OnMapReady")
 
         // Criando array de markers
         val markers = listOf(listOf(-22.835083, -47.047750), listOf(-22.912306,-47.060639), listOf(-22.969944,-46.990417))
@@ -112,16 +119,17 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var count = 0
         for(marker in markers){
             var position = LatLng(marker[0], marker[1])
-            mMap.addMarker(MarkerOptions()
-                .position(position)
-                .title("Marker ${count+1}"))
+            addMarker(mMap, position, "Marker ${count+1}")
             count++
        }
-        //Movendo o zoom do mapa para onde o usuário está
-        var move = LatLng(userLatitude,userLongitude)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(move))
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(5.0F))
 
+    }
+
+    // ESTA CHAMANDO MOVER MAPA ANTES DE GET CURRENT LOCATION
+    private fun moverMapa(mMap: GoogleMap, local: LatLng) {
+        Log.e("debug", "MoverMapa")
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(local))
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(8.0F))
     }
 
     override fun onDestroy() {
@@ -129,7 +137,4 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = null
     }
 
-    companion object{
-
-    }
 }
