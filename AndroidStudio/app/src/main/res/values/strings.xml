@@ -1,3 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PI-III_Grupo6</string>
+    <string name="second_btn_Menu">CRIAR CARTÃO</string>
+    <string name="third_btn_Menu">TERCEIRA OPCAO</string>
+    <string name="first_btn_Menu">MAPA</string>
+    <string name="welcome">Bem vindo ao Guardians!</string>
+    <string name="title_marker">Titulo Local</string>
+    <string name="endereco_marker_info">Rua armando armandoca lindo 382</string>
+    <string name="referencia_marker_info">Referência: Praia da Pipa</string>
+    <string name="btn_marker_route">IR ATÉ LÁ</string>
 </resources>

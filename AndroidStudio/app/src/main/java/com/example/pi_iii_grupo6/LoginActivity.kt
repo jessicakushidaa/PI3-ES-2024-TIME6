@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
             if(task.isSuccessful){
                 Log.d(TAG, "signInUserWithEmail:success")
                 //Avançar para tela inicial
-                var avancarTelaInicial = Intent(this@LoginActivity, MainViewActivity::class.java)
+                var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
                 startActivity(avancarTelaInicial)
             //se nao fro um sucesso, logar a falha no catlog
             }else{

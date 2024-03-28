@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="650dp"
         android:id="@+id/map"
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sair"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center"/>
 
 
