@@ -79,6 +79,20 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding?.btnLogout?.setOnClickListener{
             singOutFun()
         }
+
+        //AÇÕES DO BOTTOM NAVIGATION
+        binding?.btnHome?.setOnClickListener {
+            var irHome = Intent(this@MainViewActivity, MainViewActivity::class.java)
+            startActivity(irHome)
+        }
+        binding?.btnCartoes?.setOnClickListener {
+            var irCartoes = Intent(this@MainViewActivity, CreateCardActivity::class.java)
+            startActivity(irCartoes)
+        }
+        binding?.btnLocacoes?.setOnClickListener {
+            var irLocacoes = Intent(this@MainViewActivity, RentManagerActivity::class.java)
+            startActivity(irLocacoes)
+        }
     }
 
     private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {

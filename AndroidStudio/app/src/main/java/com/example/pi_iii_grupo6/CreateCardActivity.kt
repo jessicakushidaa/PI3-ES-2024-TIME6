@@ -20,6 +20,20 @@ class CreateCardActivity : AppCompatActivity() {
             var voltarMenu = Intent(this@CreateCardActivity, MainMenuActivity::class.java)
             startActivity(voltarMenu)
         }
+
+        //AÇÕES DO BOTTOM NAVIGATION
+        binding?.btnHome?.setOnClickListener {
+            var irHome = Intent(this@CreateCardActivity, MainViewActivity::class.java)
+            startActivity(irHome)
+        }
+        binding?.btnCartoes?.setOnClickListener {
+            var irCartoes = Intent(this@CreateCardActivity, CreateCardActivity::class.java)
+            startActivity(irCartoes)
+        }
+        binding?.btnLocacoes?.setOnClickListener {
+            var irLocacoes = Intent(this@CreateCardActivity, RentManagerActivity::class.java)
+            startActivity(irLocacoes)
+        }
     }
 
 

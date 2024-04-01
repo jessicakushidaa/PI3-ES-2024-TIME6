@@ -26,4 +26,30 @@
         />
 
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="160dp"
+        android:orientation="horizontal"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHome"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="MAPA"
+            android:layout_marginLeft="45dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCartoes"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="CARTÕES" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLocacoes"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="LOCAÇÕES" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

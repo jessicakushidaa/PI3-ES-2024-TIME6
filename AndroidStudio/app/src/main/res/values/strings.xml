@@ -9,4 +9,6 @@
     <string name="referencia_marker_info">Referência: Praia da Pipa</string>
     <string name="btn_marker_route">IR ATÉ LÁ</string>
     <string name="cardTitle">Adicione seu cartão</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

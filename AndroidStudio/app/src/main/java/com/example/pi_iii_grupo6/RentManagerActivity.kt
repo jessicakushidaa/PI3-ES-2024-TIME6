@@ -24,5 +24,19 @@ class RentManagerActivity : AppCompatActivity() {
             var voltarMenu = Intent(this@RentManagerActivity, MainMenuActivity::class.java)
             startActivity(voltarMenu)
         }
+
+        //AÇÕES DO BOTTOM NAVIGATION
+        binding?.btnHome?.setOnClickListener {
+            var irHome = Intent(this@RentManagerActivity, MainViewActivity::class.java)
+            startActivity(irHome)
+        }
+        binding?.btnCartoes?.setOnClickListener {
+            var irCartoes = Intent(this@RentManagerActivity, CreateCardActivity::class.java)
+            startActivity(irCartoes)
+        }
+        binding?.btnLocacoes?.setOnClickListener {
+            var irLocacoes = Intent(this@RentManagerActivity, RentManagerActivity::class.java)
+            startActivity(irLocacoes)
+        }
     }
 }
