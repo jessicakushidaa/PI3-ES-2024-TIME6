@@ -16,6 +16,8 @@ class LoginActivity : AppCompatActivity() {
     //criando variável do ViewBinding
     private var binding: ActivityLoginBinding? = null
 
+    //instanciando o usuário atual do authenticator -> Não logado = null
+    private var user = Firebase.auth.currentUser
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         auth = Firebase.auth
-
+        checkLogin()
         //Setando navegaçao para registro ao clicar no "nao tem uma conta?"
         binding?.tvCadastrar?.setOnClickListener{
             var abrirCadastro = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -66,6 +68,18 @@ class LoginActivity : AppCompatActivity() {
                 //se nao, mensagem na tela para preencher todos os campos
                 Toast.makeText(this@LoginActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    //Função que checa se o usuário está logado
+    private fun checkLogin(){
+        if(user == null){
+            Log.d(TAG, "User Without Login")
+        }else{
+            Log.d(TAG, "signInUserWithEmail:success")
+            //Avançar para tela inicial
+            var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
+            startActivity(avancarTelaInicial)
         }
     }
 

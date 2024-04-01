@@ -2,6 +2,7 @@ package com.example.pi_iii_grupo6
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.StyleSpan
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -94,7 +97,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         dialog.show()
 
         sheetBinding.btnRoute.setOnClickListener{
-            Toast.makeText(this@MainViewActivity, "Função em desenvolvimento", Toast.LENGTH_SHORT).show()
+            drawPath(mMap, adress)
         }
     }
 
@@ -167,8 +170,18 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             showMarkerInfo(it.title,it.position, it.snippet)
             false
         }
+
+
     }
 
+    private fun drawPath(mMap: GoogleMap, adress: LatLng){
+        val line = mMap.addPolyline(
+            PolylineOptions()
+                .add(userLocation, adress)
+                .addSpan(StyleSpan(Color.RED))
+                .addSpan(StyleSpan(Color.GREEN))
+        )
+    }
     private fun addAllMarkers() {
 
         for(place in places){
