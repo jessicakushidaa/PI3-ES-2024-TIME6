@@ -22,7 +22,13 @@ class MainMenuActivity : AppCompatActivity() {
 
         //Ao clicar em CARTAO, abre a função de adicionar um cartao
         binding?.llCartao?.setOnClickListener{
-            Toast.makeText(baseContext, "Função em desenvolvimento",Toast.LENGTH_SHORT ).show()
+            var avancarCartao = Intent(this@MainMenuActivity, CreateCardActivity::class.java)
+            startActivity(avancarCartao)
+        }
+
+        binding?.llOpcao?.setOnClickListener {
+            var avancarLocacao = Intent(this@MainMenuActivity, RentManagerActivity::class.java)
+            startActivity(avancarLocacao)
         }
     }
 }
