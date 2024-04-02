@@ -13,6 +13,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.functions.functions
+import java.util.Date
 
 class RegisterActivity : AppCompatActivity() {
     //criando variável de autenticação do firebase
@@ -22,6 +23,17 @@ class RegisterActivity : AppCompatActivity() {
 
     //criando variável do ViewBinding
     private var binding: ActivityRegisterBinding? = null
+
+    //Criar classe pessoa
+    data class Pessoa(
+        val nome: String,
+        val sobrenome: String,
+        val birth: String,
+        val cpf: String,
+        val telefone: String,
+        var gerente: Boolean
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Inflando Layout
@@ -29,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         auth = Firebase.auth
-        //functions = Firebase.functions("southamerica-east1")
+
         functions = Firebase.functions("southamerica-east1")
 
 
@@ -45,6 +57,10 @@ class RegisterActivity : AppCompatActivity() {
             var birth = binding?.etBirth?.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
+            var p = Pessoa(nome,sobrenome,birth,cpf,phone,false)
+
+            checarGerente(email, p)
+
             //Checando se os campos foram preenchidos
             if(email.isNotEmpty() && senha.isNotEmpty() && senhaConfirmation.isNotEmpty() && nome.isNotEmpty() && sobrenome.isNotEmpty() && cpf.isNotEmpty() && birth.isNotEmpty() && phone.isNotEmpty()){
                 //Checando se as senhas coincidem
@@ -52,13 +68,24 @@ class RegisterActivity : AppCompatActivity() {
                     //Se está tudo certo, chamar função de criação do usuário
                     createUserWithEmailAndPassword(email, senha)
                     //Chamando função para guardar infos no database
-                    createUserDataBase(nome, sobrenome, cpf, birth, phone)
+                    createUserDataBase(p).addOnCompleteListener { task ->
+                        if(!task.isSuccessful){
+                            Log.e("Register","Error on Function: ${task.exception}")
+                        }
+                    }
                 }else{
                     Toast.makeText(this@RegisterActivity, "Senhas não coincidem", Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(this@RegisterActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    //Função para checar se, de acordo com o email cadastrado, a pessoa será gerente ou não
+    private fun checarGerente(email: String, p: Pessoa) {
+        if("gerente@gmail.com" == email){
+            p.gerente = true
         }
     }
 
@@ -79,18 +106,22 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createUserDataBase(nome: String, sobrenome: String, cpf: String, birth: String, phone: String): Task<HttpsCallableResult> {
+    private fun createUserDataBase(p: Pessoa): Task<String> {
         val data = hashMapOf(
-            "nome" to nome,
-            "sobrenome" to sobrenome,
-            "dataNascimento" to birth,
-            "telefone" to phone,
-            "cpfUsuario" to cpf,
+            "nome" to p.nome,
+            "sobrenome" to p.sobrenome,
+            "dataNascimento" to p.birth,
+            "telefone" to p.telefone,
+            "cpf" to p.cpf,
+            "isGerente" to p.gerente,
         )
         return functions
             .getHttpsCallable("addPessoa")
             .call(data)
-
+            .continueWith { task ->
+                val result = task.result?.data as String
+                result
+            }
     }
 
     //Criação da TAG para logar no catlog
