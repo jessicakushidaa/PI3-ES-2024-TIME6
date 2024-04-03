@@ -38,6 +38,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var userLocation: LatLng
 
+    //Criando classe Place que representa cada Unidade de Locação
     private class Place (
         var latitude: Double,
         var longitude: Double,
@@ -47,6 +48,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var referenciaLocal: String
     )
 
+    //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
     private var places = listOf<Place>(
         Place(-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa"),
         Place(-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo"),
@@ -71,6 +73,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //Referenciando o Fragment do mapa
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -95,28 +98,35 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         }
     }
 
+//Funçao que chama a dialog box das informações da unidade de Locação
     private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {
+        //Criando a dialog box
         val dialog = BottomSheetDialog(this)
         val sheetBinding:  DialogMarkerInfoBinding = DialogMarkerInfoBinding.inflate(layoutInflater, null, false)
         dialog.setContentView(sheetBinding.root)
 
+        //Referenciando os campos que serão preenchidos pelas informações da unidade de locação
         var titleTextView = sheetBinding.tvTitle
         var referenceTextView = sheetBinding.tvReference
         var adressTextView = sheetBinding.tvAdress
 
+        //Preenchendo os campos com as informações da unidade
         titleTextView.setText("$title")
         referenceTextView.setText("$reference")
         adressTextView.setText("${adress.latitude} , ${adress.longitude}")
 
+    //Inicializando a dialog
         dialog.show()
 
+        // Função que chama o traçar rota ao clicar no botão
         sheetBinding.btnRoute.setOnClickListener{
             drawPath(mMap, adress)
         }
     }
 
+    //Função que obtém a localização atual do usuário
     private fun getCurrentLocation(){
-        Log.e("debug", "Entrou na getCurrentLocation")
+        //Checando permissões
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
             .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
             ){
@@ -124,11 +134,13 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
             }
 
+        //Após checar permissões, chamar a função que pega a localização do aparelho
         fusedLocationProviderClient.lastLocation.addOnCompleteListener {task ->
-            Log.e("debug", "CompleteListener")
+            //Atribuindo a localização a uma variável
             var location = task.result
+            //Checando se a localização é nula
             if(location != null){
-                Log.e("debug", "Sucess")
+                //Se nao for nula, atualiza a variável de localização do usuário
                 userLocation = LatLng(location.latitude,location.longitude)
                 //Movendo o zoom do mapa para onde o usuário está
                 moverMapa(mMap, userLocation)
@@ -137,9 +149,10 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             }
         }
         Log.e("debug", "Acabou GetLocation")
-        userLocation = LatLng(2.0,2.0)
+        userLocation = LatLng(0.0,0.0)
     }
 
+    //Função que adiciona um marker no mapa
     private fun addMarker(mapa: GoogleMap, position: LatLng, title:String, reference: String, adress: String) {
         mapa.addMarker(
             MarkerOptions()
@@ -157,12 +170,14 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         //Se fez, faz o logout e sai da acitivity principal
         if(user != null){
             Firebase.auth.signOut()
+            //Voltando para a pagina de login
             var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
             startActivity(voltarLogin)
             Toast.makeText(this@MainViewActivity, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
         //Se não fez, nao pode usar esta função, pede para fazer o login
         }else{
             Toast.makeText(this@MainViewActivity, "Faça login para acessar essa função", Toast.LENGTH_SHORT).show()
+            //Abrindo tela de login
             var abrirLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
             startActivity(abrirLogin)
         }
@@ -172,14 +187,14 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Função que lida com a pós renderização do mapa. o que fazer quando ele estiver pronto?
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        Log.e("debug", "OnMapReady")
 
-        //Lógica para adicionar os markers
+        //Chamando função para adicionar os markers
         addAllMarkers()
 
-        Log.e("debug", "Acabou OnMapReady")
+        //Chamando função para obter a localização do usuário
         getCurrentLocation()
 
+        //Setando um listener para quando clicar no marker, chamar função que mostra as informações do marker clicado
         mMap.setOnMarkerClickListener {
             showMarkerInfo(it.title,it.position, it.snippet)
             false
@@ -188,6 +203,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     }
 
+    //Função que desenha a rota entre dois pontos
     private fun drawPath(mMap: GoogleMap, adress: LatLng){
         val line = mMap.addPolyline(
             PolylineOptions()
@@ -196,8 +212,8 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                 .addSpan(StyleSpan(Color.GREEN))
         )
     }
+    //Função que adiciona os markers da lista de unidades de locação
     private fun addAllMarkers() {
-
         for(place in places){
             var position = LatLng(place.latitude, place.longitude)
             addMarker(mMap, position, place.nomeLocal,place.referenciaLocal,place.enderecoLocal)
@@ -211,6 +227,8 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(local, 15.0f))
     }
 
+
+    //Função que volta o binding para null ao encerrar a activity
     override fun onDestroy() {
         super.onDestroy()
         binding = null

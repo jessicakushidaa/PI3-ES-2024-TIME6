@@ -99,9 +99,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
+//Função que envia o email para resetar a senha
     private fun resetPassword(email: String){
+        //chamando a função
         auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            //se o envio for um sucesso
             if(task.isSuccessful){
                 Log.d(TAG, "sendPasswordResetEmail:success")
                 Toast.makeText(baseContext, "Email de recuperação enviado, cheque seu email", Toast.LENGTH_SHORT).show()
