@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     data class Pessoa(
         val nome: String,
         val sobrenome: String,
-        val birth: String,
+        val dataNascimento: String,
         val cpf: String,
         val telefone: String,
         var gerente: Boolean
@@ -55,17 +55,17 @@ class RegisterActivity : AppCompatActivity() {
             var nome = binding?.etNome?.text.toString()
             var sobrenome = binding?.etSobrenome?.text.toString()
             var cpf = binding?.etCPF?.text.toString()
-            var birth = binding?.etBirth?.text.toString()
+            var dataNascimento = binding?.etBirth?.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
             // Criando instância da cclasse Pessoa com os dados do usuário
-            var p = Pessoa(nome,sobrenome,birth,cpf,phone,false)
+            var p = Pessoa(nome,sobrenome,dataNascimento,cpf,phone,false)
 
             //Chamando a função que verifica se o usuário é um gerente, se for, muda isGerente para true
             checarGerente(email, p)
 
             //Checando se os campos foram preenchidos
-            if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,birth,phone)){
+            if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimento,phone)){
                 //Checando se as senhas coincidem
                 if(senha == senhaConfirmation){
                     //Se está tudo certo, chamar função de criação do usuário
@@ -122,7 +122,7 @@ class RegisterActivity : AppCompatActivity() {
         val data = hashMapOf(
             "nome" to p.nome,
             "sobrenome" to p.sobrenome,
-            "dataNascimento" to p.birth,
+            "dataNascimento" to p.dataNascimento,
             "telefone" to p.telefone,
             "cpf" to p.cpf,
             "isGerente" to p.gerente,
