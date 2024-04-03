@@ -39,22 +39,13 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var userLocation: LatLng
 
     //Criando classe Place que representa cada Unidade de Locação
-    private class Place (
+    class Place (
         var latitude: Double,
         var longitude: Double,
         var nomeLocal: String,
         var descricaoLocal: String,
         var enderecoLocal: String,
         var referenciaLocal: String
-    )
-
-    //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
-    private var places = listOf<Place>(
-        Place(-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa"),
-        Place(-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo"),
-        Place(-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon"),
-        Place(-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp"),
-        Place(-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati")
     )
 
     //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
@@ -148,7 +139,6 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                 mMap.isMyLocationEnabled = true
             }
         }
-        Log.e("debug", "Acabou GetLocation")
         userLocation = LatLng(0.0,0.0)
     }
 
@@ -227,6 +217,16 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(local, 15.0f))
     }
 
+    companion object{
+        //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
+        var places = listOf<Place>(
+            Place(-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa"),
+            Place(-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo"),
+            Place(-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon"),
+            Place(-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp"),
+            Place(-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati")
+        )
+    }
 
     //Função que volta o binding para null ao encerrar a activity
     override fun onDestroy() {

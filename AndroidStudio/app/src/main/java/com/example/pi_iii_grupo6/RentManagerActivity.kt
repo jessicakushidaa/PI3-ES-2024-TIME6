@@ -14,9 +14,8 @@ class RentManagerActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.btnRent?.setOnClickListener{
-            Toast.makeText(baseContext,"Funcao em desenvolvimento",Toast.LENGTH_SHORT).show()
-            var voltarMenu = Intent(this@RentManagerActivity, MainMenuActivity::class.java)
-            startActivity(voltarMenu)
+            var irRent = Intent(this@RentManagerActivity, RentActivity::class.java)
+            startActivity(irRent)
         }
 
         binding?.btnRentals?.setOnClickListener {

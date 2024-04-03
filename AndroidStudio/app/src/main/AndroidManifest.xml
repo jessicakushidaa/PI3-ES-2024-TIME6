@@ -18,6 +18,12 @@
         android:theme="@style/Theme.PIIII_Grupo6"
         tools:targetApi="31">
         <activity
+            android:name=".RentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlugarActivity"
+            android:exported="false" />
+        <activity
             android:name=".RentManagerActivity"
             android:exported="false" />
         <activity

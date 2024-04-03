@@ -103,15 +103,25 @@ class RegisterActivity : AppCompatActivity() {
         //Chamando função do authentication para criar usuário
         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener{ task ->
             if(task.isSuccessful){
+                sendEmailVerification()
                 //Se a criação for um sucesso
-                Log.d(TAG, "createUserWithEmail:success")
                 Toast.makeText(baseContext, "Registro feito com sucesso", Toast.LENGTH_SHORT).show()
                 //Volta para o usuário fazer o login
                 var voltarLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(voltarLogin)
+
             }else{
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
                 Toast.makeText(baseContext, "Criação Falhou", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //Função que envia um email de verificação para o novo usuário
+    private fun sendEmailVerification() {
+        auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                Toast.makeText(baseContext,"Foi enviado um link de verificação para seu email",Toast.LENGTH_SHORT).show()
             }
         }
     }

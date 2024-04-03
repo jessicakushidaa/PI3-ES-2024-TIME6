@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
 
     //instanciando o usuário atual do authenticator -> Não logado = null
     private var user = Firebase.auth.currentUser
+    private var emailVerified: Boolean? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         auth = Firebase.auth
+        //Checando se o usuário verificou o email
+        emailVerified = auth.currentUser?.isEmailVerified
         checkLogin()
+
         //Setando navegaçao para registro ao clicar no "nao tem uma conta?"
         binding?.tvCadastrar?.setOnClickListener{
             var abrirCadastro = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -73,8 +77,8 @@ class LoginActivity : AppCompatActivity() {
 
     //Função que checa se o usuário está logado
     private fun checkLogin(){
-        if(user == null){
-            Log.d(TAG, "User Without Login")
+        if(user == null || emailVerified == false){
+            Log.d(TAG, "signInUserWithEmail:null")
         }else{
             Log.d(TAG, "signInUserWithEmail:success")
             //Avançar para tela inicial
@@ -88,10 +92,20 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email,senha).addOnCompleteListener{ task ->
             //Se o login for um sucesso
             if(task.isSuccessful){
+                emailVerified = auth.currentUser?.isEmailVerified
+                Log.d("VERIFIED", "Emailverified: ${emailVerified}")
                 Log.d(TAG, "signInUserWithEmail:success")
-                //Avançar para tela inicial
-                var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
-                startActivity(avancarTelaInicial)
+                if (emailVerified == false){
+                    Toast.makeText(baseContext, "Por favor, verifique seu email!", Toast.LENGTH_SHORT).show()
+                    auth.signOut()
+                    var reiniciarActivity = Intent(this@LoginActivity, LoginActivity::class.java)
+                    startActivity(reiniciarActivity)
+                }else{
+                    //Avançar para tela inicial
+                    var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
+                    startActivity(avancarTelaInicial)
+                }
+
             //se nao fro um sucesso, logar a falha no catlog
             }else{
                 Log.w(TAG, "singInUserWithEmail:failure", task.exception)
