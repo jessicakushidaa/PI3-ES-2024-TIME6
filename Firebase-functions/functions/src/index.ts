@@ -110,6 +110,7 @@ function mensagemErro(codigo: number) {
   }
   case 5: {
     message = "Número de telefone do usuário não informado.";
+    break;
   }
   }
   return message;
