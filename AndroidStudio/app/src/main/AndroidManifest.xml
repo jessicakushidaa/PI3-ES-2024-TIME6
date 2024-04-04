@@ -21,9 +21,6 @@
             android:name=".RentActivity"
             android:exported="false" />
         <activity
-            android:name=".AlugarActivity"
-            android:exported="false" />
-        <activity
             android:name=".RentManagerActivity"
             android:exported="false" />
         <activity
@@ -31,9 +28,6 @@
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MapActivity"
             android:exported="false" />
         <activity
             android:name=".MainViewActivity"

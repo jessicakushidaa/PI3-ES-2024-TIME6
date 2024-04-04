@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.auth.User
+import com.google.maps.DirectionsApi
+import com.google.maps.GeoApiContext
 
 internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
@@ -68,6 +70,7 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
 
         //Ao clicar no botão logout, chamar a função de logout
         binding?.btnLogout?.setOnClickListener{
@@ -139,7 +142,6 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                 mMap.isMyLocationEnabled = true
             }
         }
-        userLocation = LatLng(0.0,0.0)
     }
 
     //Função que adiciona um marker no mapa
@@ -195,12 +197,29 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     //Função que desenha a rota entre dois pontos
     private fun drawPath(mMap: GoogleMap, adress: LatLng){
-        val line = mMap.addPolyline(
-            PolylineOptions()
-                .add(userLocation, adress)
-                .addSpan(StyleSpan(Color.RED))
-                .addSpan(StyleSpan(Color.GREEN))
-        )
+        getCurrentLocation()
+        val geoApiContext = GeoApiContext.Builder()
+            .apiKey("AIzaSyAol2dJabESlpiblrTmbN6XHeg8MyOKREM")
+            .build()
+
+        val directionsApi = DirectionsApi.newRequest(geoApiContext)
+        val directionsResult = directionsApi.origin(com.google.maps.model.LatLng(userLocation.latitude,userLocation.longitude))
+            .destination(com.google.maps.model.LatLng(adress.latitude, adress.longitude))
+            .await()
+
+        Log.d("ROUTE","${userLocation.latitude} ${userLocation.longitude}")
+
+        val route = directionsResult.routes[0]
+        val polylineOptions = PolylineOptions()
+            .addAll(route.overviewPolyline.decodePath().map { convertToAndroidLatLng(it) })
+            .color(Color.BLUE)
+            .width(8f)
+
+        mMap.addPolyline(polylineOptions)
+    }
+
+    private fun convertToAndroidLatLng(latLng: com.google.maps.model.LatLng): LatLng {
+        return LatLng(latLng.lat, latLng.lng)
     }
     //Função que adiciona os markers da lista de unidades de locação
     private fun addAllMarkers() {
