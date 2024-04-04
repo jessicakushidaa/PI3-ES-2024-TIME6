@@ -52,9 +52,4 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation ("com.google.firebase:firebase-firestore-ktx:24.11.0")
-    implementation ("com.google.firebase:firebase-functions-ktx:20.4.0")
-    platform("com.google.firebase:firebase-bom:32.8.0")
-    implementation ("com.google.android.gms:play-services-location:21.2.0")
-    implementation ("com.google.maps:google-maps-services:2.1.2")
 }

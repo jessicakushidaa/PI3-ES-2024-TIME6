@@ -4,26 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainViewActivity">
-
-    <androidx.fragment.app.FragmentContainerView xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    tools:context=".RentManagerActivity"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sair"
-        android:layout_gravity="center"/>
+        android:id="@+id/btnRent"
+        android:layout_width="220dp"
+        android:layout_height="90dp"
+        android:text="Alugar Armário"
+        android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRentals"
+        android:layout_width="220dp"
+        android:layout_height="90dp"
+        android:text="Minhas Locações"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_marginTop="160dp"
         android:orientation="horizontal"
         >
         <androidx.appcompat.widget.AppCompatButton
@@ -45,6 +51,5 @@
             android:layout_height="match_parent"
             android:text="LOCAÇÕES" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
