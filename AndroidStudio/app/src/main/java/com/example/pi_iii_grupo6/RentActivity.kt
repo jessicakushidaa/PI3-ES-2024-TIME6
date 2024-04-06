@@ -10,11 +10,14 @@ import com.example.pi_iii_grupo6.databinding.ActivityRentBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import android.location.Location
+import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 
 class RentActivity : AppCompatActivity() {
     private var binding: ActivityRentBinding? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var userLocation: LatLng
+    private lateinit var actualLocker: MainViewActivity.Place
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRentBinding.inflate(layoutInflater)
@@ -27,11 +30,38 @@ class RentActivity : AppCompatActivity() {
 
 
 
-    private fun checkLocation() {
-        Toast.makeText(baseContext, "$userLocation", Toast.LENGTH_SHORT).show()
-        Toast.makeText(baseContext, "${MainViewActivity.places[0].latitude} ${MainViewActivity.places[0].longitude}", Toast.LENGTH_SHORT).show()
+    //Lógica que compara a localização do usuário com cada localização de locker
+    private fun checkLocation(): Int {
+        var flag = 0
+        for (place in places) {
+
+            var locPlace = LatLng(place.latitude, place.longitude)
+
+            var distancia = calcularDistancia(locPlace)
+
+            if (distancia <= 1.0) {
+                //Está em alguma unidade!
+                actualLocker = place
+                flag = 1
+                locationHandler(flag)
+                return flag
+            }
+        }
+        locationHandler(flag)
+        return flag
     }
 
+    private fun locationHandler(achou: Int){
+        if(achou == 0){
+            var texto = binding?.etTitleLocation
+            texto?.text = "Você ainda não está em nenhum local"
+        }else{
+            //Implementar continuacao
+            var texto = binding?.etTitleLocation
+            texto?.text = "Você está em: ${actualLocker.nomeLocal}"
+
+        }
+    }
     private fun getCurrentLocation(){
         //Checando permissões
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
@@ -55,4 +85,27 @@ class RentActivity : AppCompatActivity() {
         //Voltando para um valor aleatorio apenas para inicializar
         userLocation = LatLng(0.0,0.0)
     }
+
+    private fun calcularDistancia(segunda: LatLng):Double {
+        var localizacaoAtual = Location("")
+        localizacaoAtual.latitude = userLocation.latitude
+        localizacaoAtual.longitude = userLocation.longitude
+
+        var localizacaoSegunda = Location("")
+        localizacaoSegunda.latitude = segunda.latitude
+        localizacaoSegunda.longitude = segunda.longitude
+
+        var distancia = localizacaoAtual.distanceTo(localizacaoSegunda) / 100.0
+
+        return distancia
+    }
+
+    //Função que volta o binding para null ao encerrar a activity
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }
+
+
+

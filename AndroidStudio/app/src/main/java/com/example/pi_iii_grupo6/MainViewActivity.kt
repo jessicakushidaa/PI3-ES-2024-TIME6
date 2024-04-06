@@ -243,7 +243,9 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             Place(-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo"),
             Place(-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon"),
             Place(-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp"),
-            Place(-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati")
+            Place(-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati"),
+            Place(-22.943412, -47.000364,"Lockers Room 6", "","Rua josé carlos ferrari 65454", "casa 224")
+
         )
     }
 
