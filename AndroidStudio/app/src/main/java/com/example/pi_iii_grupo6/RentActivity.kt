@@ -12,6 +12,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import android.location.Location
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
+import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
+import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class RentActivity : AppCompatActivity() {
     private var binding: ActivityRentBinding? = null
@@ -26,6 +29,10 @@ class RentActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         getCurrentLocation()
+
+        binding?.btnAlugarArmario?.setOnClickListener{
+            dialogAlugarArmario()
+        }
     }
 
 
@@ -53,12 +60,17 @@ class RentActivity : AppCompatActivity() {
 
     private fun locationHandler(achou: Int){
         if(achou == 0){
-            var texto = binding?.etTitleLocation
-            texto?.text = "Você ainda não está em nenhum local"
+            var textoTitulo = binding?.etTitleLocation
+            textoTitulo?.text = "Você ainda não está em nenhum local"
         }else{
-            //Implementar continuacao
-            var texto = binding?.etTitleLocation
-            texto?.text = "Você está em: ${actualLocker.nomeLocal}"
+            //Usuário está em uma unidade de locação
+            var textoTitulo = binding?.etTitleLocation
+            var textoEndereco = binding?.etEndereco
+            var textoReferencia = binding?.etReferencia
+
+            textoTitulo?.text = "Você está em: ${actualLocker.nomeLocal}"
+            textoEndereco?.text = "Endereço: ${actualLocker.enderecoLocal}"
+            textoReferencia?.text = "Referência: ${actualLocker.referenciaLocal}"
 
         }
     }
@@ -99,6 +111,42 @@ class RentActivity : AppCompatActivity() {
 
         return distancia
     }
+
+    //APAGAR FUNCAO
+    private fun dialogAlugarArmario() {
+        //Criando a dialog box
+        val dialog = BottomSheetDialog(this)
+        val sheetBinding: AlugarArmarioDialogBinding = AlugarArmarioDialogBinding.inflate(layoutInflater, null, false)
+        dialog.setContentView(sheetBinding.root)
+
+        var tempo1 = sheetBinding.tvTempo1
+        var tempo2 = sheetBinding.tvTempo2
+        var tempo3 = sheetBinding.tvTempo3
+        var tempo4 = sheetBinding.tvTempo4
+
+        var preco1 = sheetBinding.tvPreco1
+        var preco2 = sheetBinding.tvPreco2
+        var preco3 = sheetBinding.tvPreco3
+        var preco4 = sheetBinding.tvPreco4
+
+        tempo1.text = "${actualLocker.precos[0].tempo} min"
+        tempo2.text = "${actualLocker.precos[1].tempo} min"
+        tempo3.text = "${actualLocker.precos[2].tempo} min"
+
+        preco1.text = "R$ ${actualLocker.precos[0].preco}"
+        preco2.text = "R$ ${actualLocker.precos[1].preco}"
+        preco3.text = "R$ ${actualLocker.precos[2].preco}"
+
+        if(actualLocker.precos.size >= 4){
+            tempo4.text = "${actualLocker.precos[3].tempo} min"
+            preco4.text = "R$ ${actualLocker.precos[3].preco}"
+        }
+
+        //Inicializando a dialog
+        dialog.show()
+        }
+
+
 
     //Função que volta o binding para null ao encerrar a activity
     override fun onDestroy() {
