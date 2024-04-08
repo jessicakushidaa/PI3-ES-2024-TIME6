@@ -30,7 +30,7 @@ import com.google.firebase.firestore.auth.User
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 
-internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
+class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
     private var binding: ActivityMainViewBinding? = null
     private lateinit var mMap: GoogleMap
