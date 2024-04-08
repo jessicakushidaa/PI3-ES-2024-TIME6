@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RentActivity">
+    tools:context=".RentActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/etTitleLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/location_title"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:layout_marginTop="250dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/etEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enderecoLocker"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/etReferencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/referencia"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAlugarArmario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_text_alugar"
+        android:layout_gravity="center"
+        />
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

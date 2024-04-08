@@ -26,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
 
     //Criar classe pessoa, que envia os dados para a function
     data class Pessoa(
+        val userId: String,
         val nome: String,
         val sobrenome: String,
         val dataNascimento: String,
@@ -58,22 +59,32 @@ class RegisterActivity : AppCompatActivity() {
             var dataNascimento = binding?.etBirth?.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
-            // Criando instância da cclasse Pessoa com os dados do usuário
-            var p = Pessoa(nome,sobrenome,dataNascimento,cpf,phone,false)
-
-            //Chamando a função que verifica se o usuário é um gerente, se for, muda isGerente para true
-            checarGerente(email, p)
-
             //Checando se os campos foram preenchidos
             if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimento,phone)){
                 //Checando se as senhas coincidem
                 if(senha == senhaConfirmation){
-                    //Se está tudo certo, chamar função de criação do usuário
-                    createUserWithEmailAndPassword(email, senha)
-                    //Chamando função para guardar infos no database
-                    createUserDataBase(p).addOnCompleteListener { task ->
-                        if(!task.isSuccessful){
-                            Log.e("Register","Error on Function: ${task.exception}")
+                    //Se está tudo certo, chamar função de criação do usuário, retorna o userId
+                    createUserWithEmailAndPassword(email, senha) { userId ->
+                        if (userId != null) {
+                            // Criando instância da classe Pessoa com os dados do usuário
+                            var p = Pessoa(userId,nome,sobrenome,dataNascimento,cpf,phone,false)
+
+                            // Lidar com a criação do usuário bem-sucedida
+                            Log.d(TAG, "Usuário criado com sucesso. UID: $userId")
+
+                            //Chamando a função que verifica se o usuário é um gerente, se for, muda
+                            // isGerente para true
+                            checarGerente(email, p)
+
+                            //Chamando função para guardar infos no database
+                            createUserDataBase(p, userId).addOnCompleteListener { task ->
+                                if(!task.isSuccessful){
+                                    Log.e("Register","Error on Function: ${task.exception}")
+                                }
+                            }
+                        } else {
+                            // Lidar com a falha na criação do usuário
+                            Log.e(TAG, "Falha ao criar o usuário.")
                         }
                     }
                 }else{
@@ -99,18 +110,34 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     //Função que cria um usuário no Firebase
-    private fun createUserWithEmailAndPassword(email: String, senha: String){
+    private fun createUserWithEmailAndPassword(email: String, senha: String, callback: (String?) -> Unit){
         //Chamando função do authentication para criar usuário
         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener{ task ->
             if(task.isSuccessful){
+                // Mandando email de verificação para o usuário
                 sendEmailVerification()
-                //Se a criação for um sucesso
-                Toast.makeText(baseContext, "Registro feito com sucesso", Toast.LENGTH_SHORT).show()
-                //Volta para o usuário fazer o login
-                var voltarLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(voltarLogin)
+
+                // Obtendo o usuário autenticado
+                val user = auth.currentUser
+                // Obtendo o ID do usuário
+                val userId = user?.uid
+
+                if (userId != null) {
+                    //Se a criação for um sucesso
+                    Log.d(TAG, "createUserWithEmail:success.UID: $ UID: $userId")
+                    callback(userId)
+                    Toast.makeText(baseContext, "Registro feito com sucesso.", Toast.LENGTH_SHORT)
+                        .show()
+                    //Volta para o usuário fazer o login
+                    var voltarLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    startActivity(voltarLogin)
+                } else {
+                    Log.e(TAG,"Erro ao obter Id do usuário.",task.exception)
+                    callback(null)
+                }
 
             }else{
+
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
                 Toast.makeText(baseContext, "Criação Falhou", Toast.LENGTH_SHORT).show()
             }
@@ -127,9 +154,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     //Função que chama a function responsável por adicionar o usuário no banco de dados (dados de pessoa)
-    private fun createUserDataBase(p: Pessoa): Task<String> {
+    private fun createUserDataBase(p: Pessoa, userId:String): Task<String> {
         //Definindo os dados que serão passados aos parâmetros da function
         val data = hashMapOf(
+            "userId" to p.userId,
             "nome" to p.nome,
             "sobrenome" to p.sobrenome,
             "dataNascimento" to p.dataNascimento,

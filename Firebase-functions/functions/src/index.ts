@@ -18,23 +18,24 @@ const colPessoas = db.collection("pessoas");
   }
 
   /* tipando os atributos do objeto que será inserido na collection */
+  // campo "userId" vem como parametro no lado do cliente, id do usuário
+  // autenticado
   interface Pessoa {
-    // idPessoa: string | null,
+    userId: string,
     nome: string,
     sobrenome: string,
     dataNascimento: Date,
     cpf: string,
     telefone: string,
-    // senha: string
     isGerente: boolean
   }
 
 /* Função que analisa se o formulário foi preenchido */
 // *** obs: validar tamanho do telefone e cpf, tipo de caracter ***
 function camposPreenchidos(p: Pessoa) {
-  /* if (!p.idPessoa) {
-    p.idPessoa = null;
-  } */
+  if (!p.userId) {
+    return 6;
+  }
   if (!p.nome) {
     return 1;
   }
@@ -61,11 +62,6 @@ function camposPreenchidos(p: Pessoa) {
 function validarTipos(p: Pessoa): string[] | null {
   const camposInvalidos: string[] = [];
 
-  /* obs: campo idPessoa ainda nao está definido se será mantido
-  if (pessoa.idPessoa !== null && pessoa.idPessoa!= undefined &&
-  typeof pessoa.idPessoa !== "string") {
-    camposInvalidos.push("idPessoa");
-  } */
   if (typeof p.nome !== "string") {
     camposInvalidos.push("nome");
   }
@@ -112,9 +108,14 @@ function mensagemErro(codigo: number) {
     message = "Número de telefone do usuário não informado.";
     break;
   }
+  case 6: {
+    message = "Usuário não autenticado";
+    break;
+  }
   }
   return message;
 }
+/* Função para adicionar dados da pessoa cadastrada ao firebase database */
 export const addPessoa = functions
   .region("southamerica-east1")
   .https.onCall(async (data, context) => {
@@ -124,7 +125,7 @@ export const addPessoa = functions
 
     // Criando objeto pessoa com os dados recebidos - baseando nos parametros
     const pessoa: Pessoa = {
-      // idPessoa: data.idPessoa,
+      userId: data.userId,
       nome: data.nome,
       sobrenome: data.sobrenome,
       dataNascimento: new Date(data.dataNascimento),
@@ -170,5 +171,55 @@ export const addPessoa = functions
     }
 
     // Retornando o objeto result.
+    return result;
+  });
+
+/* Função que retorna campos do documento solicitado do bd */
+export const getDocumentById = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+    try {
+      // Declarando as constantes dos parâmetros recebidos:
+      // ID do documento e nome da coleção Firebase
+      const documentId: string = data.documentId;
+      const collectionName: string = data.collectionName;
+
+      // Atribuindo as referências da coleção e do documento ID do Firebase
+      const collectionRef = db.collection(collectionName);
+      const docRef = collectionRef.doc(documentId);
+
+      // Recupera o documento que tem o tal ID da coleção
+      const documentSnapshot = await docRef.get();
+
+      // Verifica se o documento existe
+      if (!documentSnapshot.exists) {
+        // Se o documento não existir, retorna mensagem de erro
+        result = {
+          status: "ERRO",
+          message: "Documento não existe",
+          payload: JSON.parse(JSON.stringify({documentSnapshot: null})),
+        };
+      } else {
+        // Sucesso: retorna os dados do documento
+        result = {
+          status: "SUCCESS",
+          message: "Documento recuperado com sucesso",
+          payload: JSON.parse(JSON
+            .stringify({documentSnapshot: documentSnapshot.data()})),
+        };
+        functions.logger.info("getDocumentById - documento recuperado");
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      result = {
+        status: "ERROR",
+        message: "Erro ao obter documento: " + error.message,
+        payload: JSON.parse(JSON.stringify({documentSnapshot: null})),
+      };
+      functions.logger.error("getElementById " +
+        "- Erro ao buscar documento:" + error.message);
+    }
+    // Retorna a resposta
     return result;
   });
