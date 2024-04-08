@@ -89,12 +89,25 @@ internal class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             startActivity(irHome)
         }
         binding?.btnCartoes?.setOnClickListener {
-            var irCartoes = Intent(this@MainViewActivity, CreateCardActivity::class.java)
-            startActivity(irCartoes)
+            if(user != null){
+                var irCartoes = Intent(this@MainViewActivity, CreateCardActivity::class.java)
+                startActivity(irCartoes)
+            }else {
+                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
+                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
+                startActivity(voltarLogin)
+            }
         }
         binding?.btnLocacoes?.setOnClickListener {
-            var irLocacoes = Intent(this@MainViewActivity, RentManagerActivity::class.java)
-            startActivity(irLocacoes)
+            if(user != null){
+                var irLocacoes = Intent(this@MainViewActivity, RentManagerActivity::class.java)
+                startActivity(irLocacoes)
+            }else {
+                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
+                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
+                startActivity(voltarLogin)
+            }
+
         }
     }
 
