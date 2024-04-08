@@ -115,6 +115,7 @@ function mensagemErro(codigo: number) {
   }
   return message;
 }
+/* Função para adicionar dados da pessoa cadastrada ao firebase database */
 export const addPessoa = functions
   .region("southamerica-east1")
   .https.onCall(async (data, context) => {
@@ -173,3 +174,52 @@ export const addPessoa = functions
     return result;
   });
 
+/* Função que retorna campos do documento solicitado do bd */
+export const getDocumentById = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+    try {
+      // Declarando as constantes dos parâmetros recebidos:
+      // ID do documento e nome da coleção Firebase
+      const documentId: string = data.documentId;
+      const collectionName: string = data.collectionName;
+
+      // Atribuindo as referências da coleção e do documento ID do Firebase
+      const collectionRef = db.collection(collectionName);
+      const docRef = collectionRef.doc(documentId);
+
+      // Recupera o documento que tem o tal ID da coleção
+      const documentSnapshot = await docRef.get();
+
+      // Verifica se o documento existe
+      if (!documentSnapshot.exists) {
+        // Se o documento não existir, retorna mensagem de erro
+        result = {
+          status: "ERRO",
+          message: "Documento não existe",
+          payload: JSON.parse(JSON.stringify({documentSnapshot: null})),
+        };
+      } else {
+        // Sucesso: retorna os dados do documento
+        result = {
+          status: "SUCCESS",
+          message: "Documento recuperado com sucesso",
+          payload: JSON.parse(JSON
+            .stringify({documentSnapshot: documentSnapshot.data()})),
+        };
+        functions.logger.info("getDocumentById - documento recuperado");
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      result = {
+        status: "ERROR",
+        message: "Erro ao obter documento: " + error.message,
+        payload: JSON.parse(JSON.stringify({documentSnapshot: null})),
+      };
+      functions.logger.error("getElementById " +
+        "- Erro ao buscar documento:" + error.message);
+    }
+    // Retorna a resposta
+    return result;
+  });
