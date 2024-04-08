@@ -30,6 +30,7 @@ class RentManagerActivity : AppCompatActivity() {
             startActivity(irHome)
         }
         binding?.btnCartoes?.setOnClickListener {
+            //if()
             var irCartoes = Intent(this@RentManagerActivity, CreateCardActivity::class.java)
             startActivity(irCartoes)
         }

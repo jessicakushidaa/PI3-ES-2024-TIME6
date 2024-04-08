@@ -1,6 +1,7 @@
 package com.example.pi_iii_grupo6
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +12,20 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import android.location.Location
+import android.view.View
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlin.math.log
 
 class RentActivity : AppCompatActivity() {
     private var binding: ActivityRentBinding? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var userLocation: LatLng
     private lateinit var actualLocker: MainViewActivity.Place
+    private var precoSelecionado: MainViewActivity.Preco? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRentBinding.inflate(layoutInflater)
@@ -119,6 +124,11 @@ class RentActivity : AppCompatActivity() {
         val sheetBinding: AlugarArmarioDialogBinding = AlugarArmarioDialogBinding.inflate(layoutInflater, null, false)
         dialog.setContentView(sheetBinding.root)
 
+        var opcao1 = sheetBinding.llPreco1
+        var opcao2 = sheetBinding.llPreco2
+        var opcao3 = sheetBinding.llPreco3
+        var opcao4 = sheetBinding.llPreco4
+
         var tempo1 = sheetBinding.tvTempo1
         var tempo2 = sheetBinding.tvTempo2
         var tempo3 = sheetBinding.tvTempo3
@@ -144,7 +154,69 @@ class RentActivity : AppCompatActivity() {
 
         //Inicializando a dialog
         dialog.show()
+
+        opcao1.setOnClickListener{
+            if (precoSelecionado?.tempo == actualLocker.precos[0].tempo){
+                removerSelecionado()
+                desmarcarOpcao(opcao1)
+            }else if (precoSelecionado == null){
+                addSelecionado(actualLocker.precos[0])
+                marcarOpçcao(opcao1)
+            }else{
+                Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+            }
         }
+        opcao2.setOnClickListener{
+            if (precoSelecionado?.tempo == actualLocker.precos[1].tempo){
+                removerSelecionado()
+                desmarcarOpcao(opcao2)
+            }else if (precoSelecionado == null){
+                addSelecionado(actualLocker.precos[1])
+                marcarOpçcao(opcao2)
+            }else{
+                Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+            }
+        }
+        opcao3.setOnClickListener{
+            if (precoSelecionado?.tempo == actualLocker.precos[2].tempo){
+                removerSelecionado()
+                desmarcarOpcao(opcao3)
+            }else if (precoSelecionado == null){
+                addSelecionado(actualLocker.precos[2])
+                marcarOpçcao(opcao3)
+            }else{
+                Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+            }
+        }
+        opcao4.setOnClickListener{
+            if (precoSelecionado?.tempo == actualLocker.precos[3].tempo){
+                removerSelecionado()
+                desmarcarOpcao(opcao4)
+            }else if (precoSelecionado == null){
+                addSelecionado(actualLocker.precos[3])
+                marcarOpçcao(opcao4)
+            }else{
+                Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        }
+
+    fun addSelecionado(selecionado: MainViewActivity.Preco){
+        precoSelecionado = selecionado
+        Log.d("SELECTION", "PRECO SELECIONADO: ${precoSelecionado?.preco}")
+    }
+    fun removerSelecionado(){
+        precoSelecionado = null
+        Log.d("SELECTION","Preco removido")
+    }
+
+    fun marcarOpçcao(viewSelecionada: View){
+        viewSelecionada.setBackgroundColor(Color.parseColor("#E7E7E7"))
+    }
+    fun desmarcarOpcao(viewSelecionada: View){
+        viewSelecionada.setBackgroundColor(Color.parseColor("#ffffff"))
+    }
 
 
 
