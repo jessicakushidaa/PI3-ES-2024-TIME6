@@ -1,6 +1,8 @@
 package com.example.pi_iii_grupo6
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +19,15 @@ import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.auth.User
+import com.google.gson.Gson
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.qrcode.QRCodeWriter
 import kotlin.math.log
 
 class RentActivity : AppCompatActivity() {
@@ -25,13 +36,23 @@ class RentActivity : AppCompatActivity() {
     private lateinit var userLocation: LatLng
     private lateinit var actualLocker: MainViewActivity.Place
     private var precoSelecionado: MainViewActivity.Preco? = null
+    private var gson = Gson()
+    private var user: FirebaseUser? = null
+    private lateinit var auth: FirebaseAuth
+
+    class Info(
+        var userId: String?,
+        var preco: MainViewActivity.Preco
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRentBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        auth = Firebase.auth
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        user = auth.currentUser
 
         getCurrentLocation()
 
@@ -200,7 +221,25 @@ class RentActivity : AppCompatActivity() {
             }
         }
 
+        sheetBinding.btnConfirmarLoc.setOnClickListener {
+            confirmacao()
         }
+
+        }
+
+    fun confirmacao(){
+        var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
+
+        if (precoSelecionado == null){
+            Toast.makeText(baseContext,"Selecione uma opção",Toast.LENGTH_SHORT).show()
+        }else{
+            var informacoes = Info(user?.email,precoSelecionado!!)
+            var infosJson = gson.toJson(informacoes)
+
+            intentQrCode.putExtra("infosJson",infosJson)
+            startActivity(intentQrCode)
+        }
+    }
 
     fun addSelecionado(selecionado: MainViewActivity.Preco){
         precoSelecionado = selecionado
@@ -217,8 +256,6 @@ class RentActivity : AppCompatActivity() {
     fun desmarcarOpcao(viewSelecionada: View){
         viewSelecionada.setBackgroundColor(Color.parseColor("#ffffff"))
     }
-
-
 
     //Função que volta o binding para null ao encerrar a activity
     override fun onDestroy() {
