@@ -60,7 +60,7 @@ function validarTiposCartao(cartao: Cartao): string[] | null {
     return null;
 }
 
-function ErrorMensage(codigo: number){
+function ErrorMessage(codigo: number){
     let message = "";
     switch (codigo) {
         case 1{
@@ -98,7 +98,7 @@ export const addCartao = functions
     };
 
     const camposInvalidos = validarTiposcartao(cartao);
-    const erroMensagem = ErrorMensage(camposInvalidos ? camposInvalidos[0] : 0);
+    const erroMensagem = ErrorMessage(camposInvalidos ? camposInvalidos[0] : 0);
 
     if (camposInvalidos) {
       functions.logger.error("addCartao " +
