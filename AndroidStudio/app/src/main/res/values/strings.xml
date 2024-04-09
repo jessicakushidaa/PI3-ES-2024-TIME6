@@ -11,4 +11,18 @@
     <string name="cardTitle">Adicione seu cartão</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location_title">LocationTitle</string>
+    <string name="enderecoLocker">Endereço:</string>
+    <string name="referencia">Referencia:</string>
+    <string name="btn_text_alugar">Alugar Armário</string>
+    <string name="seta_voltar"><![CDATA[<-]]></string>
+    <string name="tempo_1">Tempo 1</string>
+    <string name="preco_1">Preco 1</string>
+    <string name="tempo_2">Tempo 2</string>
+    <string name="preco_2">Preco 2</string>
+    <string name="tempo_3">Tempo 3</string>
+    <string name="preco_3">Preco 3</string>
+    <string name="tempo_4"> </string>
+    <string name="preco_4"> </string>
+    <string name="btn_confirmar">Confirmar Locação</string>
 </resources>
