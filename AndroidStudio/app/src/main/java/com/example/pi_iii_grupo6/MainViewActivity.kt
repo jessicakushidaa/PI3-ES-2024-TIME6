@@ -42,11 +42,9 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     //Criando classe Place que representa cada Unidade de Locação
     class Place (
-        var id: String,
         var latitude: Double,
         var longitude: Double,
         var nomeLocal: String,
-        var descricaoLocal: String,
         var enderecoLocal: String,
         var referenciaLocal: String,
         var precos: List<Preco>
@@ -258,13 +256,12 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     companion object{
         //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
         var places = listOf<Place>(
-            Place("A1",-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A2",-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo", listOf(Preco(15, 25.90), Preco(60, 45.0), Preco(125,65.0))),
-            Place("A3",-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A4",-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0),Preco(160,130.50))),
-            Place("A5",-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A6",-22.943412, -47.000364,"Lockers Room 6", "","Rua josé carlos ferrari 65454", "casa 224", listOf(Preco(30, 35.0), Preco(60, 55.0), Preco(120,85.0)))
-
+            Place(-22.835083, -47.047750, "Lockers Room 1","Rua armando bonitão 213","Praia Pipa", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
+            Place(-22.912306,-47.060639, "Lockers Room 2","Rua Hamilton jardão 185","Mercado Oxxo", listOf(Preco(15, 25.90), Preco(60, 45.0), Preco(125,65.0))),
+            Place(-22.969944,-46.990417, "Lockers Room 3","Rua puc legal 021","Casa de shows Hallon", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
+            Place(-22.943614, -46.993418, "Lockers Room 4","Rua José carlos ferrari 876","Supermercado Asp", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0),Preco(160,130.50))),
+            Place(-22.944592, -46.995360, "Lockers Room 5","Rua armando feiao 999","Colégio Inovati", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
+            Place(-22.943412, -47.000364,"Lockers Room 6", "Rua josé carlos ferrari 65454", "casa 224", listOf(Preco(30, 35.0), Preco(60, 55.0), Preco(120,85.0)))
         )
     }
 
