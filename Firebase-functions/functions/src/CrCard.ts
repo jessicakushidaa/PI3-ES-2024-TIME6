@@ -1,40 +1,37 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-
 const app = admin.initializeApp();
 const db = app.firestore();
-const colCartoes = db.collection("cartoes")
+const colCartoes = db.collection("cartoes");
 
 interface CallableResponse {
-    status: string,
-    message: string,
-    payload: JSON
-  }
+    status: string;
+    message: string;
+    payload: any; // Use any para o payload, pois pode ser de qualquer tipo
+}
 
-interface Cartao{
-    titularName: string,
-    cardNumber: string,
-    cvv: number,
+interface Cartao {
+    titularName: string;
+    cardNumber: string;
+    cvv: number;
     dataVal: Date;
 }
 
-function camposPreenchidos(p: Cartao){
-    if (!p.titularName){
+function camposPreenchidos(p: Cartao): number {
+    if (!p.titularName) {
         return 1;
     }
-    if (!p.cardNumber){
+    if (!p.cardNumber) {
         return 2;
     }
-    if (!p.cvv){
+    if (!p.cvv) {
         return 3;
     }
-    if (!p.dataVal){
+    if (!p.dataVal) {
         return 4;
     }
-    else{
-        return 0;
-    }
+    return 0;
 }
 
 function validarTiposCartao(cartao: Cartao): string[] | null {
@@ -53,105 +50,81 @@ function validarTiposCartao(cartao: Cartao): string[] | null {
         camposInvalidos.push("dataVal");
     }
 
-    if (camposInvalidos.length > 0) {
-        return camposInvalidos;
-    }
-
-    return null;
+    return camposInvalidos.length > 0 ? camposInvalidos : null;
 }
 
-function ErrorMessage(codigo: number){
-    let message = "";
+function errorMessage(codigo: number): string {
     switch (codigo) {
-        case 1{
-            message = "Nome do titular do cartão não informado.";
-            break;
-        }
-        case 2{
-            message = "Número do cartão não informado.";
-            break;
-        }
-        case 3{
-            message = "CVV não informado";
-            break;
-        }
-        case 4{
-            message = "Data de validade não informado";
-            break;
-        }
+        case 1:
+            return "Nome do titular do cartão não informado.";
+        case 2:
+            return "Número do cartão não informado.";
+        case 3:
+            return "CVV não informado";
+        case 4:
+            return "Data de validade não informado";
+        default:
+            return "";
     }
-    return message;
 }
 
 export const addCartao = functions
-  .region("southamerica-east1")
-  .https.onCall(async (data, context) => {
-    let result: CallableResponse;
+    .region("southamerica-east1")
+    .https.onCall(async (data, context) => {
+        const cartao: Cartao = {
+            titularName: data.titularName,
+            cardNumber: data.cardNumber,
+            cvv: data.cvv,
+            dataVal: new Date(data.dataVal),
+        };
 
-    functions.logger.info("Function addCartao - Iniciada.");
+        const camposInvalidos = validarTiposCartao(cartao);
+        const erroMensagem = errorMessage(camposInvalidos ? camposInvalidos[0] : 0);
 
-    const cartao: Cartao = {
-      titularName: data.titularName,
-      cardNumber: data.cardNumber,
-      cvv: data.cvv,
-      dataVal: new Date(data.dataVal),
-    };
+        if (camposInvalidos) {
+            functions.logger.error("addCartao - Erro ao inserir novo Cartão: " + erroMensagem);
+            return {
+                status: "ERROR",
+                message: erroMensagem,
+                payload: null,
+            };
+        } else {
+            const docRef = await colCartoes.add(cartao);
+            functions.logger.info("addCartao - Novo cartão inserido");
+            return {
+                status: "SUCCESS",
+                message: "Cartão inserido com sucesso.",
+                payload: { cardId: docRef.id },
+            };
+        }
+    });
 
-    const camposInvalidos = validarTiposcartao(cartao);
-    const erroMensagem = ErrorMessage(camposInvalidos ? camposInvalidos[0] : 0);
+export const getCartaoById = functions
+    .region("southamerica-east1")
+    .https.onCall(async (data, context) => {
+        try {
+            const cardId: string = data.cardId;
+            const cardRef = colCartoes.doc(cardId);
+            const cardSnapshot = await cardRef.get();
 
-    if (camposInvalidos) {
-      functions.logger.error("addCartao " +
-        "- Erro ao inserir novo Cartão:" +
-        erroMensagem);
-
-      result = {
-        status: "ERROR",
-        message: erroMensagem,
-        payload: null,
-      };
-    } else {
-      const docRef = await colCartoes.add(cartao);
-      result = {
-        status: "SUCCESS",
-        message: "Cartão inserido com sucesso.",
-        payload: { cardId: docRef.id },
-      };
-      functions.logger.info("addCartao - Novo cartão inserido");
-    }
-
-    return result;
-  });
-
-
-  export const getCartaoById = functions
-  .region("southamerica-east1")
-  .https.onCall(async (data, context) => {
-      let result: CallableResponse;
-      try {
-          const cardId: string = data.cardId;
-          const cardRef = colCartoes.doc(cardId);
-          const cardSnapshot = await cardRef.get();
-
-          if (!cardSnapshot.exists) {
-              result = {
-                  status: "ERROR",
-                  message: "Cartão não encontrado",
-                  payload: JSON.parse(JSON.stringify({ cardSnapshot: null })),
-              };
-          } else {
-              result = {
-                  status: "SUCCESS",
-                  message: "Cartão recuperado com sucesso",
-                  payload: JSON.parse(JSON.stringify({ cartao: cardSnapshot.data() })),
-              };
-          }
-      } catch (error: any) {
-          result = {
-              status: "ERROR",
-              message: "Erro ao obter cartão: " + error.message,
-              payload: JSON.parse(JSON.stringify({ cardSnapshot: null })),
-          };
-      }
-      return result;
-  });
+            if (!cardSnapshot.exists) {
+                return {
+                    status: "ERROR",
+                    message: "Cartão não encontrado",
+                    payload: { cardSnapshot: null },
+                };
+            } else {
+                return {
+                    status: "SUCCESS",
+                    message: "Cartão recuperado com sucesso",
+                    payload: { cartao: cardSnapshot.data() },
+                };
+            }
+        } catch (error: any) {
+            return {
+                status: "ERROR",
+                message: "Erro ao obter cartão: " + error.message,
+                payload: { cardSnapshot: null },
+            };
+        }
+    });
