@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // importar as funcionalidades do firebase functions, apelidando de 'functions';
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
@@ -170,118 +171,122 @@ export const addPessoa = functions
       functions.logger.error("addPessoaTeste - Nova pessoa inserida");
     }
 
-  // Retornando o objeto result.
-  return result;
-});
-
-  
-const colCartoes = db.collection("cartoes");
+    // Retornando o objeto result.
+    return result;
+  });
 
 interface Cartao {
-  titularName: string;
-  cardNumber: string;
-  cvv: number;
+  nomeTitular: string;
+  numeroCartao: string;
   dataVal: Date;
 }
 
 function camposPreenchidosCartao(p: Cartao): number {
-    if (!p.titularName) {
-        return 1;
-    }
-    if (!p.cardNumber) {
-        return 2;
-    }
-    if (!p.cvv) {
-        return 3;
-    }
-    if (!p.dataVal) {
-        return 4;
-    }
-    return 0;
+  if (!p.nomeTitular) {
+    return 1;
+  }
+  if (!p.numeroCartao) {
+    return 2;
+  }
+  if (!p.dataVal) {
+    return 3;
+  }
+  return 0;
 }
 
 function validarTiposCartao(cartao: Cartao): string[] | null {
-    const camposInvalidos: string[] = [];
+  const camposInvalidos: string[] = [];
 
-    if (typeof cartao.titularName !== "string") {
-        camposInvalidos.push("titularName");
-    }
-    if (typeof cartao.cardNumber !== "string") {
-        camposInvalidos.push("cardNumber");
-    }
-    if (typeof cartao.cvv !== "number") {
-        camposInvalidos.push("cvv");
-    }
-    if (!(cartao.dataVal instanceof Date)) {
-        camposInvalidos.push("dataVal");
-    }
+  if (typeof cartao.nomeTitular !== "string") {
+    camposInvalidos.push("nomeTitular");
+  }
+  if (typeof cartao.numeroCartao !== "string") {
+    camposInvalidos.push("numeroCartao");
+  }
+  if (!(cartao.dataVal instanceof Date)) {
+    camposInvalidos.push("dataVal");
+  }
 
-    return camposInvalidos.length > 0 ? camposInvalidos : null;
+  return camposInvalidos.length > 0 ? camposInvalidos : null;
 }
 
 function errorMessage(codigo: number): string {
-    switch (codigo) {
-        case 1:
-            return "Nome do titular do cartão não informado.";
-        case 2:
-            return "Número do cartão não informado.";
-        case 3:
-            return "CVV não informado";
-        case 4:
-            return "Data de validade não informado";
-        default:
-            return "";
-    }
+  switch (codigo) {
+  case 1:
+    return "Nome do titular do cartão não informado.";
+  case 2:
+    return "Número do cartão não informado.";
+  case 3:
+    return "Data de validade não informado";
+  default:
+    return "";
+  }
 }
 
 export const addCartao = functions
-    .region("southamerica-east1")
-    .https.onCall(async (data, context) => {
-        let result: CallableResponse;
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
 
-        functions.logger.info("Function addCartao - Iniciada.");
-        
-        const cartao: Cartao = {
-            titularName: data.titularName,
-            cardNumber: data.cardNumber,
-            cvv: data.cvv,
-            dataVal: new Date(data.dataVal),
-        };
+    functions.logger.info("Function addCartao - Iniciada.");
 
-        const CodigoErro = camposPreenchidosCartao(cartao);
-        const MensagemErro = errorMessage(CodigoErro);
-        const camposInvalid = validarTiposCartao(cartao);
+    const cartao: Cartao = {
+      nomeTitular: data.nomeTitular,
+      numeroCartao: data.cardNumber,
+      dataVal: new Date(data.dataVal),
+    };
 
-        if (CodigoErro > 0) {
-            // gravar o erro no log e preparar o retorno.
-            functions.logger.error("addCartao " +
+    const codigoErro = camposPreenchidosCartao(cartao);
+    const mensagemErro = errorMessage(codigoErro);
+    const camposInvalidos = validarTiposCartao(cartao);
+
+    // Validação dos dados recebidos
+    if (codigoErro > 0) {
+      // gravar o erro no log e preparar o retorno.
+      functions.logger.error("addCartao " +
               "- Erro ao inserir novo Cartao:" +
-              CodigoErro.toString()),
-      
-            result = {
-              status: "ERROR",
-              message: MensagemErro,
-              payload: JSON.parse(JSON.stringify({docId: null})),
-            };
-            console.log(result);
-        } else if (camposInvalid !== null && camposInvalid.length > 0) {
-            result = {
-              status: "ERROR",
-              message: `Os seguintes campos não correspondem ao tipo esperado:
-               ${camposInvalid.join(", ")}.`,
-              payload: JSON.parse(JSON.stringify({docId: null})),
-            };
-        } else {
-            const docRef = await colCartoes.add(cartao);
-            result = {
-              status: "SUCCESS",
-              message: "Cartao inserido com sucesso.",
-              payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
-            };
-            functions.logger.error("addCartaoTeste - Nova pessoa inserida");
-          }
-          return result;
-        });
+              codigoErro.toString()),
+
+      result = {
+        status: "ERROR",
+        message: mensagemErro,
+        payload: JSON.parse(JSON.stringify({docId: null})),
+      };
+      console.log(result);
+    } else if (camposInvalidos !== null && camposInvalidos.length > 0) {
+      result = {
+        status: "ERROR",
+        message: `Os seguintes campos não correspondem ao tipo esperado:
+               ${camposInvalidos.join(", ")}.`,
+        payload: JSON.parse(JSON.stringify({docId: null})),
+      };
+    } else {
+      try {
+        // Obter o ID do documento da pessoa
+        const idPessoa: string = data.idPessoa;
+
+        // Referencia a subcolletion criada dentro do doc da Pessoa
+        const subcolCartoes= db.collection(`pessoas/${idPessoa}/cartoes`);
+
+        // Adicionando o novo cartão
+        const docRef = await subcolCartoes.add(cartao);
+
+        // Resposta de sucesso
+        result = {
+          status: "SUCCESS",
+          message: "Cartao inserido com sucesso.",
+          payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
+        };
+        functions.logger.error("addCartao - Novo cartão inserido");
+      } catch (error:any) {
+        result = {
+          status: "ERROR",
+          message: "Erro ao adicionar cartão: " + error.message,
+          payload: JSON.parse(JSON.stringify({docId: null}))};
+      }
+    }
+    return result;
+  });
 
 /* Função que retorna campos do documento solicitado do bd */
 export const getDocumentById = functions
