@@ -181,17 +181,16 @@ interface Cartao {
   dataVal: Date;
 }
 
-function camposPreenchidosCartao(p: Cartao): number {
-  if (!p.nomeTitular) {
+function camposPreenchidosCartao(cartao: Cartao): number {
+  if (!cartao.nomeTitular) {
     return 1;
   }
-  if (!p.numeroCartao) {
+  if (!cartao.numeroCartao) {
     return 2;
   }
-  if (!p.dataVal) {
+  if (!cartao.dataVal) {
     return 3;
-  }
-  return 0;
+  } else return 0;
 }
 
 function validarTiposCartao(cartao: Cartao): string[] | null {
@@ -232,7 +231,7 @@ export const addCartao = functions
 
     const cartao: Cartao = {
       nomeTitular: data.nomeTitular,
-      numeroCartao: data.cardNumber,
+      numeroCartao: data.numeroCartao,
       dataVal: new Date(data.dataVal),
     };
 
