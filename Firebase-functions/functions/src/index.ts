@@ -170,19 +170,21 @@ export const addPessoa = functions
       functions.logger.error("addPessoaTeste - Nova pessoa inserida");
     }
 
-    // Retornando o objeto result.
-    return result;
-  });
+  // Retornando o objeto result.
+  return result;
+});
 
+  
+const colCartoes = db.collection("cartoes");
 
-  interface Cartao {
-    titularName: string;
-    cardNumber: string;
-    cvv: number;
-    dataVal: Date;
+interface Cartao {
+  titularName: string;
+  cardNumber: string;
+  cvv: number;
+  dataVal: Date;
 }
 
-function camposPreenchidos(p: Cartao): number {
+function camposPreenchidosCartao(p: Cartao): number {
     if (!p.titularName) {
         return 1;
     }
@@ -246,7 +248,7 @@ export const addCartao = functions
             dataVal: new Date(data.dataVal),
         };
 
-        const CodigoErro = camposPreenchidos(cartao);
+        const CodigoErro = camposPreenchidosCartao(cartao);
         const MensagemErro = errorMessage(CodigoErro);
         const camposInvalid = validarTiposCartao(cartao);
 
