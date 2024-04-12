@@ -175,40 +175,44 @@ export const addPessoa = functions
     return result;
   });
 
+// Define a estrutura de dados de um cartão
 interface Cartao {
-  nomeTitular: string;
-  numeroCartao: string;
-  dataVal: Date;
+  nomeTitular: string; // Nome do titular do cartão
+  numeroCartao: string; // Número do cartão
+  dataVal: Date; // Data de validade do cartão
 }
 
+// Verifica se os campos obrigatórios do cartão estão preenchidos
 function camposPreenchidosCartao(cartao: Cartao): number {
   if (!cartao.nomeTitular) {
-    return 1;
+    return 1; // Código de erro: Nome do titular não informado
   }
   if (!cartao.numeroCartao) {
-    return 2;
+    return 2; // Código de erro: Número do cartão não informado
   }
   if (!cartao.dataVal) {
-    return 3;
-  } else return 0;
+    return 3; // Código de erro: Data de validade não informada
+  } else return 0; // Todos os campos estão preenchidos
 }
 
+// Valida os tipos dos campos do cartão
 function validarTiposCartao(cartao: Cartao): string[] | null {
   const camposInvalidos: string[] = [];
 
   if (typeof cartao.nomeTitular !== "string") {
-    camposInvalidos.push("nomeTitular");
+    camposInvalidos.push("nomeTitular"); // Adiciona campo inválido: nomeTitular
   }
   if (typeof cartao.numeroCartao !== "string") {
-    camposInvalidos.push("numeroCartao");
+    camposInvalidos.push("numeroCartao"); // Adiciona campo inválido: numeroCartao
   }
   if (!(cartao.dataVal instanceof Date)) {
-    camposInvalidos.push("dataVal");
+    camposInvalidos.push("dataVal"); // Adiciona campo inválido: dataVal
   }
 
-  return camposInvalidos.length > 0 ? camposInvalidos : null;
+  return camposInvalidos.length > 0 ? camposInvalidos : null; // Retorna campos inválidos ou null se tudo estiver certo
 }
 
+// Retorna a mensagem de erro correspondente ao código retornado de CamposPreenchidosCartao
 function errorMessage(codigo: number): string {
   switch (codigo) {
   case 1:
@@ -222,22 +226,26 @@ function errorMessage(codigo: number): string {
   }
 }
 
+// Função Firebase Cloud para adicionar um novo cartão
 export const addCartao = functions
   .region("southamerica-east1")
   .https.onCall(async (data, context) => {
-    let result: CallableResponse;
+    let result: CallableResponse; // Define a resposta da função
 
     functions.logger.info("Function addCartao - Iniciada.");
 
+    // Cria um objeto cartão com os dados recebidos
     const cartao: Cartao = {
       nomeTitular: data.nomeTitular,
       numeroCartao: data.numeroCartao,
       dataVal: new Date(data.dataVal),
     };
 
-    const codigoErro = camposPreenchidosCartao(cartao);
+    const codigoErro = camposPreenchidosCartao(cartao);    // Verifica se os campos obrigatórios estão preenchidos
+
     const mensagemErro = errorMessage(codigoErro);
-    const camposInvalidos = validarTiposCartao(cartao);
+    
+    const camposInvalidos = validarTiposCartao(cartao);    // Valida os tipos dos campos do cartão
 
     // Validação dos dados recebidos
     if (codigoErro > 0) {
