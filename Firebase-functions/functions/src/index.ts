@@ -195,24 +195,29 @@ function camposPreenchidosCartao(cartao: Cartao): number {
   } else return 0; // Todos os campos estão preenchidos
 }
 
-// Valida os tipos dos campos do cartão
+/*
+  ** Função que analisa se os campos do formulário foram preenchidos com os
+ tipos de dados corretos
+  ** Retorna array com os campos incoerentes
+*/
 function validarTiposCartao(cartao: Cartao): string[] | null {
   const camposInvalidos: string[] = [];
 
   if (typeof cartao.nomeTitular !== "string") {
-    camposInvalidos.push("nomeTitular"); // Adiciona campo inválido: nomeTitular
+    camposInvalidos.push("nomeTitular");
   }
   if (typeof cartao.numeroCartao !== "string") {
-    camposInvalidos.push("numeroCartao"); // Adiciona campo inválido: numeroCartao
+    camposInvalidos.push("numeroCartao");
   }
   if (!(cartao.dataVal instanceof Date)) {
-    camposInvalidos.push("dataVal"); // Adiciona campo inválido: dataVal
+    camposInvalidos.push("dataVal");
   }
-
-  return camposInvalidos.length > 0 ? camposInvalidos : null; // Retorna campos inválidos ou null se tudo estiver certo
+  // Retorna campos inválidos ou null se tudo estiver certo
+  return camposInvalidos.length > 0 ? camposInvalidos : null;
 }
 
-// Retorna a mensagem de erro correspondente ao código retornado de CamposPreenchidosCartao
+/* Retorna a mensagem de erro correspondente ao código
+ retornado de CamposPreenchidosCartao */
 function errorMessage(codigo: number): string {
   switch (codigo) {
   case 1:
@@ -241,11 +246,12 @@ export const addCartao = functions
       dataVal: new Date(data.dataVal),
     };
 
-    const codigoErro = camposPreenchidosCartao(cartao);    // Verifica se os campos obrigatórios estão preenchidos
-
+    // Verifica se os campos obrigatórios estão preenchidos
+    const codigoErro = camposPreenchidosCartao(cartao);
     const mensagemErro = errorMessage(codigoErro);
-    
-    const camposInvalidos = validarTiposCartao(cartao);    // Valida os tipos dos campos do cartão
+
+    // Valida os tipos dos campos do cartão
+    const camposInvalidos = validarTiposCartao(cartao);
 
     // Validação dos dados recebidos
     if (codigoErro > 0) {
