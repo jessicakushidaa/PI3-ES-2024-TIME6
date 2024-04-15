@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 module.exports = {
   root: true,
   env: {
@@ -30,5 +31,6 @@ module.exports = {
     "import/no-unresolved": 0,
     "indent": ["error", 2],
     "require-jsdoc": 0,
+    "linebreak-style": ["error", "unix"],
   },
 };
