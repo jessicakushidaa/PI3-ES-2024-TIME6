@@ -2,17 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/page_1"
-        android:enabled="true"
         android:icon="@drawable/baseline_chrome_reader_mode_24"
         android:title="Locações"/>
     <item
         android:id="@+id/page_2"
-        android:enabled="true"
         android:icon="@drawable/baseline_add_location_24"
         android:title="Mapa"/>
     <item
         android:id="@+id/page_3"
-        android:enabled="true"
         android:icon="@drawable/baseline_credit_card_24"
         android:title="Cartões"/>
 

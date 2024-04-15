@@ -4,7 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.pi_iii_grupo6.databinding.ActivityRentManagerBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class RentManagerActivity : AppCompatActivity() {
     private var binding: ActivityRentManagerBinding? = null
