@@ -59,8 +59,8 @@
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:hint="Data de Nascimento"
-        android:inputType="number"
+        android:hint="Data de Nascimento - dd/MM/yyyy"
+        android:inputType="datetime"
         />
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPhone"
