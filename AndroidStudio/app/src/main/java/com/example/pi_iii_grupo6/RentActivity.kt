@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import android.location.Location
 import android.view.View
+import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
@@ -39,6 +40,7 @@ class RentActivity : AppCompatActivity() {
     private var gson = Gson()
     private var user: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
+    private lateinit var locAtual: MainViewActivity.Locacao
 
     class Info(
         var userId: String?,
@@ -222,19 +224,22 @@ class RentActivity : AppCompatActivity() {
         }
 
         sheetBinding.btnConfirmarLoc.setOnClickListener {
-            confirmacao()
+            var userId = user?.uid
+            locAtual = MainViewActivity.Locacao(userId,actualLocker,precoSelecionado)
+
+            locacoesConfirmadas.add(locAtual)
+            confirmacao(locAtual)
         }
 
         }
 
-    fun confirmacao(){
+    fun confirmacao(locacao: MainViewActivity.Locacao){
         var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
 
         if (precoSelecionado == null){
             Toast.makeText(baseContext,"Selecione uma opção",Toast.LENGTH_SHORT).show()
         }else{
-            var informacoes = Info(user?.email,precoSelecionado!!)
-            var infosJson = gson.toJson(informacoes)
+            var infosJson = gson.toJson(locacao)
 
             intentQrCode.putExtra("infosJson",infosJson)
             startActivity(intentQrCode)

@@ -49,6 +49,11 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var referenciaLocal: String,
         var precos: List<Preco>
     )
+    class Locacao (
+        var userId: String?,
+        var armario: Place,
+        var preco: Preco?
+    )
     class Preco (
         var tempo: Int,
         var preco: Double
@@ -74,7 +79,6 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
 
         //Ao clicar no botão logout, chamar a função de logout
         binding?.btnLogout?.setOnClickListener{
@@ -147,16 +151,20 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
         //Após checar permissões, chamar a função que pega a localização do aparelho
         fusedLocationProviderClient.lastLocation.addOnCompleteListener {task ->
+            Log.d(  "MAINVIEW","ENTROU NO COMPLETE LISTENER")
             //Atribuindo a localização a uma variável
             var location = task.result
             //Checando se a localização é nula
             if(location != null){
+                Log.d("MAINVIEW","LOCATION NAO NULL")
                 //Se nao for nula, atualiza a variável de localização do usuário
                 userLocation = LatLng(location.latitude,location.longitude)
                 //Movendo o zoom do mapa para onde o usuário está
                 moverMapa(mMap, userLocation)
                 //addMarker(mMap, userLocation, "Your Location")
                 mMap.isMyLocationEnabled = true
+            }else{
+                Log.d("MAINVIEW","LOCATION NULL")
             }
         }
     }
@@ -263,6 +271,9 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             Place(-22.944592, -46.995360, "Lockers Room 5","Rua armando feiao 999","Colégio Inovati", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
             Place(-22.943412, -47.000364,"Lockers Room 6", "Rua josé carlos ferrari 65454", "casa 224", listOf(Preco(30, 35.0), Preco(60, 55.0), Preco(120,85.0)))
         )
+
+        var locacoesPendentes = mutableListOf<Locacao>()
+        var locacoesConfirmadas = mutableListOf<Locacao>()
     }
 
     //Função que volta o binding para null ao encerrar a activity

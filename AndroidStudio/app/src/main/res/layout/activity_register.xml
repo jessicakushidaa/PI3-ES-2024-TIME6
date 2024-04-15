@@ -60,7 +60,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Data de Nascimento"
-        android:inputType="date"
+        android:inputType="number"
         />
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPhone"
