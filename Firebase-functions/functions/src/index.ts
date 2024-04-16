@@ -1,5 +1,20 @@
 /* eslint-disable linebreak-style */
-// Este arquivo exporta todas as funções dos controllers
-export * from "./controllers/userController";
-export * from "./controllers/cardController";
-export * from "./controllers/documentController";
+import * as admin from "firebase-admin";
+
+admin.initializeApp();
+
+// Importar funções e interfaces
+import {addPessoa} from "./controllers/userController";
+import {getDocumentId, getDocumentFields}
+  from "./controllers/documentController";
+import {addCartao} from "./controllers/cardController";
+import {getAllUnits} from "./controllers/rentalUnityController";
+import {CallableResponse} from "./models/customResponse";
+import * as user from "./models/user";
+import * as card from "./models/card";
+import * as rentalUnit from "./models/rentalUnit";
+
+// Exportar as funções e interfaces
+export {addPessoa, getDocumentId, getDocumentFields, addCartao, getAllUnits};
+export {CallableResponse, user, card, rentalUnit};
+

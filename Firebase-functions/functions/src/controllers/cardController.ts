@@ -5,8 +5,7 @@ import {CallableResponse} from "../models/customResponse";
 import {Cartao} from "../models/card";
 
 // retorno do método de admin - inicializa o app do firebase
-const app = admin.initializeApp();
-const db = app.firestore(); // chamada do banco de dados
+const db = admin.firestore(); // chamada do banco de dados
 
 
 // Verifica se os campos obrigatórios do cartão estão preenchidos
