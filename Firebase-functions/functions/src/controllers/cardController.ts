@@ -116,7 +116,7 @@ export const addCartao = functions
           message: "Cartao inserido com sucesso.",
           payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
         };
-        functions.logger.error("addCartao - Novo cartão inserido");
+        functions.logger.info("addCartao - Novo cartão inserido");
       } catch (error:any) {
         result = {
           status: "ERROR",

@@ -149,7 +149,7 @@ export const addPessoa = functions
         message: "Pessoa inserida com sucesso.",
         payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
       };
-      functions.logger.error("addPessoaTeste - Nova pessoa inserida");
+      functions.logger.info("addPessoaTeste - Nova pessoa inserida");
     }
 
     // Retornando o objeto result.
