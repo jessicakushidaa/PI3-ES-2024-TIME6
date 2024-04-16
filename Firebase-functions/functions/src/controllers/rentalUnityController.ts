@@ -11,7 +11,7 @@ const db = admin.firestore(); // chamada do banco de dados
 // Referenciando a collection UnidadeLocacao do projeto firebase
 const colUnidades = db.collection("unidadeLocacao");
 
-/* Função que retorna todas os docs de Unidades de Locação da collection */
+/* Função que retorna todos os docs de Unidades de Locação da collection */
 export const getAllUnits = functions
   .region("southamerica-east1")
   .https.onCall(async (data, context) => {
@@ -69,5 +69,50 @@ export const getAllUnits = functions
           "- Erro ao buscar documentos:" + error.message);
     }
     // Retorna a resposta
+    return result;
+  });
+
+
+export const addUnidadeLocacao = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+
+    try {
+    // Extrair os dados recebidos do cliente
+      const unidadeData = data.unidade;
+      const armariosData = data.armarios;
+
+      // Verificar se os dados da unidade foram fornecidos
+      if (!unidadeData) {
+        throw new functions.https.HttpsError("invalid-argument",
+          "Os dados da unidade de locação são obrigatórios.");
+      }
+
+      // Adicionar a unidade de locação à coleção
+      const docRef = await colUnidades.add(unidadeData);
+
+      // Adicionar os armários como documentos à subcoleção "armarios" da unidde
+      const armariosRefPromises = armariosData.map(async (armario:
+        admin.firestore.WithFieldValue<admin.firestore.DocumentData>) => {
+        await docRef.collection("armarios").add(armario);
+      });
+      await Promise.all(armariosRefPromises);
+
+      // Retorna o ID do documento recém-adicionado
+      result = {
+        status: "SUCCESS",
+        message: "Unidade inserida com sucesso.",
+        payload: JSON.parse(JSON.stringify({id: docRef.id.toString()})),
+      };
+    } catch (error: any) {
+    // Em caso de erro, lançar uma exceção para ser tratada pelo cliente
+      console.error("Erro ao adicionar unidade de locação:", error);
+      result = {
+        status: "ERROR",
+        message: "Erro ao obter documentos: " + error.message,
+        payload: JSON.parse(JSON.stringify({id: null})),
+      };
+    }
     return result;
   });

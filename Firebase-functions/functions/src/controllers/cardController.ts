@@ -35,7 +35,7 @@ function validarTiposCartao(cartao: Cartao): string[] | null {
   if (typeof cartao.numeroCartao !== "string") {
     camposInvalidos.push("numeroCartao");
   }
-  if (!(cartao.dataVal instanceof Date)) {
+  if (!(cartao.dataVal !== "string")) {
     camposInvalidos.push("dataVal");
   }
   // Retorna campos inválidos ou null se tudo estiver certo
@@ -69,7 +69,7 @@ export const addCartao = functions
     const cartao: Cartao = {
       nomeTitular: data.nomeTitular,
       numeroCartao: data.numeroCartao,
-      dataVal: new Date(data.dataVal),
+      dataVal: data.dataVal,
     };
 
     // Verifica se os campos obrigatórios estão preenchidos
