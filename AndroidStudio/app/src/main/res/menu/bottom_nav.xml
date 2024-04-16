@@ -3,14 +3,14 @@
     <item
         android:id="@+id/page_1"
         android:icon="@drawable/baseline_chrome_reader_mode_24"
-        android:title="Locações"/>
+        android:title="@string/loca_es"/>
     <item
         android:id="@+id/page_2"
         android:icon="@drawable/baseline_add_location_24"
-        android:title="Mapa"/>
+        android:title="@string/mapa"/>
     <item
         android:id="@+id/page_3"
         android:icon="@drawable/baseline_credit_card_24"
-        android:title="Cartões"/>
+        android:title="@string/cart_es"/>
 
 </menu>

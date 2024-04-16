@@ -1,57 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".RentManagerActivity"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/vector_ponta2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="110dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/vector_ponta"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="-10dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="35dp"
+        android:background="@color/blue_nav"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRent"
-        android:layout_width="220dp"
-        android:layout_height="90dp"
-        android:text="Alugar Armário"
-        android:layout_gravity="center"
-        android:layout_marginTop="250dp"
-        />
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="460dp"
+        android:backgroundTint="@color/yellow"
+        android:padding="40dp"
+        android:text="@string/alugar_arm_ri"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRentals"
-        android:layout_width="220dp"
-        android:layout_height="90dp"
-        android:text="Minhas Locações"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="324dp"
+        android:backgroundTint="@color/yellow"
+        android:padding="40dp"
+        android:text="@string/minhas_loca_e"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnRent"
+        app:layout_constraintStart_toStartOf="@id/btnRent" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_nav"
+        app:itemIconSize="30dp"
+        app:itemTextColor="@color/yellow"
+        app:itemIconTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav"/>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="160dp"
-        android:orientation="horizontal"
-        >
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHome"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="MAPA"
-            android:layout_marginLeft="45dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCartoes"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="CARTÕES" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLocacoes"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="LOCAÇÕES" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

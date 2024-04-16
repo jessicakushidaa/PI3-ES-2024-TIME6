@@ -27,19 +27,32 @@ class RentManagerActivity : AppCompatActivity() {
             startActivity(voltarMenu)
         }
 
-        //AÇÕES DO BOTTOM NAVIGATION
-        binding?.btnHome?.setOnClickListener {
-            var irHome = Intent(this@RentManagerActivity, MainViewActivity::class.java)
-            startActivity(irHome)
+        //Direcionando o bottomNavigation
+        val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                //tela Locações
+                R.id.page_1 -> {
+                    startActivity(Intent(this, RentManagerActivity::class.java))
+                    true
+                }
+                //tela Mapa
+                R.id.page_2 -> {
+                    startActivity(Intent(this, MainViewActivity::class.java))
+                    true
+                }
+                //tela Cartões
+                R.id.page_3 -> {
+                    startActivity(Intent(this, MainViewActivity::class.java))
+                    true
+
+                }
+
+                else -> false
+
+            }
         }
-        binding?.btnCartoes?.setOnClickListener {
-            //if()
-            var irCartoes = Intent(this@RentManagerActivity, CreateCardActivity::class.java)
-            startActivity(irCartoes)
-        }
-        binding?.btnLocacoes?.setOnClickListener {
-            var irLocacoes = Intent(this@RentManagerActivity, RentManagerActivity::class.java)
-            startActivity(irLocacoes)
-        }
+
     }
 }

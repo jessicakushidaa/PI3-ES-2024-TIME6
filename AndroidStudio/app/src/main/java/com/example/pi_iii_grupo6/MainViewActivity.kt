@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.StyleSpan
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -59,6 +62,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
     var user: FirebaseUser? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //Atribuindo valor às variáveis criadas anteriormente
@@ -72,42 +76,50 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //Direcionando o bottomNavigation
+        val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                //tela Locações
+                R.id.page_1 -> {
+                    if (user != null) {
+                        startActivity(Intent(this, RentManagerActivity::class.java))
+                    }else{
+                        Toast.makeText((baseContext), "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }
+                    true
+                }
+                //tela Mapa
+                R.id.page_2 -> {
+                    startActivity(Intent(this, MainViewActivity::class.java))
+                    true
+                }
+                //tela Cartões
+                R.id.page_3 -> {
+                    if (user != null) {
+                        startActivity(Intent(this, RentManagerActivity::class.java))
+                    }else{
+                        Toast.makeText((baseContext),"Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }
+                    true
+                }
+
+                else -> false
+
+            }
+        }
+
         //Referenciando o Fragment do mapa
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-
         //Ao clicar no botão logout, chamar a função de logout
         binding?.btnLogout?.setOnClickListener{
             singOutFun()
-        }
-
-        //AÇÕES DO BOTTOM NAVIGATION
-        binding?.btnHome?.setOnClickListener {
-            var irHome = Intent(this@MainViewActivity, MainViewActivity::class.java)
-            startActivity(irHome)
-        }
-        binding?.btnCartoes?.setOnClickListener {
-            if(user != null){
-                var irCartoes = Intent(this@MainViewActivity, CreateCardActivity::class.java)
-                startActivity(irCartoes)
-            }else {
-                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-                startActivity(voltarLogin)
-            }
-        }
-        binding?.btnLocacoes?.setOnClickListener {
-            if(user != null){
-                var irLocacoes = Intent(this@MainViewActivity, RentManagerActivity::class.java)
-                startActivity(irLocacoes)
-            }else {
-                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-                startActivity(voltarLogin)
-            }
-
         }
     }
 

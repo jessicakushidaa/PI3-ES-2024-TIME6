@@ -34,4 +34,9 @@
     <string name="entrar_sem_login">Entrar sem login</string>
     <string name="alugar_arm_rio">Alugar Armário</string>
     <string name="minhas_loca_es">Minhas Locações</string>
+    <string name="alugar_arm_ri">Alugar Armário</string>
+    <string name="minhas_loca_e">Minhas locações</string>
+    <string name="loca_es">Locações</string>
+    <string name="mapa">Mapa</string>
+    <string name="cart_es">Cartões</string>
 </resources>
