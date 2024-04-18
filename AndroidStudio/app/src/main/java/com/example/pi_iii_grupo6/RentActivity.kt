@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import android.location.Location
 import android.view.View
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
+import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
@@ -227,7 +228,7 @@ class RentActivity : AppCompatActivity() {
             var userId = user?.uid
             locAtual = MainViewActivity.Locacao(userId,actualLocker,precoSelecionado)
 
-            locacoesConfirmadas.add(locAtual)
+            locacoesPendentes.add(locAtual)
             confirmacao(locAtual)
         }
 
