@@ -36,7 +36,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:hint="Numero do Cartão" />
+            android:hint="Numero do Cartão"
+            android:inputType="number"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -47,14 +48,15 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etValidade"
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:hint="Validade" />
+                android:hint="Validade - MM/yyyy"
+                android:inputType="datetime"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etCVV"
-                android:layout_width="150dp"
+                android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:hint="CVV" />

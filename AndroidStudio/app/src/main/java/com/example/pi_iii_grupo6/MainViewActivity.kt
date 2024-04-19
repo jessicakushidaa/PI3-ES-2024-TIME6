@@ -21,12 +21,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.StyleSpan
+import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.api.LogDescriptor
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
+import com.google.gson.Gson
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 
@@ -34,6 +39,10 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
     private var binding: ActivityMainViewBinding? = null
     private lateinit var mMap: GoogleMap
+    private lateinit var functions: FirebaseFunctions
+    private var gson = Gson()
+
+
 
     private lateinit var auth: FirebaseAuth
 
@@ -42,14 +51,17 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     //Criando classe Place que representa cada Unidade de Locação
     class Place (
-        var id: String,
         var latitude: Double,
         var longitude: Double,
         var nomeLocal: String,
-        var descricaoLocal: String,
         var enderecoLocal: String,
         var referenciaLocal: String,
         var precos: List<Preco>
+    )
+    class Locacao (
+        var userId: String?,
+        var armario: Place,
+        var preco: Preco?
     )
     class Preco (
         var tempo: Int,
@@ -65,6 +77,8 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         auth = Firebase.auth
         user = auth.currentUser
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        functions = Firebase.functions("southamerica-east1")
+
 
 
         //Inflando o layout e colocando a activity na tela
@@ -72,11 +86,22 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //Chamar funcao que busca todos os armarios
+        buscarArmarios().addOnCompleteListener { task->
+            if (task.isSuccessful){
+                val armariosGson = task.result
+                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
+                Log.d("LOGARMARIOS", "$armariosGson")
+            }else{
+                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
+
+            }
+        }
+
         //Referenciando o Fragment do mapa
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
 
         //Ao clicar no botão logout, chamar a função de logout
         binding?.btnLogout?.setOnClickListener{
@@ -111,7 +136,56 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         }
     }
 
-//Funçao que chama a dialog box das informações da unidade de Locação
+    private fun buscarArmarios(): Task<String>{
+        return functions
+            .getHttpsCallable("getAllUnits")
+            .call()
+            .continueWith{ task->
+                if(task.isSuccessful){
+                    val data = task.result.data as Map<String, Any>
+                    val payload = data["payload"] as Map<String, Any>
+                    val unidades = payload["unidades"] as ArrayList<*>
+                    val numUnidades = unidades.count()
+                    var listaDeUnidades: MutableList<Place> = mutableListOf()
+                    var i = 0
+                    while (i < numUnidades){
+                        Log.d("DEBUG UNIDADES","Entrou na unidade $i de $numUnidades")
+                        val unidade = unidades[i] as Map<String, Any>
+                        Log.d("DEBUG UNIDADES","$unidade")
+                        val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val latitude = coordenadas["latitude"] as Double
+                        val longitude = coordenadas["longitude"] as Double
+                        val nome = unidade["nome"] as String
+                        val endereco = unidade["endereco"] as String
+                        val descricao = unidade["descricao"] as String
+                        val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val numPrecos = tabelaPrecos.count()
+                        //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
+                        var j = 0
+                        var listaPrecos: MutableList<Preco> = mutableListOf()
+                        while (j < numPrecos){
+                            Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
+                            var precoAtual = tabelaPrecos[j] as Map<String, Any>
+                            var preco = Preco(precoAtual["tempo"] as Int, precoAtual["preco"] as Double)
+                            listaPrecos.add(preco)
+                            j++
+                        }
+
+                        //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
+                        var unidadeLocacao = Place(latitude, longitude, nome, endereco, descricao, listaPrecos)
+                        listaDeUnidades.add(unidadeLocacao)
+                        i++
+                    }
+                    places = listaDeUnidades
+                    val unidadesJson = gson.toJson(listaDeUnidades)
+                    unidadesJson
+                }else{
+                    throw task.exception ?: Exception("Unknown error occurred")
+                }
+            }
+    }
+
+    //Funçao que chama a dialog box das informações da unidade de Locação
     private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {
         //Criando a dialog box
         val dialog = BottomSheetDialog(this)
@@ -149,16 +223,20 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
         //Após checar permissões, chamar a função que pega a localização do aparelho
         fusedLocationProviderClient.lastLocation.addOnCompleteListener {task ->
+            Log.d(  "MAINVIEW","ENTROU NO COMPLETE LISTENER")
             //Atribuindo a localização a uma variável
             var location = task.result
             //Checando se a localização é nula
             if(location != null){
+                Log.d("MAINVIEW","LOCATION NAO NULL")
                 //Se nao for nula, atualiza a variável de localização do usuário
                 userLocation = LatLng(location.latitude,location.longitude)
                 //Movendo o zoom do mapa para onde o usuário está
                 moverMapa(mMap, userLocation)
                 //addMarker(mMap, userLocation, "Your Location")
                 mMap.isMyLocationEnabled = true
+            }else{
+                Log.d("MAINVIEW","LOCATION NULL")
             }
         }
     }
@@ -243,6 +321,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Função que adiciona os markers da lista de unidades de locação
     private fun addAllMarkers() {
         for(place in places){
+            Log.d("DebugMarker","Adicionando marker")
             var position = LatLng(place.latitude, place.longitude)
             addMarker(mMap, position, place.nomeLocal,place.referenciaLocal,place.enderecoLocal)
         }
@@ -257,15 +336,10 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     companion object{
         //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
-        var places = listOf<Place>(
-            Place("A1",-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A2",-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo", listOf(Preco(15, 25.90), Preco(60, 45.0), Preco(125,65.0))),
-            Place("A3",-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A4",-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0),Preco(160,130.50))),
-            Place("A5",-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A6",-22.943412, -47.000364,"Lockers Room 6", "","Rua josé carlos ferrari 65454", "casa 224", listOf(Preco(30, 35.0), Preco(60, 55.0), Preco(120,85.0)))
+        var places = listOf<Place>()
 
-        )
+        var locacoesPendentes = mutableListOf<Locacao>()
+        var locacoesConfirmadas = mutableListOf<Locacao>()
     }
 
     //Função que volta o binding para null ao encerrar a activity

@@ -25,6 +25,7 @@
     <string name="tempo_4"> </string>
     <string name="preco_4"> </string>
     <string name="btn_confirmar">Confirmar Locação</string>
+    <string name="qrcode_label">Apresente esse QrCode para o gerente!</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="senha">Senha</string>
     <string name="email">Email</string>

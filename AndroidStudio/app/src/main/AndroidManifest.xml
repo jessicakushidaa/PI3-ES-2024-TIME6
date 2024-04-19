@@ -18,6 +18,15 @@
         android:theme="@style/Theme.PIIII_Grupo6"
         tools:targetApi="31">
         <activity
+            android:name=".ShowCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MinhasLocacoesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".RentActivity"
             android:exported="false" />
         <activity
