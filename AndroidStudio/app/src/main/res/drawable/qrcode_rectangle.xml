@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Retângulo de fundo com cantos arredondados -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#395470"/>
+            <size
+                android:width="315dp"
+                android:height="114dp"/>
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+    <!-- Retângulo menor sobreposto -->
+    <item
+        android:left="54dp"
+        android:top="44dp"
+        android:right="54dp"
+        android:bottom="20dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#577796"/>
+            <size
+                android:width="207dp"
+                android:height="47dp"/>
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+</layer-list>
