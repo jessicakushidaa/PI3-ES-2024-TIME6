@@ -117,10 +117,6 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        //Ao clicar no botão logout, chamar a função de logout
-        binding?.btnLogout?.setOnClickListener{
-            singOutFun()
-        }
     }
 
 //Funçao que chama a dialog box das informações da unidade de Locação
@@ -186,26 +182,6 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     }
 
-
-    //Criando a função para logout
-    private fun singOutFun(){
-        //Checando se o usuário fez login
-        //Se fez, faz o logout e sai da acitivity principal
-        if(user != null){
-            Firebase.auth.signOut()
-            //Voltando para a pagina de login
-            var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-            startActivity(voltarLogin)
-            Toast.makeText(this@MainViewActivity, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
-        //Se não fez, nao pode usar esta função, pede para fazer o login
-        }else{
-            Toast.makeText(this@MainViewActivity, "Faça login para acessar essa função", Toast.LENGTH_SHORT).show()
-            //Abrindo tela de login
-            var abrirLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-            startActivity(abrirLogin)
-        }
-
-    }
 
     //Função que lida com a pós renderização do mapa. o que fazer quando ele estiver pronto?
     override fun onMapReady(googleMap: GoogleMap) {

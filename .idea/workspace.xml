@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82963d91-c336-414e-88b9-bbc12c8e2d91" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudio/app/src/main/java/com/example/pi_iii_grupo6/MainViewActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidStudio/app/src/main/java/com/example/pi_iii_grupo6/MainViewActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/drawable/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/layout/activity_main_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/layout/activity_main_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/layout/activity_rent_manager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/layout/activity_rent_manager.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AndroidStudio/app/src/main/res/values/strings.xml" afterDir="false" />
-    </list>
+    <list default="true" id="82963d91-c336-414e-88b9-bbc12c8e2d91" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +13,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Izabelle\.android\avd\Medium_Phone_API_34.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Izabelle\.android\avd\Medium_Phone_API_34_1.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

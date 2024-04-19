@@ -6,7 +6,7 @@
         android:title="@string/loca_es"/>
     <item
         android:id="@+id/page_2"
-        android:icon="@drawable/baseline_add_location_24"
+        android:icon="@drawable/loc_location"
         android:title="@string/mapa"/>
     <item
         android:id="@+id/page_3"

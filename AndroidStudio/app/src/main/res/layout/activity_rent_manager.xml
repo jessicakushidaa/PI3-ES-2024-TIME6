@@ -72,7 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/blue_nav"
-        app:itemIconSize="30dp"
+        app:itemIconSize="25dp"
         app:itemTextColor="@color/yellow"
         app:itemIconTint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
