@@ -71,10 +71,10 @@
         android:hint="CPF"
         android:inputType="number"
         />
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
+
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
@@ -85,7 +85,8 @@
             android:layout_marginRight="20dp"
             android:layout_gravity="center"
             android:layout_height="match_parent"
-            android:hint="Data Nascimento"
+            android:hint="Data de Nascimento - dd/MM/yyyy"
+            android:inputType="datetime"
             />
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etPhone"

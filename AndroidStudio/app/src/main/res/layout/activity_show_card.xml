@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowCardActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCartaoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meu Cartão"
+        android:textSize="25sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNumeroCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="**** **** **** 9999"
+        android:textSize="22sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNomeTitular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome Cartao"
+        android:textSize="22sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDataVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12/2039"
+        android:textSize="22sp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
