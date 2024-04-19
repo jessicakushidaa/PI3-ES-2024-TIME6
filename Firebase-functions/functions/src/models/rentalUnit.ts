@@ -23,7 +23,7 @@ export interface UnidadeLocacao {
     coordenadas: Coordenadas,
     endereco: string,
     descricao: string,
-    gerentes: [Pessoa],
+    gerentes: Pessoa[],
     telefone: string,
     armarios: Armario[],
     tabelaPrecos: PrecoTempo[]

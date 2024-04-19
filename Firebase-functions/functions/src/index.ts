@@ -5,8 +5,8 @@ admin.initializeApp();
 
 // Importar funções e interfaces
 import {addPessoa} from "./controllers/userController";
-import {getDocumentId, getDocumentFields}
-  from "./controllers/documentController";
+import {getDocumentId, getDocumentFields} from
+  "./controllers/documentController";
 import {addCartao} from "./controllers/cardController";
 import {getAllUnits, addUnidadeLocacao}
   from "./controllers/rentalUnityController";
