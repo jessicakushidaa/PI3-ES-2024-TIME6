@@ -5,42 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/greyGuardian"
     tools:context=".RegisterActivity">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center_horizontal"/>
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crie seu cadastro!"
+        android:text="@string/cadastrar"
+        android:textColor="@color/white"
         android:layout_gravity="center"
         android:textAlignment="center"
         android:textSize="36dp"
-        android:layout_marginTop="100dp"
-        />
+        android:layout_marginTop="15dp" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etNome"
                 android:layout_width="150dp"
+                android:textColorHint="@color/white"
+                android:layout_marginRight="20dp"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:hint="Nome"
                 />
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSobrenome"
                 android:layout_width="150dp"
+                android:textColorHint="@color/white"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:hint="Sobrenome"
                 />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etEmail"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/white"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -48,32 +63,45 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etCPF"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/white"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="CPF"
         android:inputType="number"
         />
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etBirth"
-        android:layout_width="300dp"
-        android:layout_gravity="center"
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:hint="Data de Nascimento"
-        android:inputType="date"
-        />
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPhone"
-        android:layout_width="300dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Telefone"
-        android:inputType="phone"
-        />
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etBirth"
+            android:layout_width="wrap_content"
+            android:textColorHint="@color/white"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:hint="Data Nascimento"
+            />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:hint="Telefone"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etSenha"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/white"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Crie sua senha"
@@ -82,23 +110,23 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etSenhaConfirmation"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:textColorHint="@color/white"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:hint="Confirme sua senha"
         android:inputType="textPassword"
         />
 
-
-
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btnRegistrar"
-        android:layout_width="150dp"
-        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar"
-        android:textSize="20dp"
+        android:backgroundTint="@color/yellow"
+        android:textStyle="bold"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        />
+        android:text="Login" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
