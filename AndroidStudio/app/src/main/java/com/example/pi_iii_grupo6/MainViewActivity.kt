@@ -113,7 +113,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                 //tela Cartões
                 R.id.page_3 -> {
                     if (user != null) {
-                        startActivity(Intent(this, RentManagerActivity::class.java))
+                        startActivity(Intent(this, ShowCardActivity::class.java))
                     }else{
                         Toast.makeText((baseContext),"Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, LoginActivity::class.java))
@@ -141,37 +141,6 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        //Ao clicar no botão logout, chamar a função de logout
-        binding?.btnLogout?.setOnClickListener{
-            singOutFun()
-        }
-
-        //AÇÕES DO BOTTOM NAVIGATION
-        binding?.btnHome?.setOnClickListener {
-            var irHome = Intent(this@MainViewActivity, MainViewActivity::class.java)
-            startActivity(irHome)
-        }
-        binding?.btnCartoes?.setOnClickListener {
-            if(user != null){
-                var irCartoes = Intent(this@MainViewActivity, CreateCardActivity::class.java)
-                startActivity(irCartoes)
-            }else {
-                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-                startActivity(voltarLogin)
-            }
-        }
-        binding?.btnLocacoes?.setOnClickListener {
-            if(user != null){
-                var irLocacoes = Intent(this@MainViewActivity, RentManagerActivity::class.java)
-                startActivity(irLocacoes)
-            }else {
-                Toast.makeText(baseContext, "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
-                startActivity(voltarLogin)
-            }
-
-        }
 
     }
 
