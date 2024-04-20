@@ -11,9 +11,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
+import com.google.firebase.auth.auth
 import com.google.gson.Gson
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.auth
 
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
@@ -72,6 +72,27 @@ class MainMenuActivity : AppCompatActivity() {
 
 
     }
+
+    //Criando a função para logout
+    private fun singOutFun(){
+        //Checando se o usuário fez login
+        //Se fez, faz o logout e sai da acitivity principal
+        if(user != null){
+            Firebase.auth.signOut()
+            //Voltando para a pagina de login
+            var voltarLogin = Intent(this@MainMenuActivity, LoginActivity::class.java)
+            startActivity(voltarLogin)
+            Toast.makeText(this@MainMenuActivity, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
+            //Se não fez, nao pode usar esta função, pede para fazer o login
+        }else{
+            Toast.makeText(this@MainMenuActivity, "Faça login para acessar essa função", Toast.LENGTH_SHORT).show()
+            //Abrindo tela de login
+            var abrirLogin = Intent(this@MainMenuActivity, LoginActivity::class.java)
+            startActivity(abrirLogin)
+        }
+
+    }
+
     //Função que interpreta qual activity será aberta, baseando-se na existência ou não de um cartao registrado do usuário.
     fun cartaoHandler(id: String){
         if (cartaoUsuario != null){
@@ -140,25 +161,5 @@ class MainMenuActivity : AppCompatActivity() {
         if (locacoesPendentes.isNotEmpty()){
             Toast.makeText(baseContext,"Você Possui uma locação pendente! retorne para minhas locacoes",Toast.LENGTH_SHORT).show()
         }
-    }
-
-    //Criando a função para logout
-    private fun singOutFun(){
-        //Checando se o usuário fez login
-        //Se fez, faz o logout e sai da acitivity principal
-        if(user != null){
-            Firebase.auth.signOut()
-            //Voltando para a pagina de login
-            var voltarLogin = Intent(this@MainMenuActivity, LoginActivity::class.java)
-            startActivity(voltarLogin)
-            Toast.makeText(this@MainMenuActivity, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
-            //Se não fez, nao pode usar esta função, pede para fazer o login
-        }else{
-            Toast.makeText(this@MainMenuActivity, "Faça login para acessar essa função", Toast.LENGTH_SHORT).show()
-            //Abrindo tela de login
-            var abrirLogin = Intent(this@MainMenuActivity, LoginActivity::class.java)
-            startActivity(abrirLogin)
-        }
-
     }
 }
