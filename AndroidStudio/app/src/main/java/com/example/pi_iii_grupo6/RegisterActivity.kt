@@ -13,6 +13,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.functions.functions
+import java.text.SimpleDateFormat
 import java.util.Date
 
 class RegisterActivity : AppCompatActivity() {
@@ -59,15 +60,22 @@ class RegisterActivity : AppCompatActivity() {
             var dataNascimento = binding?.etBirth?.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
+            var formatoRecebido = SimpleDateFormat("dd/MM/yyyy")
+            var dataRecebida = formatoRecebido.parse(dataNascimento)
+            var formatoAmericano = SimpleDateFormat("yyyy-MM-dd")
+
+            var dataNascimentoFinal = formatoAmericano.format(dataRecebida);
+
+            Log.d("DATAFINAL","$dataNascimentoFinal")
             //Checando se os campos foram preenchidos
-            if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimento,phone)){
+            if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimentoFinal,phone)){
                 //Checando se as senhas coincidem
                 if(senha == senhaConfirmation){
                     //Se está tudo certo, chamar função de criação do usuário, retorna o userId
                     createUserWithEmailAndPassword(email, senha) { userId ->
                         if (userId != null) {
                             // Criando instância da classe Pessoa com os dados do usuário
-                            var p = Pessoa(userId,nome,sobrenome,dataNascimento,cpf,phone,false)
+                            var p = Pessoa(userId,nome,sobrenome,dataNascimentoFinal,cpf,phone,false)
 
                             // Lidar com a criação do usuário bem-sucedida
                             Log.d(TAG, "Usuário criado com sucesso. UID: $userId")

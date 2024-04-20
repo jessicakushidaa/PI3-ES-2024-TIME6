@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -23,20 +24,28 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.StyleSpan
+import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.api.LogDescriptor
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
+import com.google.gson.Gson
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 
-class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
+class MainViewActivity : AppCompatActivity(), OnMapReadyCallback {
     //Declarando as variáveis que serão utilizadas
     private var binding: ActivityMainViewBinding? = null
     private lateinit var mMap: GoogleMap
+    private lateinit var functions: FirebaseFunctions
+    private var gson = Gson()
+
 
     private lateinit var auth: FirebaseAuth
 
@@ -44,17 +53,22 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var userLocation: LatLng
 
     //Criando classe Place que representa cada Unidade de Locação
-    class Place (
-        var id: String,
+    class Place(
         var latitude: Double,
         var longitude: Double,
         var nomeLocal: String,
-        var descricaoLocal: String,
         var enderecoLocal: String,
         var referenciaLocal: String,
         var precos: List<Preco>
     )
-    class Preco (
+
+    class Locacao(
+        var userId: String?,
+        var armario: Place,
+        var preco: Preco?
+    )
+
+    class Preco(
         var tempo: Int,
         var preco: Double
     )
@@ -69,6 +83,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         auth = Firebase.auth
         user = auth.currentUser
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        functions = Firebase.functions("southamerica-east1")
 
 
         //Inflando o layout e colocando a activity na tela
@@ -76,190 +91,336 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        //Direcionando o bottomNavigation
-        val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        //Chamar funcao que busca todos os armarios
+        buscarArmarios().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val armariosGson = task.result
+                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
+                Log.d("LOGARMARIOS", "$armariosGson")
+            } else {
+                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
+                //Direcionando o bottomNavigation
+                val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                //tela Locações
-                R.id.page_1 -> {
-                    if (user != null) {
-                        startActivity(Intent(this, RentManagerActivity::class.java))
-                    }else{
-                        Toast.makeText((baseContext), "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
+                bottomNavigation.setOnNavigationItemSelectedListener { item ->
+                    when (item.itemId) {
+                        //tela Locações
+                        R.id.page_1 -> {
+                            if (user != null) {
+                                startActivity(Intent(this, RentManagerActivity::class.java))
+                            } else {
+                                Toast.makeText(
+                                    (baseContext),
+                                    "Faça login para acessar essa função",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(Intent(this, LoginActivity::class.java))
+                            }
+                            true
+                        }
+                        //tela Mapa
+                        R.id.page_2 -> {
+                            startActivity(Intent(this, MainViewActivity::class.java))
+                            true
+                        }
+                        //tela Cartões
+                        R.id.page_3 -> {
+                            if (user != null) {
+                                startActivity(Intent(this, RentManagerActivity::class.java))
+                            } else {
+                                Toast.makeText(
+                                    (baseContext),
+                                    "Faça login para acessar essa função",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(Intent(this, LoginActivity::class.java))
+                            }
+                            true
+                        }
+
+                        else -> false
                     }
-                    true
                 }
-                //tela Mapa
-                R.id.page_2 -> {
-                    startActivity(Intent(this, MainViewActivity::class.java))
-                    true
+
+                //Referenciando o Fragment do mapa
+                val mapFragment = supportFragmentManager
+                    .findFragmentById(R.id.map) as SupportMapFragment
+                mapFragment.getMapAsync(this)
+
+                //Ao clicar no botão logout, chamar a função de logout
+                binding?.btnLogout?.setOnClickListener {
+                    singOutFun()
                 }
-                //tela Cartões
-                R.id.page_3 -> {
+
+                //AÇÕES DO BOTTOM NAVIGATION
+                binding?.btnHome?.setOnClickListener {
+                    var irHome = Intent(this@MainViewActivity, MainViewActivity::class.java)
+                    startActivity(irHome)
+                }
+                binding?.btnCartoes?.setOnClickListener {
                     if (user != null) {
-                        startActivity(Intent(this, RentManagerActivity::class.java))
-                    }else{
-                        Toast.makeText((baseContext),"Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
+                        var irCartoes =
+                            Intent(this@MainViewActivity, CreateCardActivity::class.java)
+                        startActivity(irCartoes)
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Faça login para acessar essa função",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
+                        startActivity(voltarLogin)
                     }
-                    true
+                }
+                binding?.btnLocacoes?.setOnClickListener {
+                    if (user != null) {
+                        var irLocacoes =
+                            Intent(this@MainViewActivity, RentManagerActivity::class.java)
+                        startActivity(irLocacoes)
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Faça login para acessar essa função",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        var voltarLogin = Intent(this@MainViewActivity, LoginActivity::class.java)
+                        startActivity(voltarLogin)
+                    }
+
+                }
+            }
+
+            private fun buscarArmarios(): Task<String> {
+                return functions
+                    .getHttpsCallable("getAllUnits")
+                    .call()
+                    .continueWith { task ->
+                        if (task.isSuccessful) {
+                            val data = task.result.data as Map<String, Any>
+                            val payload = data["payload"] as Map<String, Any>
+                            val unidades = payload["unidades"] as ArrayList<*>
+                            val numUnidades = unidades.count()
+                            var listaDeUnidades: MutableList<Place> = mutableListOf()
+                            var i = 0
+                            while (i < numUnidades) {
+                                Log.d("DEBUG UNIDADES", "Entrou na unidade $i de $numUnidades")
+                                val unidade = unidades[i] as Map<String, Any>
+                                Log.d("DEBUG UNIDADES", "$unidade")
+                                val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                                val latitude = coordenadas["latitude"] as Double
+                                val longitude = coordenadas["longitude"] as Double
+                                val nome = unidade["nome"] as String
+                                val endereco = unidade["endereco"] as String
+                                val descricao = unidade["descricao"] as String
+                                val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                                val numPrecos = tabelaPrecos.count()
+                                //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
+                                var j = 0
+                                var listaPrecos: MutableList<Preco> = mutableListOf()
+                                while (j < numPrecos) {
+                                    Log.d("DEBUG UNIDADES", "ENTROU NO WHILE DO PRECO")
+                                    var precoAtual = tabelaPrecos[j] as Map<String, Any>
+                                    var preco = Preco(
+                                        precoAtual["tempo"] as Int,
+                                        precoAtual["preco"] as Double
+                                    )
+                                    listaPrecos.add(preco)
+                                    j++
+                                }
+
+                                //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
+                                var unidadeLocacao = Place(
+                                    latitude,
+                                    longitude,
+                                    nome,
+                                    endereco,
+                                    descricao,
+                                    listaPrecos
+                                )
+                                listaDeUnidades.add(unidadeLocacao)
+                                i++
+                            }
+                            places = listaDeUnidades
+                            val unidadesJson = gson.toJson(listaDeUnidades)
+                            unidadesJson
+                        } else {
+                            throw task.exception ?: Exception("Unknown error occurred")
+                        }
+                    }
+            }
+
+            //Funçao que chama a dialog box das informações da unidade de Locação
+            private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {
+                //Criando a dialog box
+                val dialog = BottomSheetDialog(this)
+                val sheetBinding: DialogMarkerInfoBinding =
+                    DialogMarkerInfoBinding.inflate(layoutInflater, null, false)
+                dialog.setContentView(sheetBinding.root)
+
+                //Referenciando os campos que serão preenchidos pelas informações da unidade de locação
+                var titleTextView = sheetBinding.tvTitle
+                var referenceTextView = sheetBinding.tvReference
+                var adressTextView = sheetBinding.tvAdress
+
+                //Preenchendo os campos com as informações da unidade
+                titleTextView.setText("$title")
+                referenceTextView.setText("$reference")
+                adressTextView.setText("${adress.latitude} , ${adress.longitude}")
+
+                //Inicializando a dialog
+                dialog.show()
+
+                // Função que chama o traçar rota ao clicar no botão
+                sheetBinding.btnRoute.setOnClickListener {
+                    drawPath(mMap, adress)
+                }
+            }
+
+            //Função que obtém a localização atual do usuário
+            private fun getCurrentLocation() {
+                //Checando permissões
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                        .checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    Log.e("debug", "Permissions")
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        101
+                    )
                 }
 
-                else -> false
-
-            }
-        }
-
-        //Referenciando o Fragment do mapa
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
-    }
-
-//Funçao que chama a dialog box das informações da unidade de Locação
-    private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {
-        //Criando a dialog box
-        val dialog = BottomSheetDialog(this)
-        val sheetBinding:  DialogMarkerInfoBinding = DialogMarkerInfoBinding.inflate(layoutInflater, null, false)
-        dialog.setContentView(sheetBinding.root)
-
-        //Referenciando os campos que serão preenchidos pelas informações da unidade de locação
-        var titleTextView = sheetBinding.tvTitle
-        var referenceTextView = sheetBinding.tvReference
-        var adressTextView = sheetBinding.tvAdress
-
-        //Preenchendo os campos com as informações da unidade
-        titleTextView.setText("$title")
-        referenceTextView.setText("$reference")
-        adressTextView.setText("${adress.latitude} , ${adress.longitude}")
-
-    //Inicializando a dialog
-        dialog.show()
-
-        // Função que chama o traçar rota ao clicar no botão
-        sheetBinding.btnRoute.setOnClickListener{
-            drawPath(mMap, adress)
-        }
-    }
-
-    //Função que obtém a localização atual do usuário
-    private fun getCurrentLocation(){
-        //Checando permissões
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
-            .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            ){
-                Log.e("debug", "Permissions")
-                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
+                //Após checar permissões, chamar a função que pega a localização do aparelho
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                    Log.d("MAINVIEW", "ENTROU NO COMPLETE LISTENER")
+                    //Atribuindo a localização a uma variável
+                    var location = task.result
+                    //Checando se a localização é nula
+                    if (location != null) {
+                        Log.d("MAINVIEW", "LOCATION NAO NULL")
+                        //Se nao for nula, atualiza a variável de localização do usuário
+                        userLocation = LatLng(location.latitude, location.longitude)
+                        //Movendo o zoom do mapa para onde o usuário está
+                        moverMapa(mMap, userLocation)
+                        //addMarker(mMap, userLocation, "Your Location")
+                        mMap.isMyLocationEnabled = true
+                    } else {
+                        Log.d("MAINVIEW", "LOCATION NULL")
+                    }
+                }
             }
 
-        //Após checar permissões, chamar a função que pega a localização do aparelho
-        fusedLocationProviderClient.lastLocation.addOnCompleteListener {task ->
-            //Atribuindo a localização a uma variável
-            var location = task.result
-            //Checando se a localização é nula
-            if(location != null){
-                //Se nao for nula, atualiza a variável de localização do usuário
-                userLocation = LatLng(location.latitude,location.longitude)
-                //Movendo o zoom do mapa para onde o usuário está
-                moverMapa(mMap, userLocation)
-                //addMarker(mMap, userLocation, "Your Location")
-                mMap.isMyLocationEnabled = true
+            //Função que adiciona um marker no mapa
+            private fun addMarker(
+                mapa: GoogleMap,
+                position: LatLng,
+                title: String,
+                reference: String,
+                adress: String
+            ) {
+                mapa.addMarker(
+                    MarkerOptions()
+                        .position(position)
+                        .title(title)
+                        .snippet(reference)
+                )
+
             }
+
+
+            //Função que lida com a pós renderização do mapa. o que fazer quando ele estiver pronto?
+            override fun onMapReady(googleMap: GoogleMap) {
+                mMap = googleMap
+
+                //Chamando função para adicionar os markers
+                addAllMarkers()
+
+                //Chamando função para obter a localização do usuário
+                getCurrentLocation()
+
+                //Setando um listener para quando clicar no marker, chamar função que mostra as informações do marker clicado
+                mMap.setOnMarkerClickListener {
+                    showMarkerInfo(it.title, it.position, it.snippet)
+                    false
+                }
+
+
+            }
+
+            //Função que desenha a rota entre dois pontos
+            private fun drawPath(mMap: GoogleMap, adress: LatLng) {
+                getCurrentLocation()
+                val geoApiContext = GeoApiContext.Builder()
+                    .apiKey("AIzaSyAol2dJabESlpiblrTmbN6XHeg8MyOKREM")
+                    .build()
+
+                val directionsApi = DirectionsApi.newRequest(geoApiContext)
+                val directionsResult = directionsApi.origin(
+                    com.google.maps.model.LatLng(
+                        userLocation.latitude,
+                        userLocation.longitude
+                    )
+                )
+                    .destination(com.google.maps.model.LatLng(adress.latitude, adress.longitude))
+                    .await()
+
+                Log.d("ROUTE", "${userLocation.latitude} ${userLocation.longitude}")
+
+                val route = directionsResult.routes[0]
+                val polylineOptions = PolylineOptions()
+                    .addAll(route.overviewPolyline.decodePath().map { convertToAndroidLatLng(it) })
+                    .color(Color.BLUE)
+                    .width(8f)
+
+                mMap.addPolyline(polylineOptions)
+            }
+
+            private fun convertToAndroidLatLng(latLng: com.google.maps.model.LatLng): LatLng {
+                return LatLng(latLng.lat, latLng.lng)
+            }
+
+            //Função que adiciona os markers da lista de unidades de locação
+            private fun addAllMarkers() {
+                for (place in places) {
+                    Log.d("DebugMarker", "Adicionando marker")
+                    var position = LatLng(place.latitude, place.longitude)
+                    addMarker(
+                        mMap,
+                        position,
+                        place.nomeLocal,
+                        place.referenciaLocal,
+                        place.enderecoLocal
+                    )
+                }
+            }
+
+
+            // ESTA CHAMANDO MOVER MAPA ANTES DE GET CURRENT LOCATION
+            private fun moverMapa(mMap: GoogleMap, local: LatLng) {
+                Log.e("debug", "MoverMapa")
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(local, 15.0f))
+            }
+
+            companion object {
+            //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
+            var places = listOf<Place>()
+
+            var locacoesPendentes = mutableListOf<Locacao>()
+            var locacoesConfirmadas = mutableListOf<Locacao>()
+        }
+
+            //Função que volta o binding para null ao encerrar a activity
+            override fun onDestroy() {
+                super.onDestroy()
+                binding = null
+            }
+
         }
     }
-
-    //Função que adiciona um marker no mapa
-    private fun addMarker(mapa: GoogleMap, position: LatLng, title:String, reference: String, adress: String) {
-        mapa.addMarker(
-            MarkerOptions()
-            .position(position)
-            .title(title)
-            .snippet(reference)
-        )
-
-    }
-
-
-    //Função que lida com a pós renderização do mapa. o que fazer quando ele estiver pronto?
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        //Chamando função para adicionar os markers
-        addAllMarkers()
-
-        //Chamando função para obter a localização do usuário
-        getCurrentLocation()
-
-        //Setando um listener para quando clicar no marker, chamar função que mostra as informações do marker clicado
-        mMap.setOnMarkerClickListener {
-            showMarkerInfo(it.title,it.position, it.snippet)
-            false
-        }
-
-
-    }
-
-    //Função que desenha a rota entre dois pontos
-    private fun drawPath(mMap: GoogleMap, adress: LatLng){
-        getCurrentLocation()
-        val geoApiContext = GeoApiContext.Builder()
-            .apiKey("AIzaSyAol2dJabESlpiblrTmbN6XHeg8MyOKREM")
-            .build()
-
-        val directionsApi = DirectionsApi.newRequest(geoApiContext)
-        val directionsResult = directionsApi.origin(com.google.maps.model.LatLng(userLocation.latitude,userLocation.longitude))
-            .destination(com.google.maps.model.LatLng(adress.latitude, adress.longitude))
-            .await()
-
-        Log.d("ROUTE","${userLocation.latitude} ${userLocation.longitude}")
-
-        val route = directionsResult.routes[0]
-        val polylineOptions = PolylineOptions()
-            .addAll(route.overviewPolyline.decodePath().map { convertToAndroidLatLng(it) })
-            .color(Color.BLUE)
-            .width(8f)
-
-        mMap.addPolyline(polylineOptions)
-    }
-
-    private fun convertToAndroidLatLng(latLng: com.google.maps.model.LatLng): LatLng {
-        return LatLng(latLng.lat, latLng.lng)
-    }
-    //Função que adiciona os markers da lista de unidades de locação
-    private fun addAllMarkers() {
-        for(place in places){
-            var position = LatLng(place.latitude, place.longitude)
-            addMarker(mMap, position, place.nomeLocal,place.referenciaLocal,place.enderecoLocal)
-        }
-    }
-
-
-    // ESTA CHAMANDO MOVER MAPA ANTES DE GET CURRENT LOCATION
-    private fun moverMapa(mMap: GoogleMap, local: LatLng) {
-        Log.e("debug", "MoverMapa")
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(local, 15.0f))
-    }
-
-    companion object{
-        //Criando uma lista de unidades de locação, pois rodará um looping nela para adicionar os markers
-        var places = listOf<Place>(
-            Place("A1",-22.835083, -47.047750, "Lockers Room 1","","Rua armando bonitão 213","Praia Pipa", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A2",-22.912306,-47.060639, "Lockers Room 2","","Rua Hamilton jardão 185","Mercado Oxxo", listOf(Preco(15, 25.90), Preco(60, 45.0), Preco(125,65.0))),
-            Place("A3",-22.969944,-46.990417, "Lockers Room 3","","Rua puc legal 021","Casa de shows Hallon", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A4",-22.943614, -46.993418, "Lockers Room 4","","Rua José carlos ferrari 876","Supermercado Asp", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0),Preco(160,130.50))),
-            Place("A5",-22.944592, -46.995360, "Lockers Room 5","","Rua armando feiao 999","Colégio Inovati", listOf(Preco(30, 20.0), Preco(60, 40.0), Preco(120,55.0))),
-            Place("A6",-22.943412, -47.000364,"Lockers Room 6", "","Rua josé carlos ferrari 65454", "casa 224", listOf(Preco(30, 35.0), Preco(60, 55.0), Preco(120,85.0)))
-
-        )
-    }
-
-    //Função que volta o binding para null ao encerrar a activity
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
-
 }

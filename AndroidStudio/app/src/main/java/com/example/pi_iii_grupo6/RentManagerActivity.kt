@@ -22,9 +22,8 @@ class RentManagerActivity : AppCompatActivity() {
         }
 
         binding?.btnRentals?.setOnClickListener {
-            Toast.makeText(baseContext,"Funcao em desenvolvimento",Toast.LENGTH_SHORT).show()
-            var voltarMenu = Intent(this@RentManagerActivity, MainMenuActivity::class.java)
-            startActivity(voltarMenu)
+            var irMinhasLocs = Intent(this@RentManagerActivity, MinhasLocacoesActivity::class.java)
+            startActivity(irMinhasLocs)
         }
 
         //Direcionando o bottomNavigation
