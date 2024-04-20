@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:727430809804:android:d5a4d078f6072663531a69",
         "android_client_info": {
-          "package_name": "com.example.guardians"
+          "package_name": "com.example.pi_iii_grupo6"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "727430809804-8e3ns24qme78ueenmgg2i2fcruk87mrl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.guardians",
+            "package_name": "com.example.pi_iii_grupo6",
             "certificate_hash": "cea78d0032894e9e6e5157dabd2ada7d70e83452"
           }
         },

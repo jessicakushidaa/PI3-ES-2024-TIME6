@@ -5,99 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@color/greyGuardian"
     tools:context=".LoginActivity">
 
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/logo"
-        android:layout_gravity="center_horizontal"/>
-
     <androidx.appcompat.widget.AppCompatTextView
-        android:text="LOGIN"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:layout_width="90dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        tools:ignore="HardcodedText"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/yellow"
-        android:hint="@string/email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:id="@+id/etEmail"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/greyGuardian"
-            app:boxBackgroundColor="@color/yellow"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/yellow"
-        android:hint="@string/senha">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:id="@+id/etSenha"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/greyGuardian"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey"
-        android:layout_gravity="right"
-        android:text="@string/esqueceu_a_senha"
-        android:layout_marginTop="20dp"/>
+        android:text="Bem Vindo Faça seu login!"
+        android:layout_gravity="center"
+        android:width="250dp"
+        android:textAlignment="center"
+        android:textSize="36dp"
+        android:layout_marginTop="160dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etEmail"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Email"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSenha"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:inputType="textPassword"/>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/yellow"
-        android:textStyle="bold"
+        android:layout_width="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/login" />
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="20dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey"
         android:layout_gravity="center"
-        android:text="@string/n_o_tem_uma_conta_cadastre_se"
+        android:text="Não tem uma conta? Cadastre-se"
         android:layout_marginTop="20dp"/>
 
-
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Esqueceu a senha?"
+        android:layout_marginTop="20dp"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAnonimous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"
         android:layout_gravity="center"
-        android:text="@string/entrar_sem_login"
-        android:layout_marginTop="70dp"/>
+        android:text="Entrar sem login"
+        android:layout_marginTop="180dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

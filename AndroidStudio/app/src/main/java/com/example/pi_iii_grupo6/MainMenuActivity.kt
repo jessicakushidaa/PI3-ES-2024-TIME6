@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
-
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
@@ -14,6 +13,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
+import com.google.firebase.auth.FirebaseUser
 
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
