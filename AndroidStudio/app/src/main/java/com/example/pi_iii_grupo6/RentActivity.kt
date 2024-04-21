@@ -165,11 +165,19 @@ class RentActivity : AppCompatActivity() {
 
         tempo1.text = "${actualLocker.precos[0].tempo} min"
         tempo2.text = "${actualLocker.precos[1].tempo} min"
-        tempo3.text = "${actualLocker.precos[2].tempo} min"
+
 
         preco1.text = "R$ ${actualLocker.precos[0].preco}"
         preco2.text = "R$ ${actualLocker.precos[1].preco}"
-        preco3.text = "R$ ${actualLocker.precos[2].preco}"
+
+        if(actualLocker.precos.size >= 3){
+            preco3.text = "R$ ${actualLocker.precos[2].preco}"
+            tempo3.text = "${actualLocker.precos[2].tempo} min"
+        }else{
+            preco3.text = ""
+            tempo3.text = ""
+        }
+
 
         if(actualLocker.precos.size >= 4){
             tempo4.text = "${actualLocker.precos[3].tempo} min"

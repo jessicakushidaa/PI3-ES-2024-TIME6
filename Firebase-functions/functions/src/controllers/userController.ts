@@ -5,8 +5,7 @@ import {CallableResponse} from "../models/customResponse";
 import {Pessoa} from "../models/user";
 
 // retorno do método de admin - inicializa o app do firebase
-const app = admin.initializeApp();
-const db = app.firestore(); // chamada do banco de dados
+const db = admin.firestore(); // chamada do banco de dados
 
 // incializando collection Pessoas no firestore db
 const colPessoas = db.collection("pessoas");
@@ -150,7 +149,7 @@ export const addPessoa = functions
         message: "Pessoa inserida com sucesso.",
         payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
       };
-      functions.logger.error("addPessoaTeste - Nova pessoa inserida");
+      functions.logger.info("addPessoaTeste - Nova pessoa inserida");
     }
 
     // Retornando o objeto result.

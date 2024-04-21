@@ -4,5 +4,5 @@
 export interface Cartao {
     nomeTitular: string; // Nome do titular do cartão
     numeroCartao: string; // Número do cartão
-    dataVal: Date; // Data de validade do cartão
+    dataVal: string; // Data de validade do cartão
 }

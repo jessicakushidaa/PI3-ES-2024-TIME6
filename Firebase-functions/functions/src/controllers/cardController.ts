@@ -5,8 +5,7 @@ import {CallableResponse} from "../models/customResponse";
 import {Cartao} from "../models/card";
 
 // retorno do método de admin - inicializa o app do firebase
-const app = admin.initializeApp();
-const db = app.firestore(); // chamada do banco de dados
+const db = admin.firestore(); // chamada do banco de dados
 
 
 // Verifica se os campos obrigatórios do cartão estão preenchidos
@@ -36,7 +35,7 @@ function validarTiposCartao(cartao: Cartao): string[] | null {
   if (typeof cartao.numeroCartao !== "string") {
     camposInvalidos.push("numeroCartao");
   }
-  if (!(cartao.dataVal instanceof Date)) {
+  if (!(cartao.dataVal !== "string")) {
     camposInvalidos.push("dataVal");
   }
   // Retorna campos inválidos ou null se tudo estiver certo
@@ -70,7 +69,7 @@ export const addCartao = functions
     const cartao: Cartao = {
       nomeTitular: data.nomeTitular,
       numeroCartao: data.numeroCartao,
-      dataVal: new Date(data.dataVal),
+      dataVal: data.dataVal,
     };
 
     // Verifica se os campos obrigatórios estão preenchidos
@@ -117,7 +116,7 @@ export const addCartao = functions
           message: "Cartao inserido com sucesso.",
           payload: JSON.parse(JSON.stringify({docId: docRef.id.toString()})),
         };
-        functions.logger.error("addCartao - Novo cartão inserido");
+        functions.logger.info("addCartao - Novo cartão inserido");
       } catch (error:any) {
         result = {
           status: "ERROR",
