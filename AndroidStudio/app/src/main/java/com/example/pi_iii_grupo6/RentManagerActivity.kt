@@ -43,7 +43,7 @@ class RentManagerActivity : AppCompatActivity() {
                 }
                 //tela Cartões
                 R.id.page_3 -> {
-                    startActivity(Intent(this, MainViewActivity::class.java))
+                    startActivity(Intent(this, ShowCardActivity::class.java))
                     true
 
                 }
