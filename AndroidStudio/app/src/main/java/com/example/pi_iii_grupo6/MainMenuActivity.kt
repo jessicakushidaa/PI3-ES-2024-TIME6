@@ -14,7 +14,6 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
-import com.google.firebase.auth.FirebaseUser
 
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
