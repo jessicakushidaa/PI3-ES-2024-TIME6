@@ -9,6 +9,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
@@ -19,6 +20,7 @@ class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
     private lateinit var functions: FirebaseFunctions
     private var gson = Gson()
+    private lateinit var auth: FirebaseAuth
 
     //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
     var user: FirebaseUser? = null
@@ -28,7 +30,11 @@ class MainMenuActivity : AppCompatActivity() {
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        auth = Firebase.auth
+        user = auth.currentUser
+
         functions = Firebase.functions("southamerica-east1")
+
 
         checarLocacaoPendente()
         var idDocumentPessoa = ""
