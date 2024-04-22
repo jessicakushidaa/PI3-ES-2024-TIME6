@@ -12,28 +12,34 @@
         android:id="@+id/tvCartaoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meu Cartão"
+        android:text="Cadastre um cartão"
         android:textSize="25sp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNumeroCartao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="**** **** **** 9999"
-        android:textSize="22sp"/>
+        android:text="Parece que você não cadastrou um cartão"
+        android:textSize="20sp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNomeTitular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome Cartao"
-        android:textSize="22sp"/>
+        android:text=""
+        android:textSize="20sp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDataVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12/2039"
-        android:textSize="22sp"/>
+        android:text=""
+        android:textSize="20sp"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAdicionarCartao"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="+"
+        />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -110,9 +110,8 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(intentShowCard)
 
         }else{
-            val intentCriarCartao = Intent(this@MainMenuActivity, CreateCardActivity::class.java)
-            intentCriarCartao.putExtra("IDpessoa",id)
-            startActivity(intentCriarCartao)
+            val intentShowCard = Intent(this@MainMenuActivity, CreateCardActivity::class.java)
+            startActivity(intentShowCard)
         }
 
     }
