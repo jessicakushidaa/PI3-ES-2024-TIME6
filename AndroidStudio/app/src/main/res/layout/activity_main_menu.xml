@@ -13,14 +13,68 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="35dp"
         android:background="@color/blue_nav"
         android:minHeight="?attr/actionBarSize"
+        android:padding="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
-    
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/llMapa"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_marginTop="130dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/yellow"
+            android:drawableLeft="@drawable/map_svgrepo_com"
+            android:padding="60dp"
+            android:text="Mapa"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/llCartao"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/yellow"
+            android:drawableLeft="@drawable/baselinecard_24"
+            android:padding="35dp"
+            android:text="Cartões"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/llOpcao"
+            android:layout_width="300dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/yellow"
+            android:drawableLeft="@drawable/baselinereader_mode_24"
+            android:padding="35dp"
+            android:text="Locações"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="60dp"
@@ -34,57 +88,6 @@
         android:layout_marginLeft="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/llMapa"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="520dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="60dp"
-        android:text="Mapa"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:drawableLeft="@drawable/map_svgrepo_com"/>
-
-    <Button
-        android:id="@+id/llCartao"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="360dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="35dp"
-        android:text="Cartões"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        android:drawableLeft="@drawable/baselinecard_24" />
-
-
-    <Button
-        android:id="@+id/llOpcao"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="35dp"
-        android:text="Locações"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        android:drawableLeft="@drawable/baselinereader_mode_24"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
