@@ -32,17 +32,17 @@ class RentManagerActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 //tela Locações
-                R.id.page_1 -> {
+                R.id.page_locacoes -> {
                     startActivity(Intent(this, RentManagerActivity::class.java))
                     true
                 }
                 //tela Mapa
-                R.id.page_2 -> {
+                R.id.page_mapa -> {
                     startActivity(Intent(this, MainViewActivity::class.java))
                     true
                 }
                 //tela Cartões
-                R.id.page_3 -> {
+                R.id.page_cartoes -> {
                     startActivity(Intent(this, ShowCardActivity::class.java))
                     true
 
