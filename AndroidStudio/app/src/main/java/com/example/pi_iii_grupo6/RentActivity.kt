@@ -57,34 +57,57 @@ class RentActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         user = auth.currentUser
 
-        getCurrentLocation()
+        var nomeRecebido = getLockerName()
+        getCurrentLocation(nomeRecebido)
 
         binding?.btnAlugarArmario?.setOnClickListener{
             dialogAlugarArmario()
         }
     }
 
-
+    fun getLockerName(): String?{
+        val stringRecebida = intent.getStringExtra("nomeLocker")
+        return stringRecebida
+    }
 
     //Lógica que compara a localização do usuário com cada localização de locker
-    private fun checkLocation(): Int {
-        var flag = 0
-        for (place in places) {
+    private fun checkLocation(nomeRecebido: String?) {
+        if (nomeRecebido == null){
+            var flag = 0
+            for (place in places) {
 
-            var locPlace = LatLng(place.latitude, place.longitude)
+                var locPlace = LatLng(place.latitude, place.longitude)
 
-            var distancia = calcularDistancia(locPlace)
+                var distancia = calcularDistancia(locPlace)
 
-            if (distancia <= 1.0) {
-                //Está em alguma unidade!
-                actualLocker = place
-                flag = 1
+                if (distancia <= 1.0) {
+                    //Está em alguma unidade!
+                    actualLocker = place
+                    flag = 1
+                    locationHandler(flag)
+                    return
+                }
+            }
+            locationHandler(flag)
+        }
+        else{
+            var flag = 0
+            for (place in places){
+                if(place.nomeLocal == nomeRecebido){
+                    var locPlace = LatLng(place.latitude, place.longitude)
+                    var distancia = calcularDistancia(locPlace)
+                    if (distancia <= 1.0){
+                        actualLocker = place
+                        flag = 1
+                        locationHandler(flag)
+                        return
+                    }
+                }else{
+                    Log.d("stringrecebida",nomeRecebido)
+                }
                 locationHandler(flag)
-                return flag
             }
         }
-        locationHandler(flag)
-        return flag
     }
 
     private fun locationHandler(achou: Int){
@@ -103,7 +126,7 @@ class RentActivity : AppCompatActivity() {
 
         }
     }
-    private fun getCurrentLocation(){
+    private fun getCurrentLocation(nomeRecebido: String?){
         //Checando permissões
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -120,7 +143,7 @@ class RentActivity : AppCompatActivity() {
             if(location != null){
                 //Se nao for nula, atualiza a variável de localização do usuário
                 userLocation = LatLng(location.latitude,location.longitude)
-                checkLocation()
+                checkLocation(nomeRecebido)
             }
         }
         //Voltando para um valor aleatorio apenas para inicializar

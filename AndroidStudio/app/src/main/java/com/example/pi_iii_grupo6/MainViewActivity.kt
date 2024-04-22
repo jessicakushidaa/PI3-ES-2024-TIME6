@@ -5,7 +5,11 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.renderscript.ScriptGroup.Binding
 import android.util.Log
+import android.util.TypedValue
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewBinding
@@ -177,7 +181,42 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         // Função que chama o traçar rota ao clicar no botão
         sheetBinding.btnRoute.setOnClickListener{
             drawPath(mMap, adress)
+            substituirBotao(sheetBinding, title)
         }
+    }
+    //Função para substituir o botão, de "Ir até la" para "Alugar"
+    fun substituirBotao(binding: DialogMarkerInfoBinding, nome:String?){
+        val botaoIrAte = binding.btnRoute
+
+        //Criando novo botão
+        val btnNovo = Button(this)
+        btnNovo.text = "Alugar"
+        btnNovo.id = R.id.btnAlugarArmario
+        btnNovo.setBackgroundColor(resources.getColor(R.color.blue_nav))
+        btnNovo.setTextColor(resources.getColor(R.color.white))
+        val layoutParams = ViewGroup.LayoutParams(
+            300, // Largura
+            120 // Altura
+        )
+        btnNovo.layoutParams = layoutParams
+
+
+        val viewPai = botaoIrAte.parent as ViewGroup
+
+        val index = viewPai.indexOfChild(botaoIrAte)
+
+        viewPai.removeView(botaoIrAte)
+        viewPai.addView(btnNovo, index)
+
+        btnNovo.setOnClickListener {
+            abrirAlugarArmario(nome)
+        }
+    }
+
+    private fun abrirAlugarArmario(nome: String?) {
+        val intentAlugar = Intent(this@MainViewActivity, RentActivity::class.java)
+        intentAlugar.putExtra("nomeLocker",nome)
+        startActivity(intentAlugar)
     }
 
     //Função que obtém a localização atual do usuário
