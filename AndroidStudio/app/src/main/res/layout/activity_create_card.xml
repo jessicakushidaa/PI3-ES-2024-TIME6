@@ -1,105 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".CreateCardActivity">
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="35dp"
+        android:background="@color/blue_nav"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:id="@+id/formLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="25dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/cardTitle"
-            android:textSize="25sp"
-            android:layout_marginTop="250dp"/>
+        <!-- Figura Ilustrativa do Cartão -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:src="@drawable/vector_cred_card"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp">
+        </androidx.appcompat.widget.AppCompatImageView>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etName"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:hint="Nome Completo" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etCardNumber"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:hint="Numero do Cartão"
-            android:inputType="number"/>
-
+        <!-- Início do formulário de Cadastro de Cartão -->
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etValidade"
-                android:layout_width="170dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:hint="Validade - MM/yyyy"
-                android:inputType="datetime"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etCVV"
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:hint="CVV" />
+            <!-- Campo de texto para inserir o nome completo -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                style = "@style/GuardianTextInputStyle"
+                android:hint="@string/nome_completo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    style="@style/textInputETLayout"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Campo de texto para inserir o número do cartao -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                style = "@style/GuardianTextInputStyle"
+                android:hint="@string/numCartao">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCardNumber"
+                    style = "@style/textInputETLayout"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Campo de texto para inserir o CVV-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    style = "@style/GuardianTextInputStyle"
+                    android:hint="@string/cvv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCVV"
+                        style = "@style/textInputETLayout" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Campo de texto para inserir a validade-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    style = "@style/GuardianTextInputStyle"
+                    android:hint="@string/dataVal">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etValidade"
+                        android:inputType="date"
+                        style = "@style/textInputETLayout" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnCadastrar"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CADASTRAR" />
-    </LinearLayout>
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="150dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHome"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="MAPA"
-            android:layout_marginLeft="45dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCartoes"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="CARTÕES" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLocacoes"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="LOCAÇÕES" />
+            <Button
+                android:id="@+id/btnCadastrar"
+                android:background="@drawable/rounded_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="5dp"
+                android:text="@string/btnCadastrar" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_nav"
+        app:itemIconSize="25dp"
+        app:itemTextColor="@color/yellow"
+        app:itemIconTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

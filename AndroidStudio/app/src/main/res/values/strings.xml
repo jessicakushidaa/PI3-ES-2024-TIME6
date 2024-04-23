@@ -24,6 +24,7 @@
     <string name="preco_4"> </string>
     <string name="btn_confirmar">Confirmar Locação</string>
     <string name="qrcode_label">Apresente esse QrCode para o gerente!</string>
+
     <string name="cadastrar">Cadastrar</string>
     <string name="senha">Senha</string>
     <string name="email">Email</string>
@@ -39,4 +40,10 @@
     <string name="mapa">Mapa</string>
     <string name="cart_es">Cartões</string>
 
+    <!-- Tela Cadastro de cartão -->
+    <string name="nome_completo">Nome Completo</string>
+    <string name="numCartao">Numero do Cartão</string>
+    <string name="cvv">CVV</string>
+    <string name="dataVal">Data de Validade</string>
+    <string name="btnCadastrar">CADASTRAR</string>
 </resources>
