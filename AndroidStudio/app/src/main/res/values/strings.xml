@@ -45,5 +45,15 @@
     <string name="numCartao">Numero do Cartão</string>
     <string name="cvv">CVV</string>
     <string name="dataVal">Data de Validade</string>
-    <string name="btnCadastrar">CADASTRAR</string>
+    <string name="btnCadastrar">Cadastrar</string>
+
+    <!-- Tela de Cadastro de usuário -->
+    <string name="email_cadastro">Email</string>
+    <string name="cpf_cadastro">CPF</string>
+    <string name="data_de_nascimento_cadastro">Data de Nascimento</string>
+    <string name="crie_sua_senha">Crie sua senha</string>
+    <string name="confirmar_senha">Confirme sua senha</string>
+    <string name="nome_cadastro">Nome</string>
+    <string name="sobrenome_cadastro">Sobrenome</string>
+    <string name="telefone_cadastro">Telefone</string>
 </resources>

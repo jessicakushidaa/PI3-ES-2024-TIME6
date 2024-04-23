@@ -1,133 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp"
     android:background="@color/greyGuardian"
     tools:context=".RegisterActivity">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/logo"
-        android:layout_gravity="center_horizontal"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cadastrar"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="36dp"
-        android:layout_marginTop="15dp" />
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etNome"
-                android:layout_width="150dp"
-                android:textColorHint="@color/white"
-                android:layout_marginRight="20dp"
-                android:layout_gravity="center"
-                android:layout_height="match_parent"
-                android:hint="Nome"
-                />
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etSobrenome"
-                android:layout_width="150dp"
-                android:textColorHint="@color/white"
-                android:layout_gravity="center"
-                android:layout_height="match_parent"
-                android:hint="Sobrenome"
-                />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etEmail"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:textColorHint="@color/white"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etCPF"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:textColorHint="@color/white"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="CPF"
-        android:inputType="number"
-        />
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etBirth"
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:textColorHint="@color/white"
-            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_height="match_parent"
-            android:hint="Data de Nascimento - dd/MM/yyyy"
-            android:inputType="datetime"
+            android:text="@string/cadastrar"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+
             />
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPhone"
+
+        <!-- Início do formulário de Cadastro -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/inputLayout"
             android:layout_width="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_gravity="center"
-            android:layout_height="match_parent"
-            android:hint="Telefone"
-            />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Caixa de inserção: Nome -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/textInputSCadastro"
+                    android:layout_weight="1"
+                    android:paddingEnd="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNome"
+                        android:hint="@string/nome_cadastro"
+                        style="@style/textInputETCadastro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Caixa de inserção: Sobrenome -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/textInputSCadastro"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSobrenome"
+                        android:hint="@string/sobrenome_cadastro"
+                        style="@style/textInputETCadastro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Caixa de inserção: Data de Nascimento -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/textInputSCadastro"
+                    app:boxStrokeColor="@color/red">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etBirth"
+                        android:hint="@string/data_de_nascimento_cadastro"
+                        android:inputType="date|number"
+                        style = "@style/textInputETCadastro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputSCadastro">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhone"
+                    android:hint="@string/telefone_cadastro"
+                    android:inputType="number"
+                    style = "@style/textInputETCadastro"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputSCadastro">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCPF"
+                    android:hint="@string/cpf_cadastro"
+                    android:inputType="number"
+                    style = "@style/textInputETCadastro"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/textInputSCadastro">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:inputType="textEmailAddress"
+                        style="@style/textInputETCadastro"
+                        android:hint="@string/email"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputSCadastro">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSenha"
+                    android:hint="@string/crie_sua_senha"
+                    android:inputType="textPassword"
+                    style="@style/textInputETCadastro"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputSCadastro">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSenhaConfirmation"
+                    android:hint="@string/confirmar_senha"
+                    android:inputType="textPassword"
+                    style="@style/textInputETCadastro"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/btnRegistrar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/yellowbtn"
+                android:elevation="5dp"
+                android:text="@string/btnCadastrar"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etSenha"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:textColorHint="@color/white"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Crie sua senha"
-        android:inputType="textPassword"
-        />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etSenhaConfirmation"
-        android:layout_width="match_parent"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Confirme sua senha"
-        android:inputType="textPassword"
-        />
-
-    <Button
-        android:id="@+id/btnRegistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/yellow"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Login" />
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
