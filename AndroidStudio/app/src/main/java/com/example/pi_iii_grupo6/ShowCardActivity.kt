@@ -5,24 +5,32 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityShowCardBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.gson.Gson
 
 class ShowCardActivity : AppCompatActivity() {
     private var binding: ActivityShowCardBinding? = null
     private var gson = Gson()
     private lateinit var cartaoUsuario: CreateCardActivity.Cartao
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShowCardBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        auth = Firebase.auth
 
+        var idPessoa = auth.currentUser?.uid
 
         //Recebendo a string do cartão do usuário
         receberCartao()
 
         //Setando onclick para chamar função que abre a createCard
         binding?.btnAdicionarCartao?.setOnClickListener {
-            abrirCreateCard()
+            abrirCreateCard(idPessoa)
         }
 
     }
@@ -44,9 +52,10 @@ class ShowCardActivity : AppCompatActivity() {
         tvTitle?.text = "Meu cartão"
     }
 
-    private fun abrirCreateCard() {
+    private fun abrirCreateCard(idPessoa: String?) {
         if (temCartao == false){
             val abrirCreateCard = Intent(this@ShowCardActivity, CreateCardActivity::class.java)
+            abrirCreateCard.putExtra("IDpessoa",idPessoa)
             startActivity(abrirCreateCard)
         }else{
             Toast.makeText(baseContext,"Você ja possui um cartão cadastrado",Toast.LENGTH_SHORT).show()

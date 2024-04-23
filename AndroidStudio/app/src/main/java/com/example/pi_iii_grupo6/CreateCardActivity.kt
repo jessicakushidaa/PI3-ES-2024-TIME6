@@ -44,6 +44,7 @@ class CreateCardActivity : AppCompatActivity() {
         val idPessoa = user?.uid
         var idDocumentPessoa = ""
 
+        Log.d(TAG,"Chamando receber ID")
         idDocumentPessoa = receberId()
 
 
@@ -67,8 +68,10 @@ class CreateCardActivity : AppCompatActivity() {
         } */
     }
     private fun receberId(): String{
+        Log.d(TAG,"entrou receber ID")
         var id = intent.getStringExtra("IDpessoa") as String
         Log.d("IDRECEBIDO", "$id")
+        Log.d(TAG,"id recebido : $id")
         return id
     }
     private fun verificarPreenchidos(idPessoa: String) {
@@ -131,6 +134,9 @@ class CreateCardActivity : AppCompatActivity() {
             .addOnFailureListener{
                 Log.e("CADASTRAR", "Erro ao chamar funcao: $it")
             }
+    }
+    companion object{
+        var TAG = "DEBUGCARD"
     }
 
 
