@@ -110,7 +110,7 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(intentShowCard)
 
         }else{
-            val intentShowCard = Intent(this@MainMenuActivity, CreateCardActivity::class.java)
+            val intentShowCard = Intent(this@MainMenuActivity, ShowCardActivity::class.java)
             startActivity(intentShowCard)
         }
 
