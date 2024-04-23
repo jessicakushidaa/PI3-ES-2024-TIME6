@@ -52,7 +52,7 @@ class CreateCardActivity : AppCompatActivity() {
             verificarPreenchidos(idDocumentPessoa)
         }
 
-        //AÇÕES DO BOTTOM NAVIGATION
+    /*    //AÇÕES DO BOTTOM NAVIGATION
         binding?.btnHome?.setOnClickListener {
             var irHome = Intent(this@CreateCardActivity, MainViewActivity::class.java)
             startActivity(irHome)
@@ -64,7 +64,7 @@ class CreateCardActivity : AppCompatActivity() {
         binding?.btnLocacoes?.setOnClickListener {
             var irLocacoes = Intent(this@CreateCardActivity, RentManagerActivity::class.java)
             startActivity(irLocacoes)
-        }
+        } */
     }
     private fun receberId(): String{
         var id = intent.getStringExtra("IDpessoa") as String
