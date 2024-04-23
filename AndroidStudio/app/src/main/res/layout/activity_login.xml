@@ -40,6 +40,7 @@
                 android:layout_gravity="center_horizontal" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Campos de inserção de texto: Email e Senha -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/inputLayout"
             android:layout_width="match_parent"
@@ -53,7 +54,6 @@
                 android:id="@+id/textInputLayoutEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:textColorHint="@color/yellow">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -89,6 +89,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/esqueceu_a_senha"
                 android:textColor="@color/grey"
+                android:textStyle="bold"
                 android:layout_gravity="end" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -110,7 +111,8 @@
                     android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/yellow"
+                    android:backgroundTint="@color/yellowbtn"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     android:elevation="5dp"
                     android:text="@string/login" />

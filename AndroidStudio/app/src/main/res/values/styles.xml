@@ -7,11 +7,20 @@
     </style>
     <style name="GuardianTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">2dp</item>
-        <item name="boxStrokeColor">@color/yellow</item>
+        <item name="boxStrokeColor">@color/yellowbtn</item>
+    </style>
+    <style name="textInputSCadastro" parent="GuardianTextInputStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/white</item>
+
+    </style>
+    <style name="textInputETCadastro">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/greyGuardian</item>
     </style>
 
-    <style name="OutlinedBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/outlinedBoxStrokeColor</item>
-    </style>
+
 
 </resources>

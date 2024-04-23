@@ -11,6 +11,5 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="textInputStyle">@style/OutlinedBoxStyle</item>
     </style>
 </resources>
