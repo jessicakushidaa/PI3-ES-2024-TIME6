@@ -10,4 +10,8 @@
         <item name="boxStrokeColor">@color/yellow</item>
     </style>
 
+    <style name="OutlinedBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/outlinedBoxStrokeColor</item>
+    </style>
+
 </resources>
