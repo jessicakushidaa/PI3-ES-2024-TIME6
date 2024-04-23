@@ -17,8 +17,13 @@ class ShowCardActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
 
-
+        //Recebendo a string do cartão do usuário
         receberCartao()
+
+        //Setando onclick para chamar função que abre a createCard
+        binding?.btnAdicionarCartao?.setOnClickListener {
+            abrirCreateCard()
+        }
 
     }
 
@@ -37,10 +42,6 @@ class ShowCardActivity : AppCompatActivity() {
         tvNumero?.text = numeroFormatado
         tvData?.text = cartaoUsuario.dataVal
         tvTitle?.text = "Meu cartão"
-
-        binding?.btnAdicionarCartao?.setOnClickListener {
-            abrirCreateCard()
-        }
     }
 
     private fun abrirCreateCard() {
