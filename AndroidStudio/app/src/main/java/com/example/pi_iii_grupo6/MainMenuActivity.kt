@@ -111,6 +111,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         }else{
             val intentShowCard = Intent(this@MainMenuActivity, ShowCardActivity::class.java)
+            intentShowCard.putExtra("IDpessoa",id)
             startActivity(intentShowCard)
         }
 
