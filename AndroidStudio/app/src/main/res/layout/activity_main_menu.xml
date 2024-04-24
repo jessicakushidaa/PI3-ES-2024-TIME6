@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainMenuActivity"
-    android:background="@color/greyGuardian"
-    android:gravity="center_vertical">
+    android:background="@color/greyGuardian">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,21 +20,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <Button
             android:id="@+id/llMapa"
             android:layout_gravity="center"
             android:layout_width="300dp"
-            android:layout_marginTop="130dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/yellow"
             android:drawableLeft="@drawable/map_svgrepo_com"

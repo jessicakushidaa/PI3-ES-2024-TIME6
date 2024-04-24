@@ -20,17 +20,19 @@
     <string name="preco_2">Preco 2</string>
     <string name="tempo_3">Tempo 3</string>
     <string name="preco_3">Preco 3</string>
-    <string name="tempo_4"> </string>
-    <string name="preco_4"> </string>
+    <string name="tempo_4">Tempo 4</string>
+    <string name="preco_4">Preco 4 </string>
     <string name="btn_confirmar">Confirmar Locação</string>
     <string name="qrcode_label">Apresente esse QrCode para o gerente!</string>
 
+    <!-- Tela de Login -->
     <string name="cadastrar">Cadastrar</string>
     <string name="senha">Senha</string>
     <string name="email">Email</string>
     <string name="esqueceu_a_senha">Esqueceu a senha?</string>
     <string name="login">Entrar</string>
-    <string name="n_o_tem_uma_conta_cadastre_se">Não tem uma conta? Cadastre-se</string>
+    <string name="n_o_tem_uma_conta_cadastre_se">Não tem uma conta?
+        <b>Cadastre-se</b></string>
     <string name="entrar_sem_login">Entrar sem login</string>
     <string name="alugar_arm_rio">Alugar Armário</string>
     <string name="minhas_loca_es">Minhas Locações</string>
@@ -51,9 +53,13 @@
     <string name="email_cadastro">Email</string>
     <string name="cpf_cadastro">CPF</string>
     <string name="data_de_nascimento_cadastro">Data de Nascimento</string>
-    <string name="crie_sua_senha">Crie sua senha</string>
-    <string name="confirmar_senha">Confirme sua senha</string>
+    <string name="criar_senha">Criar senha</string>
+    <string name="confirmar_senha">Confirmar senha</string>
     <string name="nome_cadastro">Nome</string>
     <string name="sobrenome_cadastro">Sobrenome</string>
     <string name="telefone_cadastro">Telefone</string>
+    <string name="selecione_o_tempo_para_loca_o">Selecione o tempo para locação</string>
+
+    <string name="locacao_title">Locação</string>
+    <string name="telefone_loc">Telefone</string>
 </resources>
