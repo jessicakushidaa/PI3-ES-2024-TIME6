@@ -3,6 +3,7 @@ package com.example.pi_iii_grupo6
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityShowCardBinding
 import com.google.firebase.Firebase
@@ -23,16 +24,22 @@ class ShowCardActivity : AppCompatActivity() {
         setContentView(binding?.root)
         auth = Firebase.auth
 
-        var idPessoa = auth.currentUser?.uid
+        var idUser = auth.currentUser?.uid
 
         //Recebendo a string do cartão do usuário
         receberCartao()
+        var idPessoa = receberId()
 
         //Setando onclick para chamar função que abre a createCard
         binding?.btnAdicionarCartao?.setOnClickListener {
             abrirCreateCard(idPessoa)
         }
 
+    }
+
+    private fun receberId():String? {
+        val idPessoa = intent.getStringExtra("IDpessoa")
+        return idPessoa
     }
 
     private fun mostrarInformacoes() {
@@ -52,10 +59,11 @@ class ShowCardActivity : AppCompatActivity() {
         tvTitle?.text = "Meu cartão"
     }
 
-    private fun abrirCreateCard(idPessoa: String?) {
+    private fun abrirCreateCard(idUser: String?) {
         if (temCartao == false){
             val abrirCreateCard = Intent(this@ShowCardActivity, CreateCardActivity::class.java)
-            abrirCreateCard.putExtra("IDpessoa",idPessoa)
+            abrirCreateCard.putExtra("IDpessoa",idUser)
+            Log.d("debugcard","$idUser")
             startActivity(abrirCreateCard)
         }else{
             Toast.makeText(baseContext,"Você ja possui um cartão cadastrado",Toast.LENGTH_SHORT).show()
