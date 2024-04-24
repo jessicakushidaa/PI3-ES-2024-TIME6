@@ -98,7 +98,7 @@ class CreateCardActivity : AppCompatActivity() {
     }
 
     //Função que chama a function responsável por adicionar o cartão no banco de dados.
-    private fun cadastrarCartaoFirestore(c: Cartao, userID: String): Task<String>{
+    private fun cadastrarCartaoFirestore(c: Cartao, userID: String): Task<String?>{
 
         Log.d("CADASTRAR", "Entrou na cadastrar cartao")
         //Definindo os dados que serão passados aos parâmetros da function
@@ -119,13 +119,8 @@ class CreateCardActivity : AppCompatActivity() {
                     val result = task.result?.data as Map<String, Any>
                     val payload = result["payload"] as Map<String, Any>
 
-                    val id = payload["documentId"]
-                    if (id is String) {
-                        id
-                    } else {
-                        Log.e("ERROR","$id")
-                        throw Exception("documentId não é uma String")
-                    }
+                    val id = payload["docId"] as String
+                    id
 
                 }else{
                     throw task.exception ?: Exception("Unknown error occurred")
