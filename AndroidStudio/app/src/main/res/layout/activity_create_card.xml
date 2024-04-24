@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:paddingHorizontal="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
 
 
             <!-- Campo de texto para inserir o nome completo -->
@@ -73,7 +73,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCardNumber"
-                    style="@style/textInputETLayout" />
+                    style="@style/textInputETLayout"
+                    android:maxLength="16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -94,8 +95,8 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etCVV"
-                        android:maxLength="3"
-                        style="@style/textInputETLayout" />
+                        style="@style/textInputETLayout"
+                        android:maxLength="3" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Campo de texto para inserir a validade-->
@@ -112,7 +113,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etValidade"
                         style="@style/textInputETLayout"
-                        android:inputType="date|number" />
+                        android:inputType="date|number"
+                        android:maxLength="7" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -130,9 +132,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_button"
-                android:elevation="5dp"
+                android:elevation="8dp"
                 android:text="@string/btnCadastrar"
-                android:textColor="@color/grey"
+                android:textColor="@color/light_grey"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>

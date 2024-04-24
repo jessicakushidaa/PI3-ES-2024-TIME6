@@ -53,8 +53,8 @@
     <string name="email_cadastro">Email</string>
     <string name="cpf_cadastro">CPF</string>
     <string name="data_de_nascimento_cadastro">Data de Nascimento</string>
-    <string name="crie_sua_senha">Crie sua senha</string>
-    <string name="confirmar_senha">Confirme sua senha</string>
+    <string name="criar_senha">Criar senha</string>
+    <string name="confirmar_senha">Confirmar senha</string>
     <string name="nome_cadastro">Nome</string>
     <string name="sobrenome_cadastro">Sobrenome</string>
     <string name="telefone_cadastro">Telefone</string>
