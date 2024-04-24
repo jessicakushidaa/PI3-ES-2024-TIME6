@@ -37,7 +37,7 @@ class MainMenuActivity : AppCompatActivity() {
 
 
         checarLocacaoPendente()
-        var idDocumentPessoa = ""
+
 
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
@@ -162,6 +162,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
     companion object{
         var cartaoUsuario: CreateCardActivity.Cartao? = null
+        var idDocumentPessoa = ""
     }
 
     private fun checarLocacaoPendente() {

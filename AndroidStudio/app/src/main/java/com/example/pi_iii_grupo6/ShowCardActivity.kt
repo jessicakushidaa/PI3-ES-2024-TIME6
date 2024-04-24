@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
+import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
 import com.example.pi_iii_grupo6.databinding.ActivityShowCardBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
@@ -58,7 +59,7 @@ class ShowCardActivity : AppCompatActivity() {
     }
 
     private fun receberId() {
-        idPessoa = intent.getStringExtra("IDpessoa")
+        idPessoa = idDocumentPessoa
     }
 
     private fun consultarCartaoHandler(){
