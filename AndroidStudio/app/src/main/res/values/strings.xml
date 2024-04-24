@@ -20,8 +20,8 @@
     <string name="preco_2">Preco 2</string>
     <string name="tempo_3">Tempo 3</string>
     <string name="preco_3">Preco 3</string>
-    <string name="tempo_4"> </string>
-    <string name="preco_4"> </string>
+    <string name="tempo_4">Tempo 4</string>
+    <string name="preco_4">Preco 4 </string>
     <string name="btn_confirmar">Confirmar Locação</string>
     <string name="qrcode_label">Apresente esse QrCode para o gerente!</string>
 
@@ -58,4 +58,5 @@
     <string name="nome_cadastro">Nome</string>
     <string name="sobrenome_cadastro">Sobrenome</string>
     <string name="telefone_cadastro">Telefone</string>
+    <string name="selecione_o_tempo_para_loca_o">Selecione o tempo para locação</string>
 </resources>
