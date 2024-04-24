@@ -4,10 +4,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColorHint">@color/greyGuardian</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="boxStrokeColor">@color/yellowbtn</item>
     </style>
     <style name="GuardianTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">2dp</item>
         <item name="boxStrokeColor">@color/yellowbtn</item>
+        <item name="android:textColorHint">@color/blue_nav</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="textInputSCadastro" parent="GuardianTextInputStyle">
         <item name="android:layout_width">match_parent</item>
@@ -20,7 +25,4 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/greyGuardian</item>
     </style>
-
-
-
 </resources>
