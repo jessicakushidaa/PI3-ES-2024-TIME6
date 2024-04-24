@@ -1,9 +1,11 @@
 package com.example.pi_iii_grupo6
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import android.location.Location
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
@@ -61,8 +66,34 @@ class RentActivity : AppCompatActivity() {
         getCurrentLocation(nomeRecebido)
 
         binding?.btnAlugarArmario?.setOnClickListener{
-            dialogAlugarArmario()
+            if(cartaoUsuario!=null){
+                dialogAlugarArmario()
+            }else{
+                dialogFaltaCartao()
+            }
         }
+    }
+
+    //Se o usuário nao tiver um cartão, abrir uma dialog que diz que para alugar, precisa ter um cartão.
+    private fun dialogFaltaCartao() {
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_falta_cartao)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvTextTwo: TextView = dialog.findViewById(R.id.tvTextTwo)
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup2)
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        tvTextTwo.setOnClickListener {
+            var intentCartao = Intent(this@RentActivity, ShowCardActivity::class.java)
+            startActivity(intentCartao)
+        }
+
+        dialog.show()
     }
 
     fun getLockerName(): String?{
