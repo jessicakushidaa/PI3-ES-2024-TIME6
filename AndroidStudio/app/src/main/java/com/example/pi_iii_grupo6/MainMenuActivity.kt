@@ -49,7 +49,7 @@ class MainMenuActivity : AppCompatActivity() {
                         val cartao: CreateCardActivity.Cartao = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
                         cartaoUsuario = cartao
                     }else{
-                        Log.e("StringRecebida","erro ao chamar function: ${task.exception}")
+                        Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
                     }
                 }
         }
@@ -57,8 +57,8 @@ class MainMenuActivity : AppCompatActivity() {
 
         //Setando o clique em MAPA que vai abrir o mapa
         binding?.llMapa?.setOnClickListener{
-            var avancar = Intent(this@MainMenuActivity, MainViewActivity::class.java)
-            startActivity(avancar)
+            var avancarMapa = Intent(this@MainMenuActivity, MainViewActivity::class.java)
+            startActivity(avancarMapa)
         }
 
         //Ao clicar em CARTAO, abre a função de adicionar um cartao
@@ -106,6 +106,7 @@ class MainMenuActivity : AppCompatActivity() {
             val cartaoGson = gson.toJson(cartaoUsuario)
 
             intentShowCard.putExtra("cartaoRecebido",cartaoGson)
+            intentShowCard.putExtra("IDpessoa",id)
 
             startActivity(intentShowCard)
 

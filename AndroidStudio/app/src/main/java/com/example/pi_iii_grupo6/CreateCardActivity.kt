@@ -1,11 +1,17 @@
 package com.example.pi_iii_grupo6
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityCreateCardBinding
+import com.example.pi_iii_grupo6.databinding.DialogPopupBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -40,11 +46,7 @@ class CreateCardActivity : AppCompatActivity() {
         auth = Firebase.auth
         functions = Firebase.functions("southamerica-east1")
 
-        val user = auth.currentUser
-        val idPessoa = user?.uid
         var idDocumentPessoa = ""
-
-        Log.d(TAG,"Chamando receber ID")
         idDocumentPessoa = receberId()
 
 
@@ -91,12 +93,34 @@ class CreateCardActivity : AppCompatActivity() {
             else{
                 //Campos preenchidos! criar instancia cartão e chamar function
                 val cartao = Cartao(nomeTitular,numeroCartao,dataVal)
-                cadastrarCartaoFirestore(cartao,idPessoa)
+                cadastrarCartaoFirestore(cartao,idPessoa).addOnSuccessListener {
+                    mostrarDialogCreated()
+                }
             }
 
         }
     }
 
+    //Função que mostra a dialogBox para mostrar mensagem ao usuário
+    private fun mostrarDialogCreated(){
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_popup)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvTitle: TextView = dialog.findViewById(R.id.tvTitle)
+        val tvText: TextView = dialog.findViewById(R.id.tvText)
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
+
+        tvTitle.text = "Cartão Cadastrado!"
+        tvText.text = " Agora, toda vez que você realizar uma locação através do nosso app, será cobrada uma caução equivalente a uma diária. Esta caução será estornada proporcionalmente de acordo com o período utilizado."
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
     //Função que chama a function responsável por adicionar o cartão no banco de dados.
     private fun cadastrarCartaoFirestore(c: Cartao, userID: String): Task<String?>{
 
@@ -133,7 +157,4 @@ class CreateCardActivity : AppCompatActivity() {
     companion object{
         var TAG = "DEBUGCARD"
     }
-
-
-
 }
