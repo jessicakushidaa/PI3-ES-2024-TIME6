@@ -58,4 +58,6 @@
     <string name="nome_cadastro">Nome</string>
     <string name="sobrenome_cadastro">Sobrenome</string>
     <string name="telefone_cadastro">Telefone</string>
+    <string name="locacao_title">Locação</string>
+    <string name="telefone_loc">Telefone</string>
 </resources>
