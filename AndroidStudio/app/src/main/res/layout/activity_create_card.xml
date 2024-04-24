@@ -112,7 +112,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etValidade"
                         style="@style/textInputETLayout"
-                        android:inputType="number" />
+                        android:inputType="date|number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
