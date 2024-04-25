@@ -11,7 +11,7 @@
     <string name="cardTitle">Adicione seu cartão</string>
     <string name="location_title">LocationTitle</string>
     <string name="enderecoLocker">Endereço:</string>
-    <string name="referencia">Referencia:</string>
+    <string name="referencia">Referência:</string>
     <string name="btn_text_alugar">Alugar Armário</string>
     <string name="seta_voltar"><![CDATA[<-]]></string>
     <string name="tempo_1">Tempo 1</string>
@@ -61,5 +61,5 @@
     <string name="selecione_o_tempo_para_loca_o">Selecione o tempo para locação</string>
 
     <string name="locacao_title">Locação</string>
-    <string name="telefone_loc">Telefone</string>
+    <string name="telefone_loc">Telefone:</string>
 </resources>

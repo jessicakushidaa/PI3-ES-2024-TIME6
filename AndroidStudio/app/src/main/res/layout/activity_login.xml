@@ -85,7 +85,7 @@
                     android:id="@+id/etSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_margin="3.7dp"
                     android:background="@color/greyGuardian"
                     android:hint="@string/senha"
                     android:inputType="textPassword"
