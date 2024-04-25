@@ -117,6 +117,8 @@ class CreateCardActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener {
             dialog.dismiss()
+            var voltarMostrarCartao = Intent(this@CreateCardActivity, ShowCardActivity::class.java)
+            startActivity(voltarMostrarCartao)
         }
 
         dialog.show()

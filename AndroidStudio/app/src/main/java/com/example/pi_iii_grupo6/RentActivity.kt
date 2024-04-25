@@ -154,7 +154,6 @@ class RentActivity : AppCompatActivity() {
             textoTitulo?.text = "Você está em: ${actualLocker.nomeLocal}"
             textoEndereco?.text = "Endereço: ${actualLocker.enderecoLocal}"
             textoReferencia?.text = "Referência: ${actualLocker.referenciaLocal}"
-
         }
     }
     private fun getCurrentLocation(nomeRecebido: String?){
