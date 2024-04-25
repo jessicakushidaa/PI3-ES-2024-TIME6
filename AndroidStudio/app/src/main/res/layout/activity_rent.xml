@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contraint_loc_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    tools:context=".RentActivity">
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,7 +28,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewLocation"
         android:layout_marginTop="80dp"/>
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/textViewLocation"
         android:layout_width="match_parent"
@@ -43,8 +38,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="40dp"
         android:layout_marginHorizontal="20dp"
-        android:paddingVertical="8dp"
-        >
+        android:paddingVertical="8dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,14 +49,13 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/etTitleLocationContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="25dp"
-        app:layout_constraintBottom_toBottomOf="@id/contraint_loc_container"
-        app:layout_constraintTop_toBottomOf="@id/textViewLocation"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="@id/view_loc_container"
+        app:layout_constraintBottom_toTopOf="@id/textViews_infos_container"
+        android:paddingHorizontal="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etTitleLocation"
@@ -72,69 +65,71 @@
             android:text="@string/location_title"
             android:textColor="@color/black"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/textViews_infos_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="25dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTitleLocationContainer"
+        android:layout_marginTop="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etEndereco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="16dp"
             android:maxLines="3"
             android:text="@string/enderecoLocker"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etTitleLocation" />
+            android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etReferencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:maxLines="3"
             android:text="@string/referencia"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEndereco" />
+            android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etTelefone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
             android:maxLines="3"
             android:text="@string/telefone_loc"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etReferencia" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="20dp"
-            android:layout_marginBottom="25dp">
-
-            <Button
-                android:id="@+id/btnAlugarArmario"
-                android:layout_width="286dp"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/yellowbtn"
-                android:hint="@string/btn_text_alugar"
-                android:textColorHint="@color/white"
-                android:textSize="16sp"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:textStyle="bold"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnAlugarArmario"
+            android:layout_width="286dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/yellowbtn"
+            android:hint="@string/btn_text_alugar"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

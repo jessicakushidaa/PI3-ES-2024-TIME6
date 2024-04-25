@@ -61,5 +61,5 @@
     <string name="selecione_o_tempo_para_loca_o">Selecione o tempo para locação</string>
 
     <string name="locacao_title">Locação</string>
-    <string name="telefone_loc">Telefone</string>
+    <string name="telefone_loc">Telefone:</string>
 </resources>
