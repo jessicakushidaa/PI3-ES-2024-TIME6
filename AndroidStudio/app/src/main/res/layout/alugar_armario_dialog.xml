@@ -93,7 +93,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco1"
                 style="@style/TimePriceBox"
-                android:elevation="@dimen/material_emphasis_high_type">
+                android:elevation="4dp">
 
 
                 <TextView

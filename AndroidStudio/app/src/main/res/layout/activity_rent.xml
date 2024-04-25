@@ -39,7 +39,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginHorizontal="20dp"
         android:paddingVertical="8dp"
-        android:elevation="@dimen/material_emphasis_high_type">
+        android:elevation="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
             android:layout_height="match_parent"
             android:hint="@string/btn_text_alugar"
             android:backgroundTint="@color/yellowbtn"
-            android:elevation="@dimen/material_emphasis_medium"
+            android:elevation="4dp"
             android:textColorHint="@color/white"
             android:textSize="20sp"
             android:padding="16dp"/>
