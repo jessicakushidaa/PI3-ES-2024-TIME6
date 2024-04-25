@@ -38,7 +38,8 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="40dp"
         android:layout_marginHorizontal="20dp"
-        android:paddingVertical="8dp">
+        android:paddingVertical="8dp"
+        android:elevation="@dimen/material_emphasis_high_type">
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,7 +66,8 @@
             android:text="@string/location_title"
             android:textColor="@color/black"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -127,9 +129,11 @@
             android:id="@+id/btnAlugarArmario"
             android:layout_width="286dp"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/yellowbtn"
             android:hint="@string/btn_text_alugar"
+            android:backgroundTint="@color/yellowbtn"
+            android:elevation="@dimen/material_emphasis_medium"
             android:textColorHint="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="20sp"
+            android:padding="16dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

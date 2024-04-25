@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <View
         android:id="@+id/view_loc_container"
         android:layout_width="match_parent"
@@ -24,35 +25,64 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/label_desc_tempo"
+        app:layout_constraintTop_toTopOf="@+id/desc_container"
         android:layout_marginTop="80dp"/>
 
-    <TextView
-        android:id="@+id/label_desc_tempo"
-        android:layout_width="wrap_content"
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/desc_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="236dp"
-        android:text="@string/selecione_o_tempo_para_loca_o"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
+        android:paddingHorizontal="25dp"
+        android:layout_marginTop="130dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/llPrecoContainer">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/time_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/outline_hourglass_top_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_loc_container">
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <TextView
+            android:id="@+id/label_desc_tempo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/selecione_o_tempo_para_loca_o"
+            android:textColor="@color/white"
+            android:elevation="4dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llPrecoContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/btnConfirmarLoc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_desc_tempo">
+        app:layout_constraintTop_toBottomOf="@id/desc_container">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -62,14 +92,8 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/yellow"
-                android:elevation="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="50dp">
+                style="@style/TimePriceBox"
+                android:elevation="@dimen/material_emphasis_high_type">
 
 
                 <TextView
@@ -95,18 +119,12 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:background="@color/yellow"
-                android:elevation="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="50dp">
+                style="@style/TimePriceBox"
+                android:layout_marginStart="16dp">
 
 
-                <TextView
+
+            <TextView
                     android:id="@+id/tvTempo2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,14 +155,7 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/yellow"
-                android:elevation="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="50dp">
+                style="@style/TimePriceBox">
 
 
                 <TextView
