@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contraint_loc_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -20,48 +21,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/view_loc_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/location_shape1"
+        app:layout_constraintBottom_toBottomOf="@id/contraint_loc_container"
+        app:layout_constraintEnd_toEndOf="@id/contraint_loc_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewLocation"
+        android:layout_marginTop="80dp"/>
+
+
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="0dp"
+        android:id="@+id/textViewLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textbox_custom_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingVertical="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="@string/locacao_title"
+            android:textSize="40sp"
+            app:drawableLeftCompat="@drawable/location_pin"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="25dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/textViewLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:background="@drawable/textbox_custom_outline"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/locacao_title"
-                android:textSize="40sp"
-                app:drawableLeftCompat="@drawable/location_pin" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
+        app:layout_constraintBottom_toBottomOf="@id/contraint_loc_container"
+        app:layout_constraintTop_toBottomOf="@id/textViewLocation"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etTitleLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
             android:maxLines="2"
             android:text="@string/location_title"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.143"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
@@ -75,7 +88,6 @@
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etTitleLocation" />
 
@@ -89,7 +101,6 @@
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.104"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etEndereco" />
 
@@ -98,12 +109,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
+            android:layout_marginBottom="40dp"
             android:maxLines="3"
             android:text="@string/telefone_loc"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.105"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etReferencia" />
 
@@ -111,18 +122,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="30dp">
+            android:paddingBottom="20dp"
+            android:layout_marginBottom="25dp">
 
             <Button
                 android:id="@+id/btnAlugarArmario"
                 android:layout_width="286dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/yellowbtn"
                 android:hint="@string/btn_text_alugar"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:textSize="16sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
