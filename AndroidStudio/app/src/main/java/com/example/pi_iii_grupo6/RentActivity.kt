@@ -3,7 +3,6 @@ package com.example.pi_iii_grupo6
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -20,22 +19,16 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
-import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
-import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.auth.User
 import com.google.gson.Gson
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.WriterException
-import com.google.zxing.qrcode.QRCodeWriter
-import kotlin.math.log
+import java.util.Calendar
 
 class RentActivity : AppCompatActivity() {
     private var binding: ActivityRentBinding? = null
@@ -47,6 +40,7 @@ class RentActivity : AppCompatActivity() {
     private var user: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var locAtual: MainViewActivity.Locacao
+
 
     class Info(
         var userId: String?,
@@ -61,6 +55,8 @@ class RentActivity : AppCompatActivity() {
         auth = Firebase.auth
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         user = auth.currentUser
+
+
 
         var nomeRecebido = getLockerName()
         getCurrentLocation(nomeRecebido)
@@ -273,15 +269,26 @@ class RentActivity : AppCompatActivity() {
                 Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
             }
         }
+
+        if (!(somaHoraAtual >= 420 && somaHoraAtual <= 480)){
+            opcao4.setBackgroundColor(Color.parseColor("#E7E7E7"))
+        }
+        Log.d("HORA","São $horaAtual:$minutoAtual")
+
         opcao4.setOnClickListener{
-            if (precoSelecionado?.tempo == actualLocker.precos[3].tempo){
-                removerSelecionado()
-                desmarcarOpcao(opcao4)
-            }else if (precoSelecionado == null){
-                addSelecionado(actualLocker.precos[3])
-                marcarOpçcao(opcao4)
+
+            if(somaHoraAtual >= 420 && somaHoraAtual <= 480){
+                if (precoSelecionado?.tempo == actualLocker.precos[3].tempo){
+                    removerSelecionado()
+                    desmarcarOpcao(opcao4)
+                }else if (precoSelecionado == null){
+                    addSelecionado(actualLocker.precos[3])
+                    marcarOpçcao(opcao4)
+                }else{
+                    Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+                }
             }else{
-                Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext,"Disponível entre 7:00 e 8:00",Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -322,6 +329,14 @@ class RentActivity : AppCompatActivity() {
     }
     fun desmarcarOpcao(viewSelecionada: View){
         viewSelecionada.setBackgroundColor(Color.parseColor("#ffffff"))
+    }
+
+    companion object{
+        val calendar = Calendar.getInstance()
+        val horaAtual = calendar.get(Calendar.HOUR_OF_DAY)
+        val minutoAtual = calendar.get(Calendar.MINUTE)
+
+        val somaHoraAtual = (horaAtual*60) + minutoAtual
     }
 
     //Função que volta o binding para null ao encerrar a activity
