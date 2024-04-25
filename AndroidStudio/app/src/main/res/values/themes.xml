@@ -3,7 +3,7 @@
     <style name="Theme.PIIII_Grupo6" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_nav</item>
-        <item name="colorPrimaryVariant">@color/blue_nav</item>
+        <item name="colorPrimaryVariant">@color/yellowbtn</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow</item>

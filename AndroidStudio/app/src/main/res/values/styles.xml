@@ -18,11 +18,20 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColorHint">@color/white</item>
-
     </style>
     <style name="textInputETCadastro">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/greyGuardian</item>
+    </style>
+    <style name="TimePriceBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/time_price_box</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">50dp</item>
     </style>
 </resources>

@@ -85,7 +85,7 @@
                     android:id="@+id/etSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_margin="3.7dp"
                     android:background="@color/greyGuardian"
                     android:hint="@string/senha"
                     android:inputType="textPassword"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/esqueceu_a_senha"
                 android:textColor="@color/grey"
                 android:textStyle="bold" />
@@ -116,7 +116,7 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="23dp"
                 android:gravity="center">
 
                 <Button
@@ -134,7 +134,7 @@
                 android:id="@+id/tvCadastrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="22dp"
                 android:text="@string/n_o_tem_uma_conta_cadastre_se"
                 android:textColor="@color/grey" />
 
