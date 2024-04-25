@@ -58,8 +58,7 @@ class CreateCardActivity : AppCompatActivity() {
             progressBar.isIndeterminate = true
 
             verificarPreenchidos(idDocumentPessoa)
-
-            progressBar.isIndeterminate = false
+            
         }
 
     /*    //AÇÕES DO BOTTOM NAVIGATION
