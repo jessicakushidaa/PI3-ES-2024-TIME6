@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityCreateCardBinding
@@ -52,7 +53,13 @@ class CreateCardActivity : AppCompatActivity() {
 
         //O que fazer quando clicar em cadastrar
         binding?.btnCadastrar?.setOnClickListener{
+            var progressBar = findViewById<ProgressBar>(R.id.progressBar)
+
+            progressBar.isIndeterminate = true
+
             verificarPreenchidos(idDocumentPessoa)
+
+            progressBar.isIndeterminate = false
         }
 
     /*    //AÇÕES DO BOTTOM NAVIGATION
@@ -117,6 +124,8 @@ class CreateCardActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener {
             dialog.dismiss()
+            var voltarMostrarCartao = Intent(this@CreateCardActivity, ShowCardActivity::class.java)
+            startActivity(voltarMostrarCartao)
         }
 
         dialog.show()

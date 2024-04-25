@@ -11,13 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnClosePopup"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="X"
-            android:layout_gravity="end"/>
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -34,6 +27,12 @@
             android:text="example example example example example example example"
             android:textSize="22sp"
             android:gravity="center"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnClosePopup"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Voltar"
+            android:layout_gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

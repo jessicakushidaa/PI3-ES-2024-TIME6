@@ -33,9 +33,16 @@
             android:layout_width="270dp"
             android:layout_height="270dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
             android:src="@drawable/vector_cred_card">
         </androidx.appcompat.widget.AppCompatImageView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:layout_marginTop="-30dp"
+            android:layout_gravity="center"/>
 
         <!-- Início do formulário de Cadastro de Cartão -->
         <androidx.appcompat.widget.LinearLayoutCompat
