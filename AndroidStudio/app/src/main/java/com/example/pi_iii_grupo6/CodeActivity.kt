@@ -1,9 +1,12 @@
 package com.example.pi_iii_grupo6
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import com.example.pi_iii_grupo6.databinding.ActivityCodeBinding
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
@@ -20,9 +23,27 @@ class CodeActivity : AppCompatActivity() {
         binding = ActivityCodeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        mostrarDialog()
         receberDados()
         gerarQrCode()
     }
+
+    //Função que diz para o usuário que a cobrança foi feita
+    private fun mostrarDialog() {
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_cobrar_cartao)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 
     fun receberDados(){
         infoString = intent.getStringExtra("infosJson")
