@@ -33,6 +33,5 @@
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
         <item name="android:padding">46dp</item>
-        <item name="elevation">4dp</item>
     </style>
 </resources>
