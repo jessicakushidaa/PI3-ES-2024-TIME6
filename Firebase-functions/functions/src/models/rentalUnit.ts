@@ -13,7 +13,7 @@ interface Armario {
 
 interface PrecoTempo {
     preco: number,
-    tempo: number
+    tempo: (number | string)
 }
 
 // Define a estrutura de dados de uma unidade de locacao

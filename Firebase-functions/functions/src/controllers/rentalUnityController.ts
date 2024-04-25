@@ -182,3 +182,5 @@ async function addArmarios(data:
   await batch.commit();
   return {result: `Sucesso! ${count} armários adicionados em ${unitId}.`};
 }
+
+

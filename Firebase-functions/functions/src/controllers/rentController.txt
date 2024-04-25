@@ -1,0 +1,83 @@
+/* eslint-disable linebreak-style */
+
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+import {CallableResponse} from "../models/customResponse";
+import {UnidadeLocacao} from "../models/rentalUnit";
+
+// Retorno do método de admin - inicializa o app do firebase
+const db = admin.firestore(); // chamada do banco de dados
+
+// Referenciando a collection UnidadeLocacao do projeto firebase
+const colUnidades = db.collection("locacao");
+
+export const addLocacao = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    // Extrair os dados recebidos do cliente
+    const situacao = "pendente";
+
+    const {locacaoData} = data;
+
+
+    if (!locacaoData || !situacao) {
+      throw new functions.https.HttpsError("invalid-argument",
+        "Os parâmetros locacaoData, situation são obrigatórios");
+    }
+
+    // Verificar se há armário na unidadeData
+    if (locacaoData.gerentes && Array.isArray(locacaoData.gerentes)) {
+      try {
+      // Mapear os paths dos gerentes para referências aos documentos
+        const gerentesRefs = await Promise
+          .all(unidadeData.gerentes.map(async (gerente: { path: string; }) => {
+            const gerenteRef = admin.firestore().doc(gerente.path);
+            const gerenteSnapshot = await gerenteRef.get();
+            if (!gerenteSnapshot.exists) {
+              throw new Error(`Gerente não encontrado para o caminho:
+               ${gerente.path}`);
+            }
+            return gerenteRef;
+          }));
+
+        // Substituir os paths dos gerentes pelas referências aos documentos
+        unidadeData.gerentes = gerentesRefs;
+      } catch (error) {
+        console.error("Erro ao obter referências aos gerentes:", error);
+        throw new functions.https.HttpsError("unknown",
+          "Falha ao obter referências aos gerentes", error);
+      }
+    }
+    try {
+      const unitDocRef = await db.collection("unidadeLocacao")
+        .add(unidadeData);
+      return await addArmarios({unitId: unitDocRef.id, count, situation});
+    } catch (error) {
+      console.error("Erro ao adicionar unidade e armários:", error);
+      throw new functions.https.HttpsError("unknown",
+        "Falha ao adicionar unidade e armários", error);
+    }
+  });
+
+async function addArmarios(data:
+    {unitId: string, count: number, situation: string}) {
+  const {unitId, count, situation} = data;
+  const db = admin.firestore();
+  const unitRef = colUnidades.doc(unitId);
+  const lockersRef = unitRef.collection("armarios");
+
+  const batch = db.batch();
+  for (let i = 1; i <= count; i++) {
+    const lockerId = `loc-${String(i).padStart(3, "0")}`;
+    const lockerDoc = lockersRef.doc(lockerId);
+    batch.set(lockerDoc, {
+      tag: lockerId,
+      situacao: situation,
+    });
+  }
+
+  await batch.commit();
+  return {result: `Sucesso! ${count} armários adicionados em ${unitId}.`};
+}
+
+
