@@ -5,28 +5,16 @@
     android:background="@color/white">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue_nav"
-        android:minHeight="?attr/actionBarSize"
-        android:padding="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <View
         android:id="@+id/view_loc_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/location_shape1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/desc_container"
-        android:layout_marginTop="80dp"/>
+        app:layout_constraintTop_toTopOf="@+id/desc_container" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -35,11 +23,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="25dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="70dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/llPrecoContainer">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -74,9 +62,9 @@
         android:id="@+id/llPrecoContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/btnConfirmarLoc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,17 +80,16 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco1"
-                style="@style/TimePriceBox"
-                android:elevation="4dp">
+                style="@style/TimePriceBox">
 
 
                 <TextView
                     android:id="@+id/tvTempo1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/tempo_1"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -112,7 +99,7 @@
                     android:gravity="center"
                     android:text="@string/preco_1"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -122,25 +109,23 @@
                 style="@style/TimePriceBox"
                 android:layout_marginStart="16dp">
 
-
-
             <TextView
                     android:id="@+id/tvTempo2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/tempo_2"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPreco2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/preco_2"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -161,53 +146,46 @@
                 <TextView
                     android:id="@+id/tvTempo3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/tempo_3"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPreco3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/preco_3"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:background="@color/yellow"
-                android:elevation="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="50dp">
+                style="@style/TimePriceBox"
+                android:layout_marginStart="16dp">
 
 
                 <TextView
                     android:id="@+id/tvTempo4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/tempo_4"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPreco4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/preco_4"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -231,7 +209,5 @@
         app:layout_constraintTop_toBottomOf="@id/llPrecoContainer"
         app:layout_constraintVertical_bias="1.0"
         android:layout_marginBottom="100dp"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
