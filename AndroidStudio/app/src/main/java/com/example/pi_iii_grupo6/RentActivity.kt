@@ -151,7 +151,7 @@ class RentActivity : AppCompatActivity() {
             var textoEndereco = binding?.etEndereco
             var textoReferencia = binding?.etReferencia
 
-            textoTitulo?.text = "Você está em: ${actualLocker.nomeLocal}"
+            textoTitulo?.text = "${actualLocker.nomeLocal}"
             textoEndereco?.text = "Endereço: ${actualLocker.enderecoLocal}"
             textoReferencia?.text = "Referência: ${actualLocker.referenciaLocal}"
 
@@ -234,7 +234,7 @@ class RentActivity : AppCompatActivity() {
 
 
         if(actualLocker.precos.size >= 4){
-            tempo4.text = "${actualLocker.precos[3].tempo} min"
+            tempo4.text = "${actualLocker.precos[3].tempo}"
             preco4.text = "R$ ${actualLocker.precos[3].preco}"
         }
 

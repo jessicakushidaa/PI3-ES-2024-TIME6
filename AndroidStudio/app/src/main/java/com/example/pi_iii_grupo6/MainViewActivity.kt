@@ -69,7 +69,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var preco: Preco?
     )
     class Preco (
-        var tempo: Int,
+        var tempo: Any?,
         var preco: Double
     )
 
@@ -174,7 +174,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                         while (j < numPrecos){
                             Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
                             var precoAtual = tabelaPrecos[j] as Map<String, Any>
-                            var preco = Preco(precoAtual["tempo"] as Int, precoAtual["preco"] as Double)
+                            var preco = Preco(precoAtual["tempo"], precoAtual["preco"] as Double)
                             listaPrecos.add(preco)
                             j++
                         }
