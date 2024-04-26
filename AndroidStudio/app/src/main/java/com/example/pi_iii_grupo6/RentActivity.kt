@@ -125,11 +125,8 @@ class RentActivity : AppCompatActivity() {
         if (nomeRecebido == null){
             var flag = 0
             for (place in places) {
-
                 var locPlace = LatLng(place.latitude, place.longitude)
-
                 var distancia = calcularDistancia(locPlace)
-
                 if (distancia <= 1.0) {
                     //Está em alguma unidade!
                     actualLocker = place
@@ -155,8 +152,8 @@ class RentActivity : AppCompatActivity() {
                 }else{
                     Log.d("stringrecebida",nomeRecebido)
                 }
-                locationHandler(flag)
             }
+            locationHandler(flag)
         }
     }
 
