@@ -35,6 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".CreateCardActivity"
+            android:parentActivityName=".ShowCardActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
