@@ -8,16 +8,25 @@
     tools:context=".MainMenuActivity"
     android:background="@color/greyGuardian">
 
+    <!--ToolBar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/blue_nav"
         android:minHeight="?attr/actionBarSize"
-        android:padding="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logovetor"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -29,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+        <!--BotãoMapa-->
         <Button
             android:id="@+id/llMapa"
             android:layout_gravity="center"
@@ -42,6 +52,7 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
+        <!--BotãoCartão-->
         <Button
             android:id="@+id/llCartao"
             android:layout_width="300dp"
@@ -56,6 +67,7 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
+        <!--BotãoLocações-->
         <Button
             android:id="@+id/llOpcao"
             android:layout_width="300dp"
@@ -72,6 +84,7 @@
 
     </LinearLayout>
 
+    <!--Botão Sair-->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="60dp"
