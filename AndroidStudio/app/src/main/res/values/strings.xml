@@ -67,7 +67,13 @@
     <string name="componenteqr">componenteQr</string>
     <string name="nenhumCartaoInfo">Você ainda não possui nenhum cartão cadastrado</string>
     <string name="cadastreCartao">Cadastre um cartão</string>
+
+    <string name="Fechar">X</string>
+    <string name="CartaoAviso">Hmm... Parece que você não tem um cartão cadastrado ainda</string>
+    <string name="cadastrarCartaoText">CADASTRAR CARTÃO</string>
+
     <string name="textPopCobrança">Foi cobrado o valor de uma diária no seu cartão, quando você voltar, será extornado o valor referente ao sei tempo utilizado.</string>
     <string name="TextCobracaTitle">Cobrança feita!</string>
     <string name="xFechar">X</string>
+
 </resources>

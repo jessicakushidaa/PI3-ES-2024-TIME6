@@ -75,7 +75,6 @@ class ShowCardActivity : AppCompatActivity() {
         Log.d("StringRecebida","ENTROU MOSTRAR INFORMAÇÕES")
         var tvNome = binding?.tvNomeTitular
         var tvNumero = binding?.tvNumeroCartao
-        var tvData = binding?.tvDataVal
         var tvTitle = binding?.tvCartaoTitle
 
 
@@ -85,7 +84,6 @@ class ShowCardActivity : AppCompatActivity() {
 
         tvNome?.text = cartaoUsuario?.nomeTitular
         tvNumero?.text = numeroFormatado
-        tvData?.text = cartaoUsuario?.dataVal
         tvTitle?.text = "Meu cartão"
     }
 
