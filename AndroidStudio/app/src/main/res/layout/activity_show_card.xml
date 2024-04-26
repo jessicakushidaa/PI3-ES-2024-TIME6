@@ -1,45 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowCardActivity"
+    android:background="@color/greyGuardian"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".ShowCardActivity">
 
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_nav"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logovetor"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--Titulo Cadastro-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCartaoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastre um cartão"
-        android:textSize="25sp"/>
+        android:layout_marginTop="156dp"
+        android:elevation="5dp"
+        android:text="@string/cadastreCartao"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!--Info não possui cartão-->
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNumeroCartao"
+        android:id="@+id/tvInfoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Parece que você não cadastrou um cartão"
-        android:textSize="20sp"/>
+        android:layout_marginTop="400dp"
+        android:background="@color/blue_nav"
+        android:elevation="5dp"
+        android:padding="30dp"
+        android:text="@string/nenhumCartaoInfo"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNomeTitular"
-        android:layout_width="wrap_content"
+    <!--Linear para ajustar o nome do cartão e o numero-->
+    <LinearLayout
+        android:id="@+id/linearInfo"
+        android:layout_width="373dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="250dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--Nome cartão-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNomeTitular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingStart="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/yellow"
+            android:text=""
+            android:textStyle="bold"
+            android:textColor="@color/blue_nav"
+            android:textSize="20sp" />
+
+        <!--Numero do cartão-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNumeroCartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingStart="20dp"
+            android:paddingBottom="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/yellow"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+    </LinearLayout>
+
+    <!--bottom navigation-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20sp"/>
+        android:background="@color/blue_nav"
+        app:itemIconSize="25dp"
+        app:itemIconTint="@color/yellow"
+        app:itemTextColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDataVal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20sp"/>
+    <!--button floating-->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAdicionarCartao"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="+"
-        />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAdicionarCartao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="100dp"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@drawable/baseline_add_24" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
