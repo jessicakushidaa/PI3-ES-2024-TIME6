@@ -1,9 +1,14 @@
 package com.example.pi_iii_grupo6
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
@@ -16,6 +21,11 @@ import com.google.firebase.functions.functions
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
 
+class Pendente(
+    var pendente: Boolean,
+    var preco: MainViewActivity.Preco,
+    var idUnidade: String
+)
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
     private lateinit var functions: FirebaseFunctions
@@ -35,13 +45,20 @@ class MainMenuActivity : AppCompatActivity() {
 
         functions = Firebase.functions("southamerica-east1")
 
-
-        checarLocacaoPendente()
-
-
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
             Log.d("idrecebido","ID: $idDocumentPessoa")
+            Log.d("IDPESSOA","$idDocumentPessoa")
+            checarLocacaoPendente().addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    val pendente = task.result
+                    if (pendente.pendente){
+                        mostrarDialogPendente(pendente)
+                    }
+                }else{
+                    Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
+                }
+            }
             consultarCartao(idDocumentPessoa)
                 .addOnCompleteListener { task->
                     if (task.isSuccessful){
@@ -53,6 +70,9 @@ class MainMenuActivity : AppCompatActivity() {
                     }
                 }
         }
+
+
+
 
         //Chamar funcao que busca todos os armarios
         buscarArmarios().addOnCompleteListener { task->
@@ -111,6 +131,31 @@ class MainMenuActivity : AppCompatActivity() {
 
     }
 
+    private fun mostrarDialogPendente(locacao: Pendente){
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_locacao_pendente)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvLocation: TextView = dialog.findViewById(R.id.tvLocation)
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup3)
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        tvLocation.setOnClickListener {
+            var intentQrCode = Intent(this@MainMenuActivity,CodeActivity::class.java)
+
+            var infosJson = gson.toJson(locacao)
+
+            intentQrCode.putExtra("infosJson",infosJson)
+            startActivity(intentQrCode)
+        }
+
+        dialog.show()
+    }
+
     private fun buscarArmarios(): Task<String>{
         return functions
             .getHttpsCallable("getAllUnits")
@@ -128,6 +173,7 @@ class MainMenuActivity : AppCompatActivity() {
                         val unidade = unidades[i] as Map<String, Any>
                         Log.d("DEBUG UNIDADES","$unidade")
                         val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val id = unidade["id"] as String
                         val latitude = coordenadas["latitude"] as Double
                         val longitude = coordenadas["longitude"] as Double
                         val nome = unidade["nome"] as String
@@ -151,6 +197,7 @@ class MainMenuActivity : AppCompatActivity() {
 
                         //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
                         var unidadeLocacao = MainViewActivity.Place(
+                            id,
                             latitude,
                             longitude,
                             nome,
@@ -236,9 +283,36 @@ class MainMenuActivity : AppCompatActivity() {
         var idDocumentPessoa = ""
     }
 
-    private fun checarLocacaoPendente() {
-        if (locacoesPendentes.isNotEmpty()){
-            Toast.makeText(baseContext,"Você Possui uma locação pendente! retorne para minhas locacoes",Toast.LENGTH_SHORT).show()
-        }
+    private fun checarLocacaoPendente(): Task<Pendente> {
+        val data = hashMapOf(
+            "idPessoa" to idDocumentPessoa
+        )
+
+        return functions
+            .getHttpsCallable("checkLocacao")
+            .call(data)
+            .continueWith{task->
+                val res = task.result.data as Map<String, Any>
+                val payload = res["payload"] as Map<String, Any>
+                val pendente = payload["pendente"] as Boolean
+
+                if (pendente){
+                    val snapshot = payload["locSnapshot"] as Map<String, Any>
+                    val data = snapshot["data"] as Map<String, Any>
+                    val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
+                    val preco = precoEscolhido["preco"] as Double
+                    val tempo = precoEscolhido["tempo"] as String
+                    val armario = data["armario"] as Map<String, Any>
+                    val path = armario["_path"] as Map<String, Any>
+                    val segments= path["segments"] as ArrayList<*>
+                    val idUnidade = segments[1] as String
+                    var pendentetrue = Pendente(true, MainViewActivity.Preco(tempo, preco),idUnidade)
+                    pendentetrue
+                }else{
+                    var pendentefalse = Pendente(false, MainViewActivity.Preco(0, 0.0), "")
+                    pendentefalse
+                }
+
+            }
     }
 }
