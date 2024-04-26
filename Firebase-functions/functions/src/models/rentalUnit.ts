@@ -8,12 +8,11 @@ interface Coordenadas {
 
 interface Armario {
     tagArmario: string,
-    situacao: string
 }
 
-interface PrecoTempo {
+export interface PrecoTempo {
     preco: number,
-    tempo: number
+    tempo: (number | string)
 }
 
 // Define a estrutura de dados de uma unidade de locacao
