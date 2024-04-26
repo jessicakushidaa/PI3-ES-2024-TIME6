@@ -128,6 +128,7 @@ class MainMenuActivity : AppCompatActivity() {
                         val unidade = unidades[i] as Map<String, Any>
                         Log.d("DEBUG UNIDADES","$unidade")
                         val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val id = unidade["id"] as String
                         val latitude = coordenadas["latitude"] as Double
                         val longitude = coordenadas["longitude"] as Double
                         val nome = unidade["nome"] as String
@@ -151,6 +152,7 @@ class MainMenuActivity : AppCompatActivity() {
 
                         //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
                         var unidadeLocacao = MainViewActivity.Place(
+                            id,
                             latitude,
                             longitude,
                             nome,

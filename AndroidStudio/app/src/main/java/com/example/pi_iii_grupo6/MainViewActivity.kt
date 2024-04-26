@@ -56,6 +56,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
     //Criando classe Place que representa cada Unidade de Locação
     class Place (
+        var id: String,
         var latitude: Double,
         var longitude: Double,
         var nomeLocal: String,
@@ -161,6 +162,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                         val unidade = unidades[i] as Map<String, Any>
                         Log.d("DEBUG UNIDADES","$unidade")
                         val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val id = unidade["id"] as String
                         val latitude = coordenadas["latitude"] as Double
                         val longitude = coordenadas["longitude"] as Double
                         val nome = unidade["nome"] as String
@@ -180,7 +182,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                         }
 
                         //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
-                        var unidadeLocacao = Place(latitude, longitude, nome, endereco, descricao, listaPrecos)
+                        var unidadeLocacao = Place(id,latitude, longitude, nome, endereco, descricao, listaPrecos)
                         listaDeUnidades.add(unidadeLocacao)
                         i++
                     }
