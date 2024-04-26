@@ -33,11 +33,30 @@
                 android:src="@drawable/logo" />
 
             <TextView
+                android:id="@+id/textname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="GUARDIAN"
+                android:textColor="@color/white"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/textname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Locker App"
+                android:textColor="@color/grey"
+                android:textSize="20sp" />
+
+            <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="LOGIN"
+                android:layout_marginTop="50dp"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
