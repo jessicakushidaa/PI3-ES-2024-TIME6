@@ -65,4 +65,6 @@
     <string name="voltarQr">Voltar</string>
     <string name="qr_codeText">QR CODE</string>
     <string name="componenteqr">componenteQr</string>
+    <string name="nenhumCartaoInfo">Você ainda não possui nenhum cartão cadastrado</string>
+    <string name="cadastreCartao">Cadastre um cartão</string>
 </resources>
