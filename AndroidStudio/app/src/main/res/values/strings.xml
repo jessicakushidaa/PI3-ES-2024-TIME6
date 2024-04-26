@@ -75,5 +75,6 @@
     <string name="textPopCobrança">Foi cobrado o valor de uma diária no seu cartão, quando você voltar, será extornado o valor referente ao sei tempo utilizado.</string>
     <string name="TextCobracaTitle">Cobrança feita!</string>
     <string name="xFechar">X</string>
+    <string name="infoLoc">Você ainda não possui nenhuma locação</string>
 
 </resources>
