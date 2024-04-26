@@ -18,6 +18,7 @@ import android.location.Location
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
@@ -81,6 +82,13 @@ class RentActivity : AppCompatActivity() {
             val intentMapa = Intent(this@RentActivity, MainViewActivity::class.java)
             startActivity(intentMapa)
         }
+
+        //Seta Voltar
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
         dialog.show()
     }

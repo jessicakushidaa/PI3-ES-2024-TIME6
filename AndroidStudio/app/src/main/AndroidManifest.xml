@@ -30,6 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".RentActivity"
+            android:parentActivityName=".MainViewActivity"
             android:exported="false" />
         <activity
             android:name=".RentManagerActivity"
