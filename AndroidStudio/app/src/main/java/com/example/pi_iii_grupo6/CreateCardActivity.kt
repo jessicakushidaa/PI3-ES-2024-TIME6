@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivityCreateCardBinding
 import com.example.pi_iii_grupo6.databinding.DialogPopupBinding
 import com.google.android.gms.tasks.Task
@@ -60,6 +61,13 @@ class CreateCardActivity : AppCompatActivity() {
             verificarPreenchidos(idDocumentPessoa)
             
         }
+
+        //Seta Voltar
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
     /*    //AÇÕES DO BOTTOM NAVIGATION
         binding?.btnHome?.setOnClickListener {
