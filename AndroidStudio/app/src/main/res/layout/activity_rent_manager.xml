@@ -5,26 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".RentManagerActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".RentManagerActivity">
+
+    <!--vector dos cantos-->
 
     <!--vector dos cantos-->
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="@drawable/vector_ponta2"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="110dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!--vector dos cantos-->
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="276dp"
+        android:layout_height="258dp"
         android:background="@drawable/vector_ponta"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="-10dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!--Toolbar-->
     <androidx.appcompat.widget.Toolbar
@@ -40,44 +39,55 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logovetor"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!--Botão "Alugar Armário-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRent"
-        android:layout_width="260dp"
+    <!-- Container dos botoes -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/container_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="460dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="40dp"
-        android:text="@string/alugar_arm_ri"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <!--Botão "Minhas Locações-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRentals"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="324dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="40dp"
-        android:text="@string/minhas_loca_e"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnRent"
-        app:layout_constraintStart_toStartOf="@id/btnRent" />
+        <!--Botão "Alugar Armário-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRent"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/yellow"
+            android:elevation="4dp"
+            android:padding="40dp"
+            android:text="@string/alugar_arm_ri"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!--Botão "Minhas Locações-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRentals"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/yellow"
+            android:elevation="4dp"
+            android:padding="40dp"
+            android:text="@string/minhas_loca_e"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <!--Bottom Navigation-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -86,12 +96,12 @@
         android:layout_height="wrap_content"
         android:background="@color/blue_nav"
         app:itemIconSize="25dp"
-        app:itemTextColor="@color/yellow"
         app:itemIconTint="@color/yellow"
+        app:itemTextColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav"/>
+        app:menu="@menu/bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
