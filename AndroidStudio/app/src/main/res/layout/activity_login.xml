@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!--Logo-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/logoLayout"
             android:layout_width="wrap_content"
@@ -130,6 +131,7 @@
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!--link Cadastrar-->
             <TextView
                 android:id="@+id/tvCadastrar"
                 android:layout_width="wrap_content"
@@ -138,6 +140,7 @@
                 android:text="@string/n_o_tem_uma_conta_cadastre_se"
                 android:textColor="@color/grey" />
 
+            <!--link acessar sem login-->
             <TextView
                 android:id="@+id/tvAnonimous"
                 android:layout_width="wrap_content"
