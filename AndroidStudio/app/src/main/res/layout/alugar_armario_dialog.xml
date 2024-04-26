@@ -7,6 +7,7 @@
     android:backgroundTint="@color/light_grey">
 
 
+    <!--Container-->
     <View
         android:id="@+id/view_loc_container"
         android:layout_width="match_parent"
@@ -31,6 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/llPrecoContainer">
 
+        <!-- Text Descrição -->
         <TextView
             android:id="@+id/label_desc_tempo"
             android:layout_width="wrap_content"
@@ -52,6 +54,7 @@
             app:drawableLeftCompat="@drawable/baseline_access_time_24" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <!-- Container dos preços -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llPrecoContainer"
         android:layout_width="wrap_content"
@@ -72,6 +75,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <!-- Preço 1 -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco1"
                 style="@style/TimePriceBox"
@@ -99,6 +103,7 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- Preço 2 -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco2"
                 style="@style/TimePriceBox"
@@ -133,6 +138,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <!-- Preço 3 -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco3"
                 style="@style/TimePriceBox"
@@ -159,6 +165,7 @@
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- Preço 4 -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPreco4"
                 style="@style/TimePriceBox"
@@ -189,6 +196,7 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <!-- Botão de confirmar locação-->
     <Button
         android:id="@+id/btnConfirmarLoc"
         android:layout_width="wrap_content"
