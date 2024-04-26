@@ -21,6 +21,11 @@ import com.google.firebase.functions.functions
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
 
+class Pendente(
+    var pendente: Boolean,
+    var preco: MainViewActivity.Preco,
+    var idUnidade: String
+)
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
     private lateinit var functions: FirebaseFunctions
@@ -47,9 +52,8 @@ class MainMenuActivity : AppCompatActivity() {
             checarLocacaoPendente().addOnCompleteListener { task->
                 if (task.isSuccessful){
                     val pendente = task.result
-                    if (pendente){
-
-                        mostrarDialogPendente()
+                    if (pendente.pendente){
+                        mostrarDialogPendente(pendente)
                     }
                 }else{
                     Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
@@ -127,7 +131,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     }
 
-    private fun mostrarDialogPendente(){
+    private fun mostrarDialogPendente(locacao: Pendente){
         var dialog = Dialog(this)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_locacao_pendente)
@@ -141,7 +145,12 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         tvLocation.setOnClickListener {
-            //Abrir tela de qr code da locação
+            var intentQrCode = Intent(this@MainMenuActivity,CodeActivity::class.java)
+
+            var infosJson = gson.toJson(locacao)
+
+            intentQrCode.putExtra("infosJson",infosJson)
+            startActivity(intentQrCode)
         }
 
         dialog.show()
@@ -274,7 +283,7 @@ class MainMenuActivity : AppCompatActivity() {
         var idDocumentPessoa = ""
     }
 
-    private fun checarLocacaoPendente(): Task<Boolean> {
+    private fun checarLocacaoPendente(): Task<Pendente> {
         val data = hashMapOf(
             "idPessoa" to idDocumentPessoa
         )
@@ -286,7 +295,24 @@ class MainMenuActivity : AppCompatActivity() {
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
                 val pendente = payload["pendente"] as Boolean
-                pendente
+
+                if (pendente){
+                    val snapshot = payload["locSnapshot"] as Map<String, Any>
+                    val data = snapshot["data"] as Map<String, Any>
+                    val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
+                    val preco = precoEscolhido["preco"] as Double
+                    val tempo = precoEscolhido["tempo"] as String
+                    val armario = data["armario"] as Map<String, Any>
+                    val path = armario["_path"] as Map<String, Any>
+                    val segments= path["segments"] as ArrayList<*>
+                    val idUnidade = segments[1] as String
+                    var pendentetrue = Pendente(true, MainViewActivity.Preco(tempo, preco),idUnidade)
+                    pendentetrue
+                }else{
+                    var pendentefalse = Pendente(false, MainViewActivity.Preco(0, 0.0), "")
+                    pendentefalse
+                }
+
             }
     }
 }

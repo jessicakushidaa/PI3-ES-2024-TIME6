@@ -22,8 +22,7 @@ class CodeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCodeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-
-        mostrarDialog()
+        
         receberDados()
         gerarQrCode()
     }
