@@ -212,19 +212,6 @@ class RentActivity : AppCompatActivity() {
         var preco3 = sheetBinding.tvPreco3
         var preco4 = sheetBinding.tvPreco4
 
-        var numPrecos = actualLocker.precos.size
-        var aux = 0
-
-        while (aux < 4){
-
-            if (actualLocker.precos[aux].tempo as Int >= 59){
-                
-            }
-
-            aux++
-        }
-
-
         tempo1.text = "${actualLocker.precos[0].tempo} min"
         tempo2.text = "${actualLocker.precos[1].tempo} min"
 
@@ -232,7 +219,7 @@ class RentActivity : AppCompatActivity() {
         preco1.text = "R$ ${actualLocker.precos[0].preco}"
         preco2.text = "R$ ${actualLocker.precos[1].preco}"
 
-        if(numPrecos >= 3){
+        if(actualLocker.precos.size >= 3){
             preco3.text = "R$ ${actualLocker.precos[2].preco}"
             tempo3.text = "${actualLocker.precos[2].tempo} min"
         }else{
@@ -240,7 +227,8 @@ class RentActivity : AppCompatActivity() {
             tempo3.text = ""
         }
 
-        if(numPrecos >= 4){
+
+        if(actualLocker.precos.size >= 4){
             tempo4.text = "${actualLocker.precos[3].tempo}"
             preco4.text = "R$ ${actualLocker.precos[3].preco}"
         }
