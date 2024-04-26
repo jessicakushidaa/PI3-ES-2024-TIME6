@@ -24,9 +24,6 @@ class ShowCardActivity : AppCompatActivity() {
     private var binding: ActivityShowCardBinding? = null
     private lateinit var functions: FirebaseFunctions
     private var gson = Gson()
-
-
-
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +31,17 @@ class ShowCardActivity : AppCompatActivity() {
         binding = ActivityShowCardBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        // Inicialização do Firebase Authentication e Firebase Functions
         auth = Firebase.auth
         functions = Firebase.functions("southamerica-east1")
 
-
+        // Obtendo o ID do usuário atualmente autenticado
         var idUser = auth.currentUser?.uid
 
         //Recebendo o ID do usuário
         receberId()
 
+        // Consultando o cartão do usuário a partir do ID da pessoa
         consultarCartao(idPessoa)
             .addOnCompleteListener { task->
                 if (task.isSuccessful){
@@ -61,7 +60,7 @@ class ShowCardActivity : AppCompatActivity() {
             abrirCreateCard(idPessoa)
         }
 
-        //Seta Voltar
+        // Configurando a Toolbar para permitir voltar à tela anterior
         val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
 
         setSupportActionBar(toolbar)
@@ -98,10 +97,12 @@ class ShowCardActivity : AppCompatActivity() {
 
     }
 
+    // Função para receber o ID da pessoa
     private fun receberId() {
         idPessoa = idDocumentPessoa
     }
 
+    // Handler para exibir informações do cartão quando existem
     private fun consultarCartaoHandler(){
         if (cartaoUsuario!=null){
             Log.d("CARTAO","USUARIO TEM CARTAO")
@@ -131,6 +132,7 @@ class ShowCardActivity : AppCompatActivity() {
         viewPai.removeView(tvInfo)
     }
 
+    // Função para mostrar as informações do cartão
     private fun mostrarInformacoes() {
         Log.d("StringRecebida","ENTROU MOSTRAR INFORMAÇÕES")
         var tvNome = binding?.tvNomeTitular
@@ -147,6 +149,7 @@ class ShowCardActivity : AppCompatActivity() {
         tvTitle?.text = "Meu cartão"
     }
 
+    // Função para abrir a tela de criação de cartão
     private fun abrirCreateCard(idUser: String?) {
         if (cartaoUsuario == null){
             val abrirCreateCard = Intent(this@ShowCardActivity, CreateCardActivity::class.java)
@@ -157,6 +160,8 @@ class ShowCardActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"Você ja possui um cartão cadastrado",Toast.LENGTH_SHORT).show()
         }
     }
+
+    // Função para consultar o cartão do usuário no Firebase
     fun consultarCartao(id: String?): Task<String> {
         Log.d("StringRecebida", "Começou consultar Cartao, id: $id")
         val data = hashMapOf(
@@ -182,6 +187,7 @@ class ShowCardActivity : AppCompatActivity() {
 
     }
 
+    //valor idpessoa
     companion object{
         var idPessoa: String? = null
     }
