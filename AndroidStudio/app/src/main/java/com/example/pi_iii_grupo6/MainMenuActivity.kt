@@ -40,13 +40,21 @@ class MainMenuActivity : AppCompatActivity() {
 
         functions = Firebase.functions("southamerica-east1")
 
-
-        checarLocacaoPendente()
-
-
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
             Log.d("idrecebido","ID: $idDocumentPessoa")
+            Log.d("IDPESSOA","$idDocumentPessoa")
+            checarLocacaoPendente().addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    val pendente = task.result
+                    if (pendente){
+
+                        mostrarDialogPendente()
+                    }
+                }else{
+                    Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
+                }
+            }
             consultarCartao(idDocumentPessoa)
                 .addOnCompleteListener { task->
                     if (task.isSuccessful){
@@ -58,6 +66,9 @@ class MainMenuActivity : AppCompatActivity() {
                     }
                 }
         }
+
+
+
 
         //Chamar funcao que busca todos os armarios
         buscarArmarios().addOnCompleteListener { task->
@@ -263,9 +274,19 @@ class MainMenuActivity : AppCompatActivity() {
         var idDocumentPessoa = ""
     }
 
-    private fun checarLocacaoPendente() {
-        if (locacoesPendentes.isNotEmpty()){
-            Toast.makeText(baseContext,"Você Possui uma locação pendente! retorne para minhas locacoes",Toast.LENGTH_SHORT).show()
-        }
+    private fun checarLocacaoPendente(): Task<Boolean> {
+        val data = hashMapOf(
+            "idPessoa" to idDocumentPessoa
+        )
+
+        return functions
+            .getHttpsCallable("checkLocacao")
+            .call(data)
+            .continueWith{task->
+                val res = task.result.data as Map<String, Any>
+                val payload = res["payload"] as Map<String, Any>
+                val pendente = payload["pendente"] as Boolean
+                pendente
+            }
     }
 }
