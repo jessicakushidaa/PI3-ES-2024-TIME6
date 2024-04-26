@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
@@ -50,6 +52,7 @@ class ShowCardActivity : AppCompatActivity() {
                     consultarCartaoHandler()
                 }else{
                     Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
+                    removerCardInfos()
                 }
             }
 
@@ -103,9 +106,29 @@ class ShowCardActivity : AppCompatActivity() {
         if (cartaoUsuario!=null){
             Log.d("CARTAO","USUARIO TEM CARTAO")
             mostrarInformacoes()
+            removerNaoTem()
         }else{
             Log.d("CARTAO","USUARIO NAO TEM CARTAO")
+            removerCardInfos()
         }
+    }
+
+    //Função que remove a view que mostra as informações do cartão, quando não há um cartão
+    private fun removerCardInfos() {
+        Log.d("remove","Removendo informacoes do cartao")
+        var tvInfo = binding?.linearInfo
+
+        val viewPai = tvInfo?.parent as ViewGroup
+        viewPai.removeView(tvInfo)
+    }
+
+    //Função que, quando tem um cartão, remove a view falando que não tem
+    private fun removerNaoTem() {
+        Log.d("remove","Removendo informacoes")
+        var tvInfo = binding?.tvInfoTitle
+
+        val viewPai = tvInfo?.parent as ViewGroup
+        viewPai.removeView(tvInfo)
     }
 
     private fun mostrarInformacoes() {
@@ -155,8 +178,8 @@ class ShowCardActivity : AppCompatActivity() {
                 val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
                 val cartoesgson = gson.toJson(cartaoRecebido)
                 cartoesgson
-
             }
+
     }
 
     companion object{
