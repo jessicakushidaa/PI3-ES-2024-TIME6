@@ -348,10 +348,10 @@ class RentActivity : AppCompatActivity() {
     }
 
     fun marcarOpçcao(viewSelecionada: View){
-        viewSelecionada.setBackgroundColor(Color.parseColor("#E7E7E7"))
+        viewSelecionada.setBackgroundResource(R.drawable.time_price_box_pressed)
     }
     fun desmarcarOpcao(viewSelecionada: View){
-        viewSelecionada.setBackgroundColor(Color.parseColor("#ffffff"))
+        viewSelecionada.setBackgroundResource(R.drawable.time_price_box)
     }
 
     companion object{

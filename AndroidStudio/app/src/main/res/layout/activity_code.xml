@@ -76,8 +76,8 @@
         android:id="@+id/imQrCode"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="124dp"
         android:elevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnQuit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,12 +88,12 @@
         android:id="@+id/btnQuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/blue_nav"
         android:text="@string/voltarQr"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/imQrCode"
         app:layout_constraintStart_toStartOf="@id/imQrCode"
-        app:layout_constraintTop_toBottomOf="@id/imQrCode" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

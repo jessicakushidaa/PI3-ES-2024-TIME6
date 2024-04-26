@@ -63,14 +63,16 @@
     <!--Linear para ajustar o nome do cartão e o numero-->
     <LinearLayout
         android:id="@+id/linearInfo"
-        android:layout_width="373dp"
-        android:layout_height="75dp"
+        android:layout_width="370dp"
+        android:layout_height="80dp"
         android:layout_marginTop="250dp"
         android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.741"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/time_price2">
 
         <!--Nome cartão-->
         <androidx.appcompat.widget.AppCompatTextView
@@ -79,11 +81,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:paddingStart="20dp"
+            android:paddingTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/yellow"
-            android:text=""
+            android:text="JESSICA S KUSHIDA"
             android:textStyle="bold"
-            android:textColor="@color/blue_nav"
+            android:textColor="@color/greyGuardian"
             android:textSize="20sp" />
 
         <!--Numero do cartão-->
@@ -94,12 +97,13 @@
             android:layout_marginStart="16dp"
             android:paddingStart="20dp"
             android:paddingBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/yellow"
-            android:text=""
+            android:text="12346780"
             android:textColor="@color/white"
-            android:textSize="23sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

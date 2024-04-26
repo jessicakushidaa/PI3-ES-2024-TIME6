@@ -79,14 +79,15 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/textbox_custom_outline"
                 android:textColorHint="@color/white"
-                app:startIconDrawable="@drawable/baseline_email_24">
+                app:startIconDrawable="@drawable/padlock_svgrepo_com">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3.7dp"
+                    android:layout_margin="4dp"
                     android:background="@color/greyGuardian"
+                    android:gravity="center_vertical"
                     android:hint="@string/senha"
                     android:inputType="textPassword"
                     android:paddingStart="45dp" />

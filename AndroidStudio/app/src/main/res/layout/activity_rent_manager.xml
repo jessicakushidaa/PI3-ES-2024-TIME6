@@ -69,7 +69,7 @@
             android:padding="40dp"
             android:text="@string/alugar_arm_ri"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
