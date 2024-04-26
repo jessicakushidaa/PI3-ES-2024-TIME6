@@ -8,7 +8,9 @@
     tools:context=".MainMenuActivity"
     android:background="@color/greyGuardian">
 
+
     <!--ToolBar-->
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -47,10 +49,11 @@
             android:backgroundTint="@color/yellow"
             android:drawableLeft="@drawable/map_svgrepo_com"
             android:padding="60dp"
-            android:text="Mapa"
+            android:text="@string/Textmapa"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
+
 
         <!--BotãoCartão-->
         <Button
@@ -62,12 +65,14 @@
             android:backgroundTint="@color/yellow"
             android:drawableLeft="@drawable/baselinecard_24"
             android:padding="35dp"
-            android:text="Cartões"
+            android:text="@string/TextCart"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
+
         <!--BotãoLocações-->
+
         <Button
             android:id="@+id/llOpcao"
             android:layout_width="300dp"
@@ -77,29 +82,31 @@
             android:backgroundTint="@color/yellow"
             android:drawableLeft="@drawable/baselinereader_mode_24"
             android:padding="35dp"
-            android:text="Locações"
+            android:text="@string/loca_esText"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
     <!--Botão Sair-->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:text="Sair"
+        android:text="@string/sair"
         android:textStyle="bold"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:textColor="@color/greyGuardian"
         android:backgroundTint="@color/white"
         android:layout_marginTop="12dp"
-        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <!--Bottom Navigation-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"

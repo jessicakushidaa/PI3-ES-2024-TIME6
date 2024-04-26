@@ -80,5 +80,9 @@
     <string name="text_abrir_mapa_btn">ABRIR MAPA</string>
 
     <string name="infoLoc">Você ainda não possui nenhuma locação</string>
+    <string name="sair">Sair</string>
+    <string name="loca_esText">Locações</string>
+    <string name="TextCart">Cartões</string>
+    <string name="Textmapa">Mapa</string>
 
 </resources>

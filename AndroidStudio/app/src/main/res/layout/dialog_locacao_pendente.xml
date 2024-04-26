@@ -16,9 +16,10 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClosePopup3"
             android:layout_width="wrap_content"
+            android:background="@color/zxing_transparent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:layout_marginBottom="-15dp"
+            android:layout_marginBottom="-13dp"
             android:textSize="20sp"
             android:textColor="@color/blue_nav"
             android:text="@string/Fechar"

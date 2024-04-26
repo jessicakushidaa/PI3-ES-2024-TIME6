@@ -39,16 +39,20 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-
+        //inicializando variáveis
         auth = Firebase.auth
         user = auth.currentUser
 
         functions = Firebase.functions("southamerica-east1")
 
+
+        checarLocacaoPendente()
+
+        //pegando o id do docmuento do usuário no banco de dados
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
             Log.d("idrecebido","ID: $idDocumentPessoa")
-            Log.d("IDPESSOA","$idDocumentPessoa")
+            //Com o id, chamar a função que busca o cartão do usuário no banco, se tiver
             checarLocacaoPendente().addOnCompleteListener { task->
                 if (task.isSuccessful){
                     val pendente = task.result
@@ -59,9 +63,11 @@ class MainMenuActivity : AppCompatActivity() {
                     Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
                 }
             }
+
             consultarCartao(idDocumentPessoa)
                 .addOnCompleteListener { task->
                     if (task.isSuccessful){
+                        //Adicionando o cartao do usuário na variável do companion object cartauUsuario
                         val cartaoJson = task.result
                         val cartao: CreateCardActivity.Cartao = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
                         cartaoUsuario = cartao
@@ -82,7 +88,6 @@ class MainMenuActivity : AppCompatActivity() {
                 Log.d("LOGARMARIOS", "$armariosGson")
             }else{
                 Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
-
             }
         }
 
@@ -97,7 +102,7 @@ class MainMenuActivity : AppCompatActivity() {
         binding?.llCartao?.setOnClickListener{
             cartaoHandler(idDocumentPessoa)
         }
-
+        //clicou no tv do RentManager
         binding?.llOpcao?.setOnClickListener {
             var avancarLocacao = Intent(this@MainMenuActivity, RentManagerActivity::class.java)
             startActivity(avancarLocacao)
@@ -131,6 +136,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     }
 
+
     private fun mostrarDialogPendente(locacao: Pendente){
         var dialog = Dialog(this)
         dialog.setCancelable(false)
@@ -156,18 +162,23 @@ class MainMenuActivity : AppCompatActivity() {
         dialog.show()
     }
 
+  
+   //Função que busca as unidades no banco
     private fun buscarArmarios(): Task<String>{
+        //Chamando function
         return functions
             .getHttpsCallable("getAllUnits")
             .call()
             .continueWith{ task->
                 if(task.isSuccessful){
+                    //Pegar os dados que vieram no result e colocar numa classe Place, que guarda uma unidade de locação
                     val data = task.result.data as Map<String, Any>
                     val payload = data["payload"] as Map<String, Any>
                     val unidades = payload["unidades"] as ArrayList<*>
                     val numUnidades = unidades.count()
                     var listaDeUnidades: MutableList<MainViewActivity.Place> = mutableListOf()
                     var i = 0
+                    //Loop para percorrer todas as unidades recebidas
                     while (i < numUnidades){
                         Log.d("DEBUG UNIDADES","Entrou na unidade $i de $numUnidades")
                         val unidade = unidades[i] as Map<String, Any>
@@ -183,7 +194,9 @@ class MainMenuActivity : AppCompatActivity() {
                         val numPrecos = tabelaPrecos.count()
                         //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
                         var j = 0
+                        //Criando uma lista que irá conter todos os preços da unidade
                         var listaPrecos: MutableList<MainViewActivity.Preco> = mutableListOf()
+                        //Loop para pegar todos os precos da unidade
                         while (j < numPrecos){
                             Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
                             var precoAtual = tabelaPrecos[j] as Map<String, Any>
@@ -208,6 +221,7 @@ class MainMenuActivity : AppCompatActivity() {
                         listaDeUnidades.add(unidadeLocacao)
                         i++
                     }
+                    //colocando todas as unidades numa variável do companion object, para outras activities acessarem
                     MainViewActivity.places = listaDeUnidades
                     val unidadesJson = gson.toJson(listaDeUnidades)
                     unidadesJson
@@ -219,6 +233,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     //Função que interpreta qual activity será aberta, baseando-se na existência ou não de um cartao registrado do usuário.
     fun cartaoHandler(id: String){
+        //Se tiver cartão manda o cartao via intent, com put.extra
         if (cartaoUsuario != null){
             val intentShowCard = Intent(this@MainMenuActivity, ShowCardActivity::class.java)
             val cartaoGson = gson.toJson(cartaoUsuario)
@@ -229,12 +244,14 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(intentShowCard)
 
         }else{
+            //Se nao tiver cartão, enviar apenas o id da pessoa via intent.
             val intentShowCard = Intent(this@MainMenuActivity, ShowCardActivity::class.java)
             intentShowCard.putExtra("IDpessoa",id)
             startActivity(intentShowCard)
         }
 
     }
+    //Função que busca o id da pessoa, enviando o ID do user no auth
     fun pegarId(): Task<String> {
         return functions
             .getHttpsCallable("getDocumentId")
@@ -254,16 +271,21 @@ class MainMenuActivity : AppCompatActivity() {
                 }
             }
     }
+    //Função que consulta os cartões no banco de dados
     fun consultarCartao(id: String): Task<String>{
+
+        //Setando os parâmetros
         Log.d("StringRecebida","Começou consultar Cartao")
         val data = hashMapOf(
             "documentId" to id,
             "collectionName" to "pessoas",
         )
+        //Chamando a função
         return functions
             .getHttpsCallable("getDocumentFields")
             .call(data)
             .continueWith{task ->
+                //Guardando os dados recebidos
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
                 val subcoletcions = payload["subCollectionsData"] as Map<String, Any>
@@ -275,9 +297,9 @@ class MainMenuActivity : AppCompatActivity() {
                 val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular,numeroCartao,dataVal)
                 val cartoesgson = gson.toJson(cartaoRecebido)
                 cartoesgson
-
             }
     }
+    //Variáveis que poderão ser acessadas por todas as activities
     companion object{
         var cartaoUsuario: CreateCardActivity.Cartao? = null
         var idDocumentPessoa = ""
