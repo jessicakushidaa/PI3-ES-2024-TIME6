@@ -17,9 +17,7 @@ import com.google.gson.Gson
 class MinhasLocacoesActivity : AppCompatActivity() {
     private var binding: ActivityMinhasLocacoesBinding? = null
     private var gson = Gson()
-
-    //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
-    var user: FirebaseUser? = null
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMinhasLocacoesBinding.inflate(layoutInflater)
