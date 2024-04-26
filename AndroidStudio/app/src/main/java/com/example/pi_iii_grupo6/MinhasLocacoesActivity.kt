@@ -41,10 +41,9 @@ class MinhasLocacoesActivity : AppCompatActivity() {
         val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
 
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true) //botão voltar na toolbar
-            setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
 
 
         //Declarando user como null, para depois atribuir o usuário do authenticator a ele (que pode ser null se for anonimo)
