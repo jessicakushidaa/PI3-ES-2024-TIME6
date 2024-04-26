@@ -69,6 +69,21 @@ class RentActivity : AppCompatActivity() {
             }
         }
     }
+    private fun dialogNaoChegou(){
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_nao_chegou)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvAbrirMapa: TextView = dialog.findViewById(R.id.tvAbrirMapa)
+
+        tvAbrirMapa.setOnClickListener {
+            val intentMapa = Intent(this@RentActivity, MainViewActivity::class.java)
+            startActivity(intentMapa)
+        }
+
+        dialog.show()
+    }
 
     //Se o usuário nao tiver um cartão, abrir uma dialog que diz que para alugar, precisa ter um cartão.
     private fun dialogFaltaCartao() {
@@ -138,7 +153,10 @@ class RentActivity : AppCompatActivity() {
     }
 
     private fun locationHandler(achou: Int){
+        Log.d("HANDLER","ENTROU LOCATION HANDLER")
         if(achou == 0){
+            Log.d("HANDLER","NAO ACHOU ARMARIO")
+            dialogNaoChegou()
             var textoTitulo = binding?.etTitleLocation
             textoTitulo?.text = "Você ainda não está em nenhum local"
         }else{
