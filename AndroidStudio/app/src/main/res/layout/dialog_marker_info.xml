@@ -5,28 +5,35 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <!--Marker Titulo-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="@color/blue_nav"
+        android:textStyle="bold"
         android:text="@string/title_marker"
         android:textSize="25sp"
         android:layout_marginTop="10dp"
         />
 
+    <!--Marker endereço-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAdress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_gravity="center"
         android:text="@string/endereco_marker_info"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
         />
 
+    <!--Marker Referencia-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvReference"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -36,6 +43,7 @@
         android:layout_marginBottom="20dp"
         />
 
+    <!--Botão traçar Rota-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRoute"
         android:layout_width="150dp"
