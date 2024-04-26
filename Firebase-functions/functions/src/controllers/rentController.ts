@@ -119,16 +119,17 @@ export const checkLocacao = functions
         result = {
           status: "SUCCESS",
           message: "Locacao pendente encontrada.",
-          payload: JSON.parse(JSON.stringify({locSnapshot:
-            {idPessoa: idPessoa, pendente: pendente, idLocacao: locPendente.id,
+          payload: JSON.parse(JSON.stringify({idPessoa: idPessoa,
+            pendente: pendente,
+            locSnapshot: {idLocacao: locPendente.id,
               data: locPendente.data()}})),
         };
       } else {
         result = {
           status: "SUCCESS",
           message: "Não há nenhuma locação pendente",
-          payload: JSON.parse(JSON.stringify({locSnapshot:
-            {pendente: pendente}})),
+          payload: JSON.parse(JSON.stringify({pendente: pendente,
+            locSnapshot: []})),
         };
       }
     } catch (error: any) {
