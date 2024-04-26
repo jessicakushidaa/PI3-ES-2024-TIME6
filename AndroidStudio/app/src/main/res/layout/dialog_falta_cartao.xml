@@ -6,35 +6,48 @@
     app:cardCornerRadius="16dp"
     android:elevation="10dp">
 
+    <!--ajuste card-->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--Botão fechar-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClosePopup2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="X"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="none"
+            android:textStyle="bold"
+            android:layout_marginBottom="-15dp"
+            android:textSize="20sp"
+            android:textColor="@color/blue_nav"
+            android:text="@string/Fechar"
             android:layout_gravity="end"/>
 
+        <!--Conteudo Card-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTextOne"
             android:layout_width="300dp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:text="Hmm... Parece que você não temum cartão cadastrado ainda"
-            android:textSize="18sp"
+            android:text="@string/CartaoAviso"
+            android:textSize="17sp"
             android:layout_gravity="center"
             />
 
+        <!--redireciona ao cadastrar cartão -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTextTwo"
-            android:layout_width="300dp"
+            android:layout_width="314dp"
             android:layout_height="wrap_content"
-            android:text="CADASTRAR CARTÃO"
+            android:text="@string/cadastrarCartaoText"
             android:textSize="18sp"
+            android:background="@color/grey"
+            android:elevation="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textColor="@color/blue_nav"
             android:layout_marginTop="10dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
