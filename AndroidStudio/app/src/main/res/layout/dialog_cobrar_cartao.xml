@@ -23,7 +23,6 @@
             android:textSize="20sp"
             android:textColor="@color/blue_nav"
             android:textStyle="bold"
-            android:background="none"
             android:layout_marginBottom="-20dp"
             android:text="@string/xFechar"
             />
