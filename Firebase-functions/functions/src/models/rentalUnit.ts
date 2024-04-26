@@ -8,10 +8,9 @@ interface Coordenadas {
 
 interface Armario {
     tagArmario: string,
-    situacao: string
 }
 
-interface PrecoTempo {
+export interface PrecoTempo {
     preco: number,
     tempo: (number | string)
 }

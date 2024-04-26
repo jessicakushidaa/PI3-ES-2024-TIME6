@@ -8,7 +8,7 @@ import {Pessoa} from "../models/user";
 const db = admin.firestore(); // chamada do banco de dados
 
 // incializando collection Pessoas no firestore db
-const colPessoas = db.collection("pessoas");
+export const colPessoas = db.collection("pessoas");
 
 /* VALIDAÇÃO */
 /* Função que analisa se o formulário foi preenchido */
@@ -143,7 +143,7 @@ export const addPessoa = functions
     } else {
       // cadastrar a Pessoa pois está ok.
       const docRef = await colPessoas.add(pessoa);
-      // await docRef.update({idPessoa: docRef.id});
+
       result = {
         status: "SUCCESS",
         message: "Pessoa inserida com sucesso.",

@@ -26,7 +26,7 @@ export const getDocumentId = functions
       // Extrair o UID do usuário autenticado
       const userId = context.auth.uid;
 
-      // Recupera o documento que tem o tal ID da coleção
+      // Recupera o documento que tem o campo userId igual ao UID extraído
       const documentSnapshot = await colPessoas.where("userId", "==", userId)
         .get();
 
@@ -39,7 +39,7 @@ export const getDocumentId = functions
           payload: JSON.parse(JSON.stringify({documentSnapshot: null})),
         };
       } else {
-        // Sucesso: retorna os dados do documento
+        // Sucesso: retorna o id do documento firebase
         const documentId = documentSnapshot.docs[0].id;
         result = {
           status: "SUCCESS",
@@ -104,17 +104,28 @@ export const getDocumentFields = functions
            ** retorna uma promise que resolve p/ um array com as subcollections
             do documento
            ** itera sobre a lista de subcollections
-           ** retorna array de promises com nome, dados dos documentos
+           ** retorna array de promises com nome da subcollection{
+            id e dados dos documentos
+           }
         */
         const subCollections = await docRef.listCollections();
+
         const subCollectionsDataPromises = subCollections
           .map(async (subCollection) => {
             const subCollectionName = subCollection.id;
             const subCollectionSnapshot = await subCollection.get();
             const subCollectionDocsData = subCollectionSnapshot.docs
-              .map((doc) => doc.data());
+              .map((doc) => {
+                // retorna objeto para SubCollectionsDocsData, com
+                // id e campos do documento.
+                return {
+                  id: doc.id,
+                  ...doc.data(),
+                };
+              });
+            // retorna nome da subCol {dados dos docs}
             return {[subCollectionName]: subCollectionDocsData};
-          });
+          }); // fim da iteração
 
         // Esperar que todas as Promises sejam resolvidas
         const subCollectionsData= await Promise.all(subCollectionsDataPromises);

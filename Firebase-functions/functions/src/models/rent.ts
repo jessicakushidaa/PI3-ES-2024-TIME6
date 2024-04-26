@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
-import {UnidadeLocacao} from "./rentalUnit";
+import {UnidadeLocacao, PrecoTempo} from "./rentalUnit";
 import {Pessoa} from "./user";
 
 export interface Locacao {
-    id: string,
     armario: UnidadeLocacao["armarios"],
     cliente: Pessoa[],
-    tempoEscolhido:
+    precoTempoEscolhido: PrecoTempo
+    status: string
 }
