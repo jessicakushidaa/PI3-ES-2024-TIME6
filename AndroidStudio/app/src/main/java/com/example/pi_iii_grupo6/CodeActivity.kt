@@ -1,6 +1,7 @@
 package com.example.pi_iii_grupo6
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -23,10 +24,15 @@ class CodeActivity : AppCompatActivity() {
         binding = ActivityCodeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        mostrarDialog()
+        binding?.btnQuit?.setOnClickListener {
+            var intentVoltarMenu = Intent(this@CodeActivity,MainMenuActivity::class.java)
+            startActivity(intentVoltarMenu)}
+
         receberDados()
         gerarQrCode()
     }
+
+
 
     //Função que diz para o usuário que a cobrança foi feita
     private fun mostrarDialog() {

@@ -20,14 +20,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
+import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.AlugarArmarioDialogBinding
+import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
 import com.google.gson.Gson
 import java.util.Calendar
 
@@ -41,6 +45,8 @@ class RentActivity : AppCompatActivity() {
     private var user: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var locAtual: MainViewActivity.Locacao
+    private lateinit var functions: FirebaseFunctions
+
 
 
     class Info(
@@ -56,6 +62,8 @@ class RentActivity : AppCompatActivity() {
         auth = Firebase.auth
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         user = auth.currentUser
+        functions = Firebase.functions("southamerica-east1")
+
 
 
 
@@ -125,11 +133,8 @@ class RentActivity : AppCompatActivity() {
         if (nomeRecebido == null){
             var flag = 0
             for (place in places) {
-
                 var locPlace = LatLng(place.latitude, place.longitude)
-
                 var distancia = calcularDistancia(locPlace)
-
                 if (distancia <= 1.0) {
                     //Está em alguma unidade!
                     actualLocker = place
@@ -155,8 +160,8 @@ class RentActivity : AppCompatActivity() {
                 }else{
                     Log.d("stringrecebida",nomeRecebido)
                 }
-                locationHandler(flag)
             }
+            locationHandler(flag)
         }
     }
 
@@ -322,11 +327,73 @@ class RentActivity : AppCompatActivity() {
             var userId = user?.uid
             locAtual = MainViewActivity.Locacao(userId,actualLocker,precoSelecionado)
 
+            pegarIdArmario().addOnCompleteListener { task->
+                if(task.isSuccessful){
+                    val idArmario = task.result
+                    Log.d("PEGOU ARMARIO", idArmario)
+                    addLocacaoPendente(idArmario)
+                        .addOnCompleteListener { task->
+                            if (task.isSuccessful){
+                                Log.d("ADDLOC","Locacao adicionada com sucesso! ${task.result}")
+                            }else{
+                                Log.e("ERROR","erro ao adicionar loc: ${task.exception}")
+                            }
+                        }
+                }else{
+                    Log.e("ERROR","${task.exception}")
+                }
+            }
             locacoesPendentes.add(locAtual)
             confirmacao(locAtual)
         }
+    }
 
-        }
+    private fun pegarIdArmario(): Task<String> {
+        Log.d("PEGAR ARMARIO", "id: ${actualLocker.id}")
+        val data = hashMapOf(
+            "documentId" to actualLocker.id,
+            "collectionName" to "unidadeLocacao"
+        )
+
+        return functions
+            .getHttpsCallable("getDocumentFields")
+            .call(data)
+            .continueWith{ task->
+                val res = task.result.data as Map<String, Any>
+                val payload = res["payload"] as Map<String, Any>
+                val subcoletcions = payload["subCollectionsData"] as Map<String, Any>
+                val armarios = subcoletcions["armarios"] as ArrayList<*>
+                val armarioItem = armarios[0] as Map<String, Any>
+                val idArmario = armarioItem["id"] as String
+                idArmario
+            }
+    }
+    private fun addLocacaoPendente(idArmario: String):Task<String> {
+
+        Log.d("IDPESS","$idDocumentPessoa")
+        Log.d("IDARM","$idArmario")
+        Log.d("IDUNID","${actualLocker.id}")
+
+        val data = hashMapOf(
+            "idUnidade" to actualLocker.id,
+            "idArmario" to idArmario,
+            "idPessoa" to mutableListOf(idDocumentPessoa),
+            "tempoEscolhido" to precoSelecionado?.tempo,
+            "precoEscolhido" to precoSelecionado?.preco,
+        )
+        return functions
+            .getHttpsCallable("addLocacao")
+            .call(data)
+            .continueWith{task->
+                val res = task.result.data as Map<String, Any>
+                val payload = res["payload"] as Map<String, Any>
+                val docId = payload["docId"] as String
+
+                docId
+            }
+
+
+    }
 
     fun confirmacao(locacao: MainViewActivity.Locacao){
         var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
@@ -351,10 +418,10 @@ class RentActivity : AppCompatActivity() {
     }
 
     fun marcarOpçcao(viewSelecionada: View){
-        viewSelecionada.setBackgroundColor(Color.parseColor("#E7E7E7"))
+        viewSelecionada.setBackgroundResource(R.drawable.time_price_box_pressed)
     }
     fun desmarcarOpcao(viewSelecionada: View){
-        viewSelecionada.setBackgroundColor(Color.parseColor("#ffffff"))
+        viewSelecionada.setBackgroundResource(R.drawable.time_price_box)
     }
 
     companion object{
