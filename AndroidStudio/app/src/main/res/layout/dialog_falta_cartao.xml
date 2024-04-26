@@ -20,6 +20,7 @@
             android:textStyle="bold"
             android:layout_marginBottom="-15dp"
             android:textSize="20sp"
+            android:background="@color/zxing_transparent"
             android:textColor="@color/blue_nav"
             android:text="@string/Fechar"
             android:layout_gravity="end"/>
