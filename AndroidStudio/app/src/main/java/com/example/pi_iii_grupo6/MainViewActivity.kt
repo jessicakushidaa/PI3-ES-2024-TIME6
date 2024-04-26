@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewBinding
 import com.example.pi_iii_grupo6.databinding.DialogMarkerInfoBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -88,6 +89,14 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Seta Retorno
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
 
         //Direcionando o bottomNavigation
         val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)

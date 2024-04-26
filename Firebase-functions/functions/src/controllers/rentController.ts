@@ -41,9 +41,9 @@ export const addLocacao = functions
     functions.logger.info("Function addLocacao - Iniciada.");
 
     // Caso a request não conste os campos esperados
-    if (!locacaoData) {
+    if (!locacaoData || !unidadeLocacao) {
       functions.logger.error("addLocacao " +
-          "- Erro ao inserir nova Pessoa: Dados não recebidos corretamente"),
+          "- Erro ao inserir nova locacao: Dados não recebidos corretamente"),
       result = {
         status: "ERROR",
         message: "Parâmetros não recebidos corretamente",
@@ -76,9 +76,9 @@ export const addLocacao = functions
         locacaoData.cliente = clienteRefs;
         locacaoData.armario = armarioRef;
       } catch (error) {
-        console.error("Erro ao obter referências à pessoa:", error);
+        console.error("Erro ao obter referências à pessoa ou armário:", error);
         throw new functions.https.HttpsError("unknown",
-          "Falha ao obter referências à pessoa", error);
+          "Falha ao obter referências à pessoa e/ou armário", error);
       }
     }
     try {
@@ -98,5 +98,49 @@ export const addLocacao = functions
       throw new functions.https.HttpsError("unknown",
         "Falha ao adicionar locação", error);
     }
+    return result;
+  });
+
+export const checkLocacao = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    const idPessoa = data.idPessoa;
+    let result: CallableResponse;
+
+    functions.logger.info("Function checkLocacao - Iniciada");
+    try {
+      const pessoaRef = db.doc(`pessoas/${idPessoa}`);
+      const locSnapshot = await colLocacao
+        .where("cliente", "array-contains", pessoaRef)
+        .where("status", "==", "pendente").limit(1).get();
+      const pendente = !locSnapshot.empty;
+      if (pendente) {
+        const locPendente =locSnapshot.docs[0];
+        result = {
+          status: "SUCCESS",
+          message: "Locacao pendente encontrada.",
+          payload: JSON.parse(JSON.stringify({locSnapshot:
+            {idPessoa: idPessoa, pendente: pendente, idLocacao: locPendente.id,
+              data: locPendente.data()}})),
+        };
+      } else {
+        result = {
+          status: "SUCCESS",
+          message: "Não há nenhuma locação pendente",
+          payload: JSON.parse(JSON.stringify({locSnapshot:
+            {pendente: pendente}})),
+        };
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      result = {
+        status: "ERROR",
+        message: "Erro ao obter documentos: " + error.message,
+        payload: JSON.parse(JSON.stringify({locSnapshot: null})),
+      };
+      functions.logger.error("checkLocacao " +
+          "- Erro ao buscar documentos:" + error.message);
+    }
+    // Retorna a resposta
     return result;
   });

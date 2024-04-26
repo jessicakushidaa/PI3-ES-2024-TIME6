@@ -4,11 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
 import com.example.pi_iii_grupo6.databinding.ActivityShowCardBinding
 import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -48,12 +52,48 @@ class ShowCardActivity : AppCompatActivity() {
                     consultarCartaoHandler()
                 }else{
                     Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
+                    removerCardInfos()
                 }
             }
 
         //Setando onclick para chamar função que abre a createCard
         binding?.btnAdicionarCartao?.setOnClickListener {
             abrirCreateCard(idPessoa)
+        }
+
+        //Seta Voltar
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+
+        //Direcionando o bottomNavigation
+        val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                //tela Locações
+                R.id.page_locacoes -> {
+                    startActivity(Intent(this, RentManagerActivity::class.java))
+                    true
+                }
+                //tela Mapa
+                R.id.page_mapa -> {
+                    startActivity(Intent(this, MainViewActivity::class.java))
+                    true
+                }
+                //tela Cartões
+                R.id.page_cartoes -> {
+                    startActivity(Intent(this, ShowCardActivity::class.java))
+                    true
+
+                }
+
+                else -> false
+
+            }
         }
 
     }
@@ -66,9 +106,29 @@ class ShowCardActivity : AppCompatActivity() {
         if (cartaoUsuario!=null){
             Log.d("CARTAO","USUARIO TEM CARTAO")
             mostrarInformacoes()
+            removerNaoTem()
         }else{
             Log.d("CARTAO","USUARIO NAO TEM CARTAO")
+            removerCardInfos()
         }
+    }
+
+    //Função que remove a view que mostra as informações do cartão, quando não há um cartão
+    private fun removerCardInfos() {
+        Log.d("remove","Removendo informacoes do cartao")
+        var tvInfo = binding?.linearInfo
+
+        val viewPai = tvInfo?.parent as ViewGroup
+        viewPai.removeView(tvInfo)
+    }
+
+    //Função que, quando tem um cartão, remove a view falando que não tem
+    private fun removerNaoTem() {
+        Log.d("remove","Removendo informacoes")
+        var tvInfo = binding?.tvInfoTitle
+
+        val viewPai = tvInfo?.parent as ViewGroup
+        viewPai.removeView(tvInfo)
     }
 
     private fun mostrarInformacoes() {
@@ -118,8 +178,8 @@ class ShowCardActivity : AppCompatActivity() {
                 val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
                 val cartoesgson = gson.toJson(cartaoRecebido)
                 cartoesgson
-
             }
+
     }
 
     companion object{
