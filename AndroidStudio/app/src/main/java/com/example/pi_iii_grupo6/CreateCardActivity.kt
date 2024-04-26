@@ -129,6 +129,8 @@ class CreateCardActivity : AppCompatActivity() {
 
         dialog.show()
     }
+
+
     //Função que chama a function responsável por adicionar o cartão no banco de dados.
     private fun cadastrarCartaoFirestore(c: Cartao, userID: String): Task<String?>{
 

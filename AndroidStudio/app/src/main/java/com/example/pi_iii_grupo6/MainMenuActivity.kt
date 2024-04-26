@@ -54,6 +54,18 @@ class MainMenuActivity : AppCompatActivity() {
                 }
         }
 
+        //Chamar funcao que busca todos os armarios
+        buscarArmarios().addOnCompleteListener { task->
+            if (task.isSuccessful){
+                val armariosGson = task.result
+                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
+                Log.d("LOGARMARIOS", "$armariosGson")
+            }else{
+                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
+
+            }
+        }
+
 
         //Setando o clique em MAPA que vai abrir o mapa
         binding?.llMapa?.setOnClickListener{
@@ -97,6 +109,65 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(abrirLogin)
         }
 
+    }
+
+    private fun buscarArmarios(): Task<String>{
+        return functions
+            .getHttpsCallable("getAllUnits")
+            .call()
+            .continueWith{ task->
+                if(task.isSuccessful){
+                    val data = task.result.data as Map<String, Any>
+                    val payload = data["payload"] as Map<String, Any>
+                    val unidades = payload["unidades"] as ArrayList<*>
+                    val numUnidades = unidades.count()
+                    var listaDeUnidades: MutableList<MainViewActivity.Place> = mutableListOf()
+                    var i = 0
+                    while (i < numUnidades){
+                        Log.d("DEBUG UNIDADES","Entrou na unidade $i de $numUnidades")
+                        val unidade = unidades[i] as Map<String, Any>
+                        Log.d("DEBUG UNIDADES","$unidade")
+                        val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val latitude = coordenadas["latitude"] as Double
+                        val longitude = coordenadas["longitude"] as Double
+                        val nome = unidade["nome"] as String
+                        val endereco = unidade["endereco"] as String
+                        val descricao = unidade["descricao"] as String
+                        val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val numPrecos = tabelaPrecos.count()
+                        //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
+                        var j = 0
+                        var listaPrecos: MutableList<MainViewActivity.Preco> = mutableListOf()
+                        while (j < numPrecos){
+                            Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
+                            var precoAtual = tabelaPrecos[j] as Map<String, Any>
+                            var preco = MainViewActivity.Preco(
+                                precoAtual["tempo"],
+                                precoAtual["preco"] as Double
+                            )
+                            listaPrecos.add(preco)
+                            j++
+                        }
+
+                        //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
+                        var unidadeLocacao = MainViewActivity.Place(
+                            latitude,
+                            longitude,
+                            nome,
+                            endereco,
+                            descricao,
+                            listaPrecos
+                        )
+                        listaDeUnidades.add(unidadeLocacao)
+                        i++
+                    }
+                    MainViewActivity.places = listaDeUnidades
+                    val unidadesJson = gson.toJson(listaDeUnidades)
+                    unidadesJson
+                }else{
+                    throw task.exception ?: Exception("Unknown error occurred")
+                }
+            }
     }
 
     //Função que interpreta qual activity será aberta, baseando-se na existência ou não de um cartao registrado do usuário.
