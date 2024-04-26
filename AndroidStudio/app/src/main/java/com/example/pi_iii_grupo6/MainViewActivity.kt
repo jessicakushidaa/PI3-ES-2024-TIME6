@@ -205,7 +205,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     //Funçao que chama a dialog box das informações da unidade de Locação
-    private fun showMarkerInfo(title: String?, adress: LatLng, reference: String?) {
+    private fun showMarkerInfo(title: String?, adress: Any?, reference: String?, position: LatLng) {
         //Criando a dialog box
         val dialog = BottomSheetDialog(this)
         val sheetBinding:  DialogMarkerInfoBinding = DialogMarkerInfoBinding.inflate(layoutInflater, null, false)
@@ -214,19 +214,17 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         //Referenciando os campos que serão preenchidos pelas informações da unidade de locação
         var titleTextView = sheetBinding.tvTitle
         var referenceTextView = sheetBinding.tvReference
-        var adressTextView = sheetBinding.tvAdress
 
         //Preenchendo os campos com as informações da unidade
         titleTextView.setText("$title")
         referenceTextView.setText("$reference")
-        adressTextView.setText("${adress.latitude} , ${adress.longitude}")
 
         //Inicializando a dialog
         dialog.show()
 
         // Função que chama o traçar rota ao clicar no botão
         sheetBinding.btnRoute.setOnClickListener{
-            drawPath(mMap, adress)
+            drawPath(mMap, position)
             substituirBotao(sheetBinding, title)
         }
     }
@@ -296,12 +294,12 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     //Função que adiciona um marker no mapa
-    private fun addMarker(mapa: GoogleMap, position: LatLng, title:String, reference: String, adress: String) {
+    private fun addMarker(mapa: GoogleMap, position: LatLng, title:String, reference: String, adressComing: String) {
         mapa.addMarker(
             MarkerOptions()
                 .position(position)
                 .title(title)
-                .snippet(reference)
+                .snippet(adressComing + "\n\n\n" + reference)
         )
 
     }
@@ -339,7 +337,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
         //Setando um listener para quando clicar no marker, chamar função que mostra as informações do marker clicado
         mMap.setOnMarkerClickListener {
-            showMarkerInfo(it.title,it.position, it.snippet)
+            showMarkerInfo(it.title,it.tag, it.snippet,it.position)
             false
         }
 

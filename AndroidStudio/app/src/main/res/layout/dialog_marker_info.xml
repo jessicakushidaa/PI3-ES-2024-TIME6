@@ -18,18 +18,6 @@
         android:layout_marginTop="10dp"
         />
 
-    <!--Marker endereço-->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAdress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:text="@string/endereco_marker_info"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        />
-
     <!--Marker Referencia-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvReference"
