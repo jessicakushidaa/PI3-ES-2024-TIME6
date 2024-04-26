@@ -17,7 +17,6 @@
             android:id="@+id/btnClosePopup2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="none"
             android:textStyle="bold"
             android:layout_marginBottom="-15dp"
             android:textSize="20sp"
