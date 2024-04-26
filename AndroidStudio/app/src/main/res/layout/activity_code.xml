@@ -5,77 +5,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainMenuActivity"
+    tools:context=".CodeActivity"
     android:gravity="center_vertical">
 
+
+    <!--ToolBar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="35dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/blue_nav"
         android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!--ToolBar Imagem-Logo -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logovetor"
+            android:layout_gravity="center"
+            android:contentDescription="@string/componenteqr"
+            android:layout_marginEnd="10dp" />
 
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--Shape-->
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imQrCode"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="250dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
         android:id="@+id/shape_qr"
-        android:layout_width="360dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="500dp"
-        android:layout_marginLeft="25dp"
-        android:src="@drawable/qrcode_rectangle"
-        app:layout_constraintBottom_toTopOf="@+id/imQrCode"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QR CODE"
-        android:textSize="30dp"
-        android:layout_marginTop="135dp"
-        android:textColor="@color/white"
+        android:src="@drawable/qrcode_rectangle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
+    <!--Text Qrcode-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textqr1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qr_codeText"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="7dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/shape_qr"
+        app:layout_constraintStart_toStartOf="@id/shape_qr"
+        app:layout_constraintEnd_toEndOf="@id/shape_qr"
+        />
 
-
+    <!--Text Instrução-->
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/qrcode_label"
-        android:textSize="15dp"
+        android:textSize="14sp"
         android:maxLines="2"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="42dp"
         android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/textqr1"
+        app:layout_constraintEnd_toEndOf="@id/textqr1"
+        app:layout_constraintStart_toStartOf="@id/textqr1" />
 
+
+    <!--QrCode-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imQrCode"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="124dp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shape_qr" />
+
+    <!--Botão voltar-->
     <Button
         android:id="@+id/btnQuit"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:backgroundTint="@color/blue_nav"
-        android:text="Voltar"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/voltarQr"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/imQrCode"
-        app:layout_constraintStart_toStartOf="@id/imQrCode"/>
-
+        app:layout_constraintStart_toStartOf="@id/imQrCode"
+        app:layout_constraintTop_toBottomOf="@id/imQrCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
