@@ -11,6 +11,7 @@ const colLocacao = db.collection("locacao");
 
 /** Função que adiciona a locação ao database
  * precisa passar como parâmetro/data:
+ * id do documento da unidade de locacao
  * id do documento do cliente - chamar function getDocumentById
  * id do armario que está na unidade de loc - pegar pelo getDocumentFields
  (document)
