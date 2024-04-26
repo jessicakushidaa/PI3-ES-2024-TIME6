@@ -62,4 +62,7 @@
 
     <string name="locacao_title">Locação</string>
     <string name="telefone_loc">Telefone:</string>
+    <string name="voltarQr">Voltar</string>
+    <string name="qr_codeText">QR CODE</string>
+    <string name="componenteqr">componenteQr</string>
 </resources>
