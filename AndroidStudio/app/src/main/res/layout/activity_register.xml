@@ -89,6 +89,7 @@
                         android:id="@+id/etBirth"
                         android:hint="@string/data_de_nascimento_cadastro"
                         android:inputType="date|number"
+                        android:maxLength="10"
                         style = "@style/textInputETCadastro"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,20 +101,24 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
                     android:hint="@string/telefone_cadastro"
+                    android:maxLength="11"
                     android:inputType="number"
                     style = "@style/textInputETCadastro"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <!-- Campo de inserção: CPF -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/textInputSCadastro">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCPF"
                     android:hint="@string/cpf_cadastro"
+                    android:maxLength="11"
                     android:inputType="number"
                     style = "@style/textInputETCadastro"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de inserção: Email -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,6 +138,7 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- Campo de inserção: Senha -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/textInputSCadastro">
                 <com.google.android.material.textfield.TextInputEditText
@@ -142,6 +148,7 @@
                     style="@style/textInputETCadastro"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Campo de inserção: Confirmar senha -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/textInputSCadastro">
                 <com.google.android.material.textfield.TextInputEditText
@@ -152,6 +159,7 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Botão de Cadastrar -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="160dp"
             android:layout_height="wrap_content"
