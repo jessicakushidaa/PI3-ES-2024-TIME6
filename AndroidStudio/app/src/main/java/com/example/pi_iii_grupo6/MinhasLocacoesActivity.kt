@@ -40,12 +40,7 @@ class MinhasLocacoesActivity : AppCompatActivity() {
             when (item.itemId) {
                 //tela Locações
                 R.id.page_locacoes -> {
-                    if (user != null) {
-                        startActivity(Intent(this, RentManagerActivity::class.java))
-                    }else{
-                        Toast.makeText((baseContext), "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                    }
+                    startActivity(Intent(this, RentManagerActivity::class.java))
                     true
                 }
                 //tela Mapa
@@ -55,19 +50,17 @@ class MinhasLocacoesActivity : AppCompatActivity() {
                 }
                 //tela Cartões
                 R.id.page_cartoes -> {
-                    if (user != null) {
-                        startActivity(Intent(this, ShowCardActivity::class.java))
-                    }else{
-                        Toast.makeText((baseContext),"Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                    }
+                    startActivity(Intent(this, ShowCardActivity::class.java))
                     true
+
                 }
 
                 else -> false
 
             }
         }
+
+
 
     checarLocacoes()
     }
