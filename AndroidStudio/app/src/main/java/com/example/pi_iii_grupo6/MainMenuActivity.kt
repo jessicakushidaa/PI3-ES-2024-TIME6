@@ -1,9 +1,14 @@
 package com.example.pi_iii_grupo6
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
@@ -109,6 +114,26 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(abrirLogin)
         }
 
+    }
+
+    private fun mostrarDialogPendente(){
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_locacao_pendente)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvLocation: TextView = dialog.findViewById(R.id.tvLocation)
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup3)
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        tvLocation.setOnClickListener {
+            //Abrir tela de qr code da locação
+        }
+
+        dialog.show()
     }
 
     private fun buscarArmarios(): Task<String>{
