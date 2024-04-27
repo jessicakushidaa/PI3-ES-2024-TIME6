@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="16dp"
-    android:elevation="10dp">
+    android:elevation="10dp"
+    app:cardCornerRadius="16dp">
 
     <!--ajuste card-->
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -16,26 +16,29 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTextMapa"
             android:layout_width="300dp"
-            android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:text="@string/text_nao_chegou_dialog"
-            android:textSize="17sp"
             android:layout_gravity="center"
-            />
+            android:padding="20dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/text_nao_chegou_dialog"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
 
         <!--redireciona ao cadastrar cartão -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvAbrirMapa"
             android:layout_width="314dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_abrir_mapa_btn"
-            android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:background="@color/grey"
             android:elevation="20dp"
             android:gravity="center"
-            android:textStyle="bold"
+            android:padding="5dp"
+            android:text="@string/text_abrir_mapa_btn"
             android:textColor="@color/blue_nav"
-            android:layout_marginTop="10dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
