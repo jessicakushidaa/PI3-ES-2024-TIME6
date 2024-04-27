@@ -6,11 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.pi_iii_grupo6.databinding.ActivityLoginBinding
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
+import com.google.gson.Gson
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var functions: FirebaseFunctions
+    private var gson = Gson()
     //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
     //criando variável do ViewBinding
@@ -22,12 +28,29 @@ class LoginActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         //Inflando Layout
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //inicializando variáveis
         auth = Firebase.auth
+        user = auth.currentUser
+
+        functions = Firebase.functions("southamerica-east1")
+
+        //Chamar funcao que busca todos os armarios
+        buscarArmarios().addOnCompleteListener { task->
+            if (task.isSuccessful){
+                val armariosGson = task.result
+                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
+                Log.d("LOGARMARIOS", "$armariosGson")
+            }else{
+                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
+
+            }
+        }
         //Checando se o usuário verificou o email
         emailVerified = auth.currentUser?.isEmailVerified
         checkLogin()
@@ -55,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
         //Avançar de tela ao clicar em entrar anonimamente
         //isso não altera o valor de user, continua como null, portanto nao conseguirá utilizar certas funções
         binding?.tvAnonimous?.setOnClickListener{
-            var avancar = Intent(this@LoginActivity, MainViewActivity::class.java)
+            val avancar = Intent(this@LoginActivity, MainViewActivity::class.java)
             startActivity(avancar)
         }
 
@@ -73,6 +96,68 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    private fun buscarArmarios(): Task<String> {
+        return functions
+            .getHttpsCallable("getAllUnits")
+            .call()
+            .continueWith{ task->
+                if(task.isSuccessful){
+                    val data = task.result.data as Map<String, Any>
+                    val payload = data["payload"] as Map<String, Any>
+                    val unidades = payload["unidades"] as ArrayList<*>
+                    val numUnidades = unidades.count()
+                    var listaDeUnidades: MutableList<MainViewActivity.Place> = mutableListOf()
+                    var i = 0
+                    while (i < numUnidades){
+                        Log.d("DEBUG UNIDADES","Entrou na unidade $i de $numUnidades")
+                        val unidade = unidades[i] as Map<String, Any>
+                        Log.d("DEBUG UNIDADES","$unidade")
+                        val coordenadas = unidade["coordenadas"] as Map<String, Any>
+                        val id = unidade["id"] as String
+                        val latitude = coordenadas["latitude"] as Double
+                        val longitude = coordenadas["longitude"] as Double
+                        val nome = unidade["nome"] as String
+                        val endereco = unidade["endereco"] as String
+                        val descricao = unidade["descricao"] as String
+                        val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val numPrecos = tabelaPrecos.count()
+                        //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
+                        var j = 0
+                        var listaPrecos: MutableList<MainViewActivity.Preco> = mutableListOf()
+                        while (j < numPrecos){
+                            Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
+                            var precoAtual = tabelaPrecos[j] as Map<String, Any>
+                            var preco = MainViewActivity.Preco(
+                                precoAtual["tempo"],
+                                precoAtual["preco"] as Double
+                            )
+                            listaPrecos.add(preco)
+                            j++
+                        }
+
+                        //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
+                        var unidadeLocacao = MainViewActivity.Place(
+                            id,
+                            latitude,
+                            longitude,
+                            nome,
+                            endereco,
+                            descricao,
+                            listaPrecos
+                        )
+                        listaDeUnidades.add(unidadeLocacao)
+                        i++
+                    }
+                    MainViewActivity.places = listaDeUnidades
+                    val unidadesJson = gson.toJson(listaDeUnidades)
+                    unidadesJson
+                }else{
+                    throw task.exception ?: Exception("Unknown error occurred")
+                }
+            }
     }
 
     //Função que checa se o usuário está logado
