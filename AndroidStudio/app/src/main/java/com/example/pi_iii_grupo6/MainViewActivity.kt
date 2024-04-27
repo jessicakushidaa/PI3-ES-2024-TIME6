@@ -91,13 +91,28 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         binding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        //Seta Retorno
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+        //Chamar funcao que busca todos os armarios
+        buscarArmarios().addOnCompleteListener { task->
+            if (task.isSuccessful){
+                val armariosGson = task.result
+                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
+                Log.d("LOGARMARIOS", "$armariosGson")
+            }else{
+                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+            }
+        }
+
+        setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
+        //Seta Retorno aparece na ToolBar caso o usuário esteja logado
+        if (user != null) {
+            // Configurando a Toolbar para permitir voltar à tela anterior
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }else {
+            // continua
+        }
 
         //Direcionando o bottomNavigation
         val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
@@ -135,17 +150,6 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
             }
         }
 
-        //Chamar funcao que busca todos os armarios
-        buscarArmarios().addOnCompleteListener { task->
-            if (task.isSuccessful){
-                val armariosGson = task.result
-                //val unidadesLocacao = gson.fromJson(armariosGson, listOf<Place>()::class.java)
-                Log.d("LOGARMARIOS", "$armariosGson")
-            }else{
-                Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
-
-            }
-        }
 
         //Referenciando o Fragment do mapa
         val mapFragment = supportFragmentManager
@@ -222,7 +226,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         //Inicializando a dialog
         dialog.show()
 
-        // Função que chama o traçar rota ao clicar no botão
+        // Ao clicar no botao chama Funcao de traçar rota e de substituir o botao
         sheetBinding.btnRoute.setOnClickListener{
             drawPath(mMap, position)
             substituirBotao(sheetBinding, title)
@@ -253,7 +257,12 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         viewPai.addView(btnNovo, index)
 
         btnNovo.setOnClickListener {
-            abrirAlugarArmario(nome)
+            if (user != null) {
+                abrirAlugarArmario(nome)
+            } else {
+                Toast.makeText((baseContext), "Faça login para acessar essa função",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
         }
     }
 
