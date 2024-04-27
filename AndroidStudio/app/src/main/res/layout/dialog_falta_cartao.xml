@@ -15,13 +15,13 @@
         <!--Botão fechar-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClosePopup2"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:layout_marginBottom="-15dp"
+            android:layout_marginBottom="-13dp"
             android:textSize="20sp"
             android:background="@color/zxing_transparent"
-            android:textColor="@color/blue_nav"
+            android:textColor="@color/red"
             android:text="@string/Fechar"
             android:layout_gravity="end"/>
 
@@ -30,6 +30,8 @@
             android:id="@+id/tvTextOne"
             android:layout_width="300dp"
             android:textColor="@color/black"
+            android:textAlignment="center"
+            android:padding="20dp"
             android:layout_height="wrap_content"
             android:text="@string/CartaoAviso"
             android:textSize="17sp"
@@ -45,6 +47,7 @@
             android:textSize="18sp"
             android:background="@color/grey"
             android:elevation="20dp"
+            android:padding="5dp"
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/blue_nav"
