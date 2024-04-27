@@ -101,19 +101,38 @@ export const addLocacao = functions
     return result;
   });
 
+/**
+ * Função que checa se a pessoa tem uma locação no banco de dados e a
+  situação da locação - pendente ou não
+ * Parâmetro passado na requisição pelo cliente:
+ * idPessoa - id do documento da pessoa na collection
+ * Retorna id da Locação, status e outros campos do documento
+ */
 export const checkLocacao = functions
   .region("southamerica-east1")
   .https.onCall(async (data, context) => {
-    const idPessoa = data.idPessoa;
     let result: CallableResponse;
+
+    // Extrair os dados recebidos do cliente
+    const idPessoa = data.idPessoa;
 
     functions.logger.info("Function checkLocacao - Iniciada");
     try {
+      // Referenciar documento da pessoa - path
       const pessoaRef = db.doc(`pessoas/${idPessoa}`);
+
+      // Buscar locação onde haja o cliente no array de clientes
+      // e na qual o status seja pendente (retorna a primeira que encontrar)
       const locSnapshot = await colLocacao
         .where("cliente", "array-contains", pessoaRef)
         .where("status", "==", "pendente").limit(1).get();
       const pendente = !locSnapshot.empty;
+      /**
+       * Verificar se a busca retornou vazia
+       * Se não, atribui os dados do documento e retorna pendente = true com
+       * os dados
+       * Se sim, retorna pendente = false e array vazio
+       **/
       if (pendente) {
         const locPendente =locSnapshot.docs[0];
         result = {
