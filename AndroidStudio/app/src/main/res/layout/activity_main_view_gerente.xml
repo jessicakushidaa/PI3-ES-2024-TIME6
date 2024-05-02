@@ -1,36 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainViewGerenteActivity"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    >
+    tools:context=".MainViewGerenteActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
+
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/greyGuardian"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:id="@+id/textGerente1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/blue_nav"
+            android:text="@string/area_do_gerente"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textgerente2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/yellowbtn"
+            android:text="@string/bem_vindogerente"
+            android:textSize="35sp"/>
+
+        <TextView
+            android:id="@+id/tvNomeGerente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/blue_nav"
+            android:text="@string/nome_gerente"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvEmailGerente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/blue_nav"
+            android:text="@string/email_gerente"
+            android:textSize="20sp" />
+        
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+    <!--Botão Acessar Armario-->
+    <Button
+        android:id="@+id/tvAcessarArmario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tela inicial Gerente"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAcessarArmario"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blue_nav"
+        android:padding="30dp"
         android:text="Acessar Armário"
-        android:gravity="center"
-        android:textSize="25sp"
-        />
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+
+    <!--Botão Liberar Locações-->
+    <Button
         android:id="@+id/tvLiberarLocacao"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:text="Liberar Locação"
-        android:gravity="center"
-        android:textSize="25sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blue_nav"
+        android:padding="30dp"
+        android:text="Liberar locações"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

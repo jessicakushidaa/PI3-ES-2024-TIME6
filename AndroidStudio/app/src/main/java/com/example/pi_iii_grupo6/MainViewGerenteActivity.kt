@@ -3,6 +3,7 @@ package com.example.pi_iii_grupo6
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewGerenteBinding
 
 class MainViewGerenteActivity : AppCompatActivity() {
