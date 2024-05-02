@@ -23,7 +23,5 @@ class MainViewGerenteActivity : AppCompatActivity() {
             val intentLiberarLocacao = Intent(this@MainViewGerenteActivity,LiberarLocacaoActivity::class.java)
             startActivity(intentLiberarLocacao)
         }
-
-
     }
 }
