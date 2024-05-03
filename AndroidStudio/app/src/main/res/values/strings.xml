@@ -85,5 +85,11 @@
     <string name="TextCart">Cartões</string>
     <string name="Textmapa">Mapa</string>
     <string name="locacao_pendente_popup">Você tem uma locação pendente!</string>
+    <string name="area_do_gerente">Área do Gerente</string>
+    <string name="bem_vindogerente">Bem-Vindo</string>
+    <string name="nome_gerente">Nome gerente</string>
+    <string name="email_gerente">Email gerente</string>
+    <string name="acessar_arm_rio">Acessar Armário</string>
+    <string name="liberar_locs">Liberar locações</string>
 
 </resources>
