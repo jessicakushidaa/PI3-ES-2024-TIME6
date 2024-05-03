@@ -31,6 +31,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/tvWelcomeGerente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
@@ -84,12 +85,24 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <!--Shape fundo-->
+    <View
+        android:id="@+id/view_loc_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/location_shape1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="300dp"
+        />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="300dp"
-        android:background="@color/light_grey"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,12 +111,14 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_bias="0.0">
 
+
         <!--Botão Acessar Armario-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingVertical="30dp">
+
 
             <Button
                 android:id="@+id/tvAcessarArmario"
@@ -113,11 +128,12 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/rounded_button"
                 android:paddingHorizontal="35dp"
-                android:paddingVertical="30dp"
+                android:paddingVertical="25dp"
                 android:text="@string/acessar_arm_rio"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <!--Botão Liberar Locações-->
             <Button
@@ -129,7 +145,7 @@
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/blue_nav"
                 android:paddingHorizontal="35dp"
-                android:paddingVertical="30dp"
+                android:paddingVertical="25dp"
                 android:text="@string/liberar_locs"
                 android:textColor="@color/white"
                 android:textSize="15sp"
