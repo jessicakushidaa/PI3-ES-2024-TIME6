@@ -33,8 +33,9 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -44,20 +45,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_nav"
             android:text="@string/area_do_gerente"
-            android:textSize="20sp" />
+            android:textColor="@color/blue_nav"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textgerente2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:textStyle="bold"
-            android:textColor="@color/yellowbtn"
             android:text="@string/bem_vindogerente"
-            android:textSize="35sp"/>
+            android:textColor="@color/yellowbtn"
+            android:textSize="35sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNomeGerente"
@@ -65,10 +66,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_nav"
             android:text="@string/nome_gerente"
-            android:textSize="20sp" />
+            android:textColor="@color/blue_nav"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvEmailGerente"
@@ -76,51 +77,66 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_nav"
             android:text="@string/email_gerente"
-            android:textSize="20sp" />
-        
+            android:textColor="@color/blue_nav"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
-    
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="300dp"
+        android:background="@color/light_grey"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
 
-    <!--Botão Acessar Armario-->
-    <Button
-        android:id="@+id/tvAcessarArmario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/blue_nav"
-        android:padding="30dp"
-        android:text="Acessar Armário"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        <!--Botão Acessar Armario-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="30dp">
 
+            <Button
+                android:id="@+id/tvAcessarArmario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/rounded_button"
+                android:paddingHorizontal="35dp"
+                android:paddingVertical="30dp"
+                android:text="@string/acessar_arm_rio"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <!--Botão Liberar Locações-->
-    <Button
-        android:id="@+id/tvLiberarLocacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/blue_nav"
-        android:padding="30dp"
-        android:text="Liberar locações"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+            <!--Botão Liberar Locações-->
+            <Button
+                android:id="@+id/tvLiberarLocacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/blue_nav"
+                android:paddingHorizontal="35dp"
+                android:paddingVertical="30dp"
+                android:text="@string/liberar_locs"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
