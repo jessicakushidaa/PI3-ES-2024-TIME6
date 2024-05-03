@@ -97,8 +97,25 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+    //Função que checa se o email do usuário corresponde a um gerente
+    private fun isGerente(email: String?): Boolean{
+        Log.d("GERENTE","email recebido: $email")
 
+        val aposArroba = email?.substringAfter("@")
+        var gerente = false
 
+        if (aposArroba == "gerente.com"){
+            //retornar true
+            gerente = true
+            Log.d("GERENTE","$gerente : $aposArroba")
+        }else{
+            //retornar false
+            Log.d("GERENTE","$gerente : $aposArroba")
+        }
+        return gerente
+    }
+
+    //Função que busca os armários no banco de dados
     private fun buscarArmarios(): Task<String> {
         return functions
             .getHttpsCallable("getAllUnits")
@@ -177,18 +194,25 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email,senha).addOnCompleteListener{ task ->
             //Se o login for um sucesso
             if(task.isSuccessful){
-                emailVerified = auth.currentUser?.isEmailVerified
-                Log.d("VERIFIED", "Emailverified: ${emailVerified}")
                 Log.d(TAG, "signInUserWithEmail:success")
-                if (emailVerified == false){
-                    Toast.makeText(baseContext, "Por favor, verifique seu email!", Toast.LENGTH_SHORT).show()
-                    auth.signOut()
-                    var reiniciarActivity = Intent(this@LoginActivity, LoginActivity::class.java)
-                    startActivity(reiniciarActivity)
+                if(isGerente(auth.currentUser?.email)){
+                    //Chamar coisas do gerente
+                    val intentGerente = Intent(this@LoginActivity, MainViewGerenteActivity::class.java)
+                    startActivity(intentGerente)
                 }else{
-                    //Avançar para tela inicial
-                    var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
-                    startActivity(avancarTelaInicial)
+                    emailVerified = auth.currentUser?.isEmailVerified
+                    Log.d("VERIFIED", "Emailverified: ${emailVerified}")
+                    //Não é gerente
+                    if (emailVerified == false){
+                        Toast.makeText(baseContext, "Por favor, verifique seu email!", Toast.LENGTH_SHORT).show()
+                        auth.signOut()
+                        var reiniciarActivity = Intent(this@LoginActivity, LoginActivity::class.java)
+                        startActivity(reiniciarActivity)
+                    }else{
+                        //Avançar para tela inicial
+                        var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
+                        startActivity(avancarTelaInicial)
+                    }
                 }
 
             //se nao fro um sucesso, logar a falha no catlog
