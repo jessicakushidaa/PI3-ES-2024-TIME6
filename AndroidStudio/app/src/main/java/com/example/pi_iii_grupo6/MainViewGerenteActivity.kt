@@ -29,7 +29,7 @@ class MainViewGerenteActivity : AppCompatActivity() {
             // Encerra a atividade atual
             finish()
 
-            //inicia a LoginActivity
+            //Abrir a LoginActivity
             val intentExitGerente = Intent(this,LoginActivity::class.java)
             startActivity(intentExitGerente)
         }
