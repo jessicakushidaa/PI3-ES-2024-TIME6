@@ -24,5 +24,15 @@ class MainViewGerenteActivity : AppCompatActivity() {
             val intentLiberarLocacao = Intent(this@MainViewGerenteActivity,LiberarLocacaoActivity::class.java)
             startActivity(intentLiberarLocacao)
         }
+
+        binding?.btnExit?.setOnClickListener{
+            // Encerra a atividade atual
+            finish()
+
+            //inicia a LoginActivity
+            val intentExitGerente = Intent(this,LoginActivity::class.java)
+            startActivity(intentExitGerente)
+        }
+
     }
 }
