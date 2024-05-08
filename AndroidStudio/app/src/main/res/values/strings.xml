@@ -91,5 +91,7 @@
     <string name="email_gerente">Email gerente</string>
     <string name="acessar_arm_rio">Acessar Armário</string>
     <string name="liberar_locs">Liberar locações</string>
+    <string name="abrir_temporariamente">Abrir temporariamente</string>
+    <string name="encerrar_loc">encerrar locação</string>
 
 </resources>

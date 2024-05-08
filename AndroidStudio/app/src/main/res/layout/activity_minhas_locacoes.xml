@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    tools:context=".MinhasLocacoesActivity"
-    android:gravity="center_vertical">
+    tools:context=".MinhasLocacoesActivity">
 
 
     <!--ToolBar-->
@@ -24,35 +24,53 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logovetor"
             android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
             android:contentDescription="@string/componenteqr"
-            android:layout_marginEnd="10dp" />
+            android:src="@drawable/logovetor" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!--imagem armario-->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgArm"
+    <RelativeLayout
+        android:id="@+id/locker_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:src="@drawable/library_locker_school_svgrepo_com"
         app:layout_constraintEnd_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
-        app:layout_constraintTop_toTopOf="@id/toolbar"/>
+        app:layout_constraintTop_toTopOf="@id/toolbar">
+
+        <!-- Primeira ImageView - Armario -->
+
+        <!-- Segunda ImageView - Logo (sobreposta à primeira) -->
+        <ImageView
+            android:id="@+id/imgArm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vector_locker" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/imgArm"
+            android:layout_alignTop="@id/imgArm"
+            android:layout_marginStart="121dp"
+            android:layout_marginTop="79dp"
+            android:src="@drawable/logovetorLocker" />
+    </RelativeLayout>
 
     <!--Descricao-->
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:text="@string/infoLoc"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgArm" />
+        app:layout_constraintTop_toBottomOf="@+id/locker_container" />
 
     <!--Bottom Navigation-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -61,10 +79,10 @@
         android:layout_height="wrap_content"
         android:background="@color/blue_nav"
         app:itemIconSize="25dp"
-        app:itemTextColor="@color/yellow"
         app:itemIconTint="@color/yellow"
+        app:itemTextColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav"/>
+        app:menu="@menu/bottom_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>
