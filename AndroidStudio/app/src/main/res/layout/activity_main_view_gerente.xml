@@ -8,8 +8,9 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainViewGerenteActivity">
-
-
+    <!-- **
+     @todo - colocar icons svg nos botoes
+    ** -->
     <!--Toolbar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".AcessarArmarioActivity">
 
 
@@ -72,7 +73,7 @@
             android:layout_alignTop="@id/imgArm"
             android:layout_marginStart="121dp"
             android:layout_marginTop="79dp"
-            android:src="@drawable/logovetorLocker" />
+            android:src="@drawable/logovetor_locker" />
     </RelativeLayout>
 
     <TextView
