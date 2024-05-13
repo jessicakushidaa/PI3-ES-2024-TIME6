@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:paddingBottom="5dp"
+            android:paddingBottom="20dp"
             android:text="@string/textPopCobrança"
             android:textColor="@color/black"
             android:textSize="16sp" />

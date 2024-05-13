@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".AcessarArmarioActivity">
 
 
@@ -36,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:drawablePadding="8dp"
 <<<<<<< Updated upstream
         android:text="@string/acessar_arm_rio"
@@ -56,8 +57,9 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />    <!-- Armário ilustrativo -->
     <RelativeLayout
         android:id="@+id/locker_container"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="110dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_container"
         app:layout_constraintEnd_toEndOf="@id/toolbar"
@@ -81,7 +83,7 @@
             android:layout_alignTop="@id/imgArm"
             android:layout_marginStart="121dp"
             android:layout_marginTop="79dp"
-            android:src="@drawable/logovetorLocker" />
+            android:src="@drawable/logovetor_locker" />
     </RelativeLayout>
 
     <TextView
@@ -118,18 +120,24 @@
             android:background="@drawable/rounded_button"
             android:maxLines="1"
             android:elevation="8dp"
-            android:paddingHorizontal="25dp"
+            android:paddingHorizontal="20dp"
             android:paddingVertical="15dp"
             android:text="@string/abrir_temporariamente"
             android:textColor="@color/white"
+            android:drawablePadding="10dp"
+            android:textAlignment="textStart"
+            android:paddingStart="50dp"
+            android:drawableLeft="@drawable/baseline_access_time_24"
             android:layout_marginBottom="30dp"/>
         <Button
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:elevation="8dp"
+            android:drawableLeft="@drawable/baseline_check_circle_24"
             android:background="@drawable/rounded_button"
             android:paddingVertical="15dp"
+            android:textAlignment="center"
             android:paddingHorizontal="25dp"
             android:text="@string/encerrar_loc"
             android:textColor="@color/white" />
