@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +33,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
                     Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
                 } else {
                     setResult(result.contents)
+
                 }
             }
         }
@@ -40,6 +42,9 @@ class LiberarLocacaoActivity : AppCompatActivity() {
     private fun setResult(string: String){
         resultado = string
         binding?.tvLiberarLocacao?.text = resultado.toEditable()
+
+        val intentNext = Intent(this@LiberarLocacaoActivity, SelectPessoasActivity::class.java)
+        startActivity(intentNext)
     }
     fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
