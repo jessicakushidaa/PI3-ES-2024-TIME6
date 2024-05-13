@@ -38,11 +38,20 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="10dp"
         android:drawablePadding="8dp"
+<<<<<<< Updated upstream
         android:text="@string/acessar_arm_rio"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/blue_nav"
         app:drawableStartCompat="@drawable/loc_location"
+=======
+        android:padding="2dp"
+        android:text="@string/acessar_arm_rio"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/greyGuardian"
+        app:drawableStartCompat="@drawable/settings_1390_svgrepo_com"
+>>>>>>> Stashed changes
         app:layout_constraintBottom_toTopOf="@+id/locker_container"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />    <!-- Armário ilustrativo -->
     <RelativeLayout
