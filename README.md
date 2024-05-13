@@ -23,6 +23,7 @@ A pasta `Firebase-functions` contém as funções Firebase escritas em TypeScrip
 Caso haja a necessidade de manipular dados manualmente no Database, respeitar os tipos esperados de cada campo do documento. Por exemplo, na coleção
 unidadesLocacao, ao adicionar um documento de unidade, o campo **TabelaPrecos** será um array de maps, tal que `preco` espera um number e `tempo` 
 espera uma string ou number.
+É possível consultar os tipos esperados na pasta models, em que as interfaces estão definidas.
 
 ### Estrutura de Pastas
 
