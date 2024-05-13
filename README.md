@@ -16,7 +16,13 @@ A pasta `AndroidStudio` contém todo o código-fonte e recursos relacionados ao 
 
 ## Firebase Functions
 
-A pasta `Firebase-functions` contém as funções Firebase escritas em TypeScript.
+A pasta `Firebase-functions` contém as funções Firebase escritas em TypeScript. Essas funções têm integração direta com o Firestore Database.
+
+### Atenção!
+
+Caso haja a necessidade de manipular dados manualmente no Database, respeitar os tipos esperados de cada campo do documento. Por exemplo, na coleção
+unidadesLocacao, ao adicionar um documento de unidade, o campo **TabelaPrecos** será um array de maps, tal que `preco` espera um number e `tempo` 
+espera uma string ou number.
 
 ### Estrutura de Pastas
 
