@@ -85,7 +85,6 @@ export const addCartao = functions
       functions.logger.error("addCartao " +
                 "- Erro ao inserir novo Cartao:" +
                 codigoErro.toString()),
-
       result = {
         status: "ERROR",
         message: mensagemErro,
@@ -93,6 +92,9 @@ export const addCartao = functions
       };
       console.log(result);
     } else if (camposInvalidos !== null && camposInvalidos.length > 0) {
+      functions.logger.error("addCartao " +
+      "- Erro ao inserir novo Cartao:" +
+      codigoErro.toString()),
       result = {
         status: "ERROR",
         message: `Os seguintes campos não correspondem ao tipo esperado:
@@ -122,6 +124,7 @@ export const addCartao = functions
           status: "ERROR",
           message: "Erro ao adicionar cartão: " + error.message,
           payload: JSON.parse(JSON.stringify({docId: null}))};
+        functions.logger.error("Fim - Erro na chamada da função");
       }
     }
     return result;
