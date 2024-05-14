@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -41,6 +42,8 @@ class SelectPessoasActivity : AppCompatActivity() {
     fun avancarIntent(){
         if(numPessoas != 0){
             Toast.makeText(baseContext,"numero escolhido: $numPessoas",Toast.LENGTH_SHORT).show()
+            val intentCamera = Intent(this@SelectPessoasActivity, TirarFotoActivity::class.java)
+            startActivity(intentCamera)
         }else{
             Toast.makeText(baseContext,"Escolha uma opção",Toast.LENGTH_SHORT).show()
         }
