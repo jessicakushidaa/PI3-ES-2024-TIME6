@@ -17,16 +17,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.pi_iii_grupo6.databinding.ActivityVincularPulseiraBinding
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
 
 class VincularPulseiraActivity : AppCompatActivity() {
     //Declaração do NFCAdapter (Conexão código -> hardware)
     private var nfcAdapter: NfcAdapter? = null
+    private var binding: ActivityVincularPulseiraBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vincular_pulseira)
+        binding = ActivityVincularPulseiraBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         //instanciando o Adapter do NFC (Conexão código -> hardware)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
@@ -66,6 +69,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)
+                            atualizarTela(tagLida)
                         }
                     }
                 }
@@ -84,6 +88,11 @@ class VincularPulseiraActivity : AppCompatActivity() {
     //Apresentar um Toast
     fun toastNaTela(string: String){
         Toast.makeText(baseContext,string,Toast.LENGTH_SHORT).show()
+    }
+    fun atualizarTela(string: String){
+        var tvPulseira = binding?.tvPulseira
+
+        tvPulseira?.text = "Id da pulseira: " + string
     }
 
     companion object{
