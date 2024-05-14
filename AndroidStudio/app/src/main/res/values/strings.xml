@@ -72,7 +72,7 @@
     <string name="CartaoAviso">Hmm... Parece que você não tem um cartão cadastrado ainda</string>
     <string name="cadastrarCartaoText">CADASTRAR CARTÃO</string>
 
-    <string name="textPopCobrança">Foi cobrado o valor de uma diária no seu cartão, quando você voltar, será extornado o valor referente ao sei tempo utilizado.</string>
+    <string name="textPopCobrança">Foi cobrado o valor de uma diária \nno seu cartão \n\n Quando você voltar, será extornado o valor referente ao seu tempo utilizado.</string>
     <string name="TextCobracaTitle">Cobrança feita!</string>
     <string name="xFechar">X</string>
 
@@ -91,5 +91,7 @@
     <string name="email_gerente">Email gerente</string>
     <string name="acessar_arm_rio">Acessar Armário</string>
     <string name="liberar_locs">Liberar locações</string>
+    <string name="abrir_temporariamente">Abrir armário</string>
+    <string name="encerrar_loc">encerrar locação</string>
 
 </resources>
