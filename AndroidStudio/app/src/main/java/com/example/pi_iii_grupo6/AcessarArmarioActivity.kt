@@ -1,11 +1,21 @@
 package com.example.pi_iii_grupo6
 
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory.Options
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.databinding.ActivityAcessarArmarioBinding
+import com.google.maps.android.Context
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
+
 
 class AcessarArmarioActivity : AppCompatActivity() {
-    var binding: ActivityAcessarArmarioBinding? = null
+    private var binding: ActivityAcessarArmarioBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAcessarArmarioBinding.inflate(layoutInflater)
