@@ -54,12 +54,13 @@
 
         <!--Texto locação-->
         <TextView
+            android:id="@+id/tvLocTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/greyGuardian"
             android:hint="@string/locacao_title"
             android:textSize="40sp"
             android:drawablePadding="5dp"
+            android:textColor="@color/greyGuardian"
             app:drawableLeftCompat="@drawable/location_pin"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
