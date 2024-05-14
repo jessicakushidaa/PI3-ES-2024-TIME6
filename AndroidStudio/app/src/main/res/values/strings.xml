@@ -93,5 +93,7 @@
     <string name="liberar_locs">Liberar locações</string>
     <string name="abrir_temporariamente">Abrir armário</string>
     <string name="encerrar_loc">encerrar locação</string>
+    <string name="aproxime_a_pulseira"> <b>Aproxime</b> a pulseira \n ao dispositivo</string>
+    <string name="connection_icon_animation">connection icon animation</string>
 
 </resources>
