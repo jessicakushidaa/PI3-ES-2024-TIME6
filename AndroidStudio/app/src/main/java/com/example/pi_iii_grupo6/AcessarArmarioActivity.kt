@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory.Options
 import androidx.appcompat.app.AppCompatActivity
@@ -20,5 +21,11 @@ class AcessarArmarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAcessarArmarioBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        binding?.btnAbrirTemp?.setOnClickListener {
+            //Abrir acessar armario
+            val intentAcessarArmario = Intent(this@AcessarArmarioActivity,VincularPulseiraActivity::class.java)
+            startActivity(intentAcessarArmario)
+        }
     }
 }

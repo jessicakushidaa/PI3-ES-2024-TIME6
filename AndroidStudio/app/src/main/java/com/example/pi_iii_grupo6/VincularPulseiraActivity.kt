@@ -20,16 +20,41 @@ import androidx.annotation.RequiresApi
 import com.example.pi_iii_grupo6.databinding.ActivityVincularPulseiraBinding
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
+import android.graphics.drawable.AnimatedVectorDrawable
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
+
 
 class VincularPulseiraActivity : AppCompatActivity() {
     //Declaração do NFCAdapter (Conexão código -> hardware)
     private var nfcAdapter: NfcAdapter? = null
     private var binding: ActivityVincularPulseiraBinding? = null
+    private lateinit var pendingIntent: PendingIntent
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVincularPulseiraBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        /** Iniciando animações drawable na tela - icons de conexao da pulseira
+         * instanciando as variaveis com o id do layout
+         * atribuindo à uma lista de animações
+         * iniciando cada um dos elementos da lista
+         */
+        val drawableConn1 = binding?.imageView3?.drawable as? AnimatedVectorDrawable
+        val drawableConn2 = binding?.imageView4?.drawable as? AnimatedVectorDrawable
+
+        val animationList = listOf(drawableConn1, drawableConn2)
+        animationList.forEach { it?.start() }
+
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            0
+        }
+
+        pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), flags)
 
         //instanciando o Adapter do NFC (Conexão código -> hardware)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
