@@ -96,8 +96,7 @@
             android:paddingRight="100dp"
             android:textColor="@color/white"
             android:buttonTint="@color/white"
-            android:layoutDirection="rtl"
-            android:checked="@={SelectPessoas"/>
+            android:layoutDirection="rtl" />
 
         <!--botão enviar-->
         <Button
