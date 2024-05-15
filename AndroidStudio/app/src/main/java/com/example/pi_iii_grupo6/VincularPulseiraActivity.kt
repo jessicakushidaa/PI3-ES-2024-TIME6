@@ -10,13 +10,33 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import android.graphics.drawable.AnimatedVectorDrawable
+import androidx.annotation.RequiresApi
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
+import com.example.pi_iii_grupo6.databinding.ActivityVincularPulseiraBinding
+
 
 class VincularPulseiraActivity : AppCompatActivity() {
+    private var binding: ActivityVincularPulseiraBinding? = null
     private var nfcAdapter: NfcAdapter? = null
     private lateinit var pendingIntent: PendingIntent
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vincular_pulseira)
+        binding = ActivityVincularPulseiraBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        /** Iniciando animações drawable na tela - icons de conexao da pulseira
+         * instanciando as variaveis com o id do layout
+         * atribuindo à uma lista de animações
+         * iniciando cada um dos elementos da lista
+         */
+        val drawableConn1 = binding?.imageView3?.drawable as? AnimatedVectorDrawable
+        val drawableConn2 = binding?.imageView4?.drawable as? AnimatedVectorDrawable
+
+        val animationList = listOf(drawableConn1, drawableConn2)
+        animationList.forEach { it?.start() }
 
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE

@@ -90,7 +90,7 @@
             android:layout_marginStart="87dp"
             android:layout_marginTop="179dp"
             android:contentDescription="@string/connection_icon_animation"
-            android:src="@drawable/animated_connection"/>
+            android:src="@drawable/animated_connection" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -110,6 +110,7 @@
         android:layout_height="wrap_content"
         android:text="@string/aproxime_a_pulseira"
         android:textAlignment="center"
+        android:textColor="@color/greyGuardian"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
