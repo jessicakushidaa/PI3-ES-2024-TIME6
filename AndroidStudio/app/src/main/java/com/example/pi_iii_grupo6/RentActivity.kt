@@ -225,9 +225,11 @@ class RentActivity : AppCompatActivity() {
     private fun dialogAlugarArmario() {
         //Criando a dialog box
         val dialog = BottomSheetDialog(this)
+        //Criando uma variável que tera o binding não da activity, mas sim do layout da dialog
         val sheetBinding: AlugarArmarioDialogBinding = AlugarArmarioDialogBinding.inflate(layoutInflater, null, false)
         dialog.setContentView(sheetBinding.root)
 
+        //Referenciando as Views vindas do layout
         var opcao1 = sheetBinding.llPreco1
         var opcao2 = sheetBinding.llPreco2
         var opcao3 = sheetBinding.llPreco3
@@ -243,6 +245,7 @@ class RentActivity : AppCompatActivity() {
         var preco3 = sheetBinding.tvPreco3
         var preco4 = sheetBinding.tvPreco4
 
+        //Setando o texto dessas views, o valor to tempo e preço vindos do banco
         tempo1.text = "${actualLocker.precos[0].tempo} min"
         tempo2.text = "${actualLocker.precos[1].tempo} min"
 
@@ -250,6 +253,7 @@ class RentActivity : AppCompatActivity() {
         preco1.text = "R$ ${actualLocker.precos[0].preco}"
         preco2.text = "R$ ${actualLocker.precos[1].preco}"
 
+        //Se a unidade tiver mais de 2 opções de preço
         if(actualLocker.precos.size >= 3){
             preco3.text = "R$ ${actualLocker.precos[2].preco}"
             tempo3.text = "${actualLocker.precos[2].tempo} min"
@@ -258,7 +262,7 @@ class RentActivity : AppCompatActivity() {
             tempo3.text = ""
         }
 
-
+        //Se houver mais de 3 opções de preço, sendo essa opção a da diária.
         if(actualLocker.precos.size >= 4){
             tempo4.text = "${actualLocker.precos[3].tempo}"
             preco4.text = "R$ ${actualLocker.precos[3].preco}"
@@ -267,17 +271,22 @@ class RentActivity : AppCompatActivity() {
         //Inicializando a dialog
         dialog.show()
 
+        //Setando os cliques nos elementos dentro da dialog.
         opcao1.setOnClickListener{
+            //Se já estver selecionado, remover a seleção, tanto na lógica quanto visualmente.
             if (precoSelecionado?.tempo == actualLocker.precos[0].tempo){
                 removerSelecionado()
                 desmarcarOpcao(opcao1)
             }else if (precoSelecionado == null){
+                //Selecionar
                 addSelecionado(actualLocker.precos[0])
                 marcarOpçcao(opcao1)
             }else{
+                //Nessa opção, ja tem uma opção selecionada, portanto não é possível selecionar
                 Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
             }
         }
+        //Mesmos comentários da opcao1
         opcao2.setOnClickListener{
             if (precoSelecionado?.tempo == actualLocker.precos[1].tempo){
                 removerSelecionado()
@@ -289,6 +298,7 @@ class RentActivity : AppCompatActivity() {
                 Toast.makeText(baseContext,"Selecione apenas uma opção",Toast.LENGTH_SHORT).show()
             }
         }
+        //Mesmos comentários da opcao1
         opcao3.setOnClickListener{
             if (precoSelecionado?.tempo == actualLocker.precos[2].tempo){
                 removerSelecionado()
@@ -301,11 +311,11 @@ class RentActivity : AppCompatActivity() {
             }
         }
 
+        //consultando a hora e setando a cor da seleção da diária caso não se encaixe no horário previsto.
         if (!(somaHoraAtual >= 420 && somaHoraAtual <= 480)){
             opcao4.setBackgroundColor(Color.parseColor("#E7E7E7"))
         }
-        Log.d("HORA","São $horaAtual:$minutoAtual")
-
+        //Essa é a opção da diária, portanto não estará disponível em qualquer horário que não seja entre as 7:00 e 8:00
         opcao4.setOnClickListener{
 
             if(somaHoraAtual >= 420 && somaHoraAtual <= 480){
@@ -323,14 +333,19 @@ class RentActivity : AppCompatActivity() {
             }
         }
 
+        //Botão que confirma o envio da opção selecionada.
         sheetBinding.btnConfirmarLoc.setOnClickListener {
+            //Setar a variável locAtual com uma classe Locacao para posteriormente enviar via QrCode.
             var userId = user?.uid
             locAtual = MainViewActivity.Locacao(userId,actualLocker,precoSelecionado)
 
+            //Chamando funcao que retorna o id do armário.
             pegarIdArmario().addOnCompleteListener { task->
+                //Ao pegar o id do armário, chama-se a função que adiciona a locação pendente no banco de dados.
                 if(task.isSuccessful){
                     val idArmario = task.result
                     Log.d("PEGOU ARMARIO", idArmario)
+                    //Chamando a function.
                     addLocacaoPendente(idArmario)
                         .addOnCompleteListener { task->
                             if (task.isSuccessful){
@@ -347,7 +362,7 @@ class RentActivity : AppCompatActivity() {
             confirmacao(locAtual)
         }
     }
-
+    //Essa função passa o Id do documento e o nome da colecction, e retorna o ID do armário dessa unidade de locação.
     private fun pegarIdArmario(): Task<String> {
         Log.d("PEGAR ARMARIO", "id: ${actualLocker.id}")
         val data = hashMapOf(
@@ -355,10 +370,12 @@ class RentActivity : AppCompatActivity() {
             "collectionName" to "unidadeLocacao"
         )
 
+        //Chamando a function
         return functions
             .getHttpsCallable("getDocumentFields")
             .call(data)
             .continueWith{ task->
+                //Lidar com o resultado retornado/
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
                 val subcoletcions = payload["subCollectionsData"] as Map<String, Any>
@@ -368,12 +385,9 @@ class RentActivity : AppCompatActivity() {
                 idArmario
             }
     }
+    //FunçÃo que adiciona a locação pendente no banco de dados.
     private fun addLocacaoPendente(idArmario: String):Task<String> {
-
-        Log.d("IDPESS","$idDocumentPessoa")
-        Log.d("IDARM","$idArmario")
-        Log.d("IDUNID","${actualLocker.id}")
-
+        //Setando os valores a serem enviados.
         val data = hashMapOf(
             "idUnidade" to actualLocker.id,
             "idArmario" to idArmario,
@@ -381,10 +395,12 @@ class RentActivity : AppCompatActivity() {
             "tempoEscolhido" to precoSelecionado?.tempo,
             "precoEscolhido" to precoSelecionado?.preco,
         )
+        //Chamando a function.
         return functions
             .getHttpsCallable("addLocacao")
             .call(data)
             .continueWith{task->
+                //Lidar com o retorno, se houver.
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
                 val docId = payload["docId"] as String
@@ -394,20 +410,22 @@ class RentActivity : AppCompatActivity() {
 
 
     }
-
+    //Função chamada ao clicar no botão de confirmar a solicitação de locação.
     fun confirmacao(locacao: MainViewActivity.Locacao){
         var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
 
+        //Se a pessoa não tiver selecionado nenhuma das opções, avisar que é preciso selecionar ao menos uma.
         if (precoSelecionado == null){
             Toast.makeText(baseContext,"Selecione uma opção",Toast.LENGTH_SHORT).show()
         }else{
+            //Se está tudo ok com a seleção, (ja validada anteriormente), passar para a activity do Qr Code
             var infosJson = gson.toJson(locacao)
 
             intentQrCode.putExtra("infosJson",infosJson)
             startActivity(intentQrCode)
         }
     }
-
+//Funções que lidam com o layout das opções.
     fun addSelecionado(selecionado: MainViewActivity.Preco){
         precoSelecionado = selecionado
         Log.d("SELECTION", "PRECO SELECIONADO: ${precoSelecionado?.preco}")
