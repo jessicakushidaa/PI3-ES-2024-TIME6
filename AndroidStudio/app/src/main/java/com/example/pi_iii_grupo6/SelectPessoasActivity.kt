@@ -4,14 +4,23 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivitySelectPessoasBinding
 
 class SelectPessoasActivity : AppCompatActivity() {
     private var binding: ActivitySelectPessoasBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectPessoasBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Seta Retorno
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
         //Voltando o numero escolhido para 0
         numPessoas = 0
@@ -32,6 +41,7 @@ class SelectPessoasActivity : AppCompatActivity() {
             avancarIntent()
         }
     }
+
 
     //Função que recebe o número de pessoas que usarão a pulseira e guarda no companion object para acesso via outra Activity.
     fun adicionarPessoa(numero: Int){
