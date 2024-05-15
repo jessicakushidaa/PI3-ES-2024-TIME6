@@ -4,10 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.cartaoUsuario
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
 import com.example.pi_iii_grupo6.databinding.ActivityShowCardBinding
@@ -19,6 +22,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 
 class ShowCardActivity : AppCompatActivity() {
     private var binding: ActivityShowCardBinding? = null
@@ -46,9 +50,19 @@ class ShowCardActivity : AppCompatActivity() {
             .addOnCompleteListener { task->
                 if (task.isSuccessful){
                     val cartaoJson = task.result
-                    val cartao: CreateCardActivity.Cartao = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
-                    cartaoUsuario = cartao
-                    consultarCartaoHandler()
+                    if (cartaoJson != null) {
+                        val cartao: CreateCardActivity.Cartao? = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
+                        if (cartao != null) {
+                            cartaoUsuario = cartao
+                            consultarCartaoHandler()
+                        } else {
+                            Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
+                            removerCardInfos()
+                        }
+                    } else {
+                        Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
+                        removerCardInfos()
+                    }
                 }else{
                     Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
                     removerCardInfos()
@@ -60,13 +74,13 @@ class ShowCardActivity : AppCompatActivity() {
             abrirCreateCard(idPessoa)
         }
 
-        // Configurando a Toolbar para permitir voltar à tela anterior
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
-
-        setSupportActionBar(toolbar)
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
 
         //Direcionando o bottomNavigation
         val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
@@ -91,7 +105,6 @@ class ShowCardActivity : AppCompatActivity() {
                 }
 
                 else -> false
-
             }
         }
 
@@ -107,10 +120,22 @@ class ShowCardActivity : AppCompatActivity() {
         if (cartaoUsuario!=null){
             Log.d("CARTAO","USUARIO TEM CARTAO")
             mostrarInformacoes()
-            removerNaoTem()
         }else{
             Log.d("CARTAO","USUARIO NAO TEM CARTAO")
             removerCardInfos()
+            mostrarNaoTem()
+        }
+    }
+
+    // Função que simula botão desabilitado de adicionar cartão
+    private fun desabilitarBtn(){
+        binding?.btnAdicionarCartao?.let{
+            // muda a cor do botao para cinza
+            it.setColorFilter(ContextCompat.getColor(this, R.color.light_grey))
+            it.setOnClickListener {
+                it.isPressed = false
+                Toast.makeText(baseContext,"Você já possui um cartão cadastrado",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -132,9 +157,18 @@ class ShowCardActivity : AppCompatActivity() {
         viewPai.removeView(tvInfo)
     }
 
+    //Função que, quando nao tem um cartão, mostra a view falando que não tem cartao
+    private fun mostrarNaoTem() {
+        Log.d("mostrar","Mostrando que nao tem")
+        var tvInfo = binding?.tvInfoTitle
+
+        tvInfo?.visibility = VISIBLE // Definindo a visibilidade de tvInfo
+    }
+
     // Função para mostrar as informações do cartão
     private fun mostrarInformacoes() {
         Log.d("StringRecebida","ENTROU MOSTRAR INFORMAÇÕES")
+        var tvInfo = binding?.linearInfo
         var tvNome = binding?.tvNomeTitular
         var tvNumero = binding?.tvNumeroCartao
         var tvTitle = binding?.tvCartaoTitle
@@ -144,6 +178,7 @@ class ShowCardActivity : AppCompatActivity() {
         var ultimosDigitos = "${digitosOriginais[12]}${digitosOriginais[13]}${digitosOriginais[14]}${digitosOriginais[15]}"
         var numeroFormatado = "**** **** **** $ultimosDigitos"
 
+        tvInfo?.visibility = VISIBLE
         tvNome?.text = cartaoUsuario?.nomeTitular
         tvNumero?.text = numeroFormatado
         tvTitle?.text = "Meu cartão"
@@ -157,7 +192,7 @@ class ShowCardActivity : AppCompatActivity() {
             Log.d("debugcard","$idUser")
             startActivity(abrirCreateCard)
         }else{
-            Toast.makeText(baseContext,"Você ja possui um cartão cadastrado",Toast.LENGTH_SHORT).show()
+            desabilitarBtn()
         }
     }
 
@@ -174,17 +209,36 @@ class ShowCardActivity : AppCompatActivity() {
             .continueWith { task ->
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
-                val subcoletcions = payload["subCollectionsData"] as Map<String, Any>
-                val cartoes = subcoletcions["cartoes"] as ArrayList<*>
-                val cartao = cartoes[0] as Map<String, Any>
-                val numeroCartao = cartao["numeroCartao"] as String
-                val nomeTitular = cartao["nomeTitular"] as String
-                val dataVal = cartao["dataVal"] as String
-                val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
-                val cartoesgson = gson.toJson(cartaoRecebido)
-                cartoesgson
-            }
+                val subcoletcions = payload["subCollectionsData"] as? Map<*, *>
 
+                // Verifica se subCollectionsData não é nulo
+                if (subcoletcions != null) {
+                    val cartoes = subcoletcions["cartoes"] as? List<Map<String, Any>>
+
+                    // Verifica se cartoes não é nulo
+                    if (cartoes != null) {
+                        // Verifica se cartoes não está vazio
+                        if (cartoes.isNotEmpty()) {
+                            val cartao = cartoes[0]
+                            val numeroCartao = cartao["numeroCartao"] as String
+                            val nomeTitular = cartao["nomeTitular"] as String
+                            val dataVal = cartao["dataVal"] as String
+                            val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
+                            gson.toJson(cartaoRecebido)
+                        } else {
+                            Log.d("StringRecebida", "A lista de cartões está vazia")
+                            gson.toJson(null)
+                        }
+                    } else {
+                        Log.d("StringRecebida", "A lista de cartões é nula")
+                        gson.toJson(null)
+                    }
+                } else {
+                    Log.d("StringRecebida", "A subcoleção é nula")
+                    gson.toJson(null)
+                }
+
+            }
     }
 
     //valor idpessoa

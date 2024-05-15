@@ -26,6 +26,8 @@ import okhttp3.internal.format
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.logging.SimpleFormatter
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 
 class CreateCardActivity : AppCompatActivity() {
     //criando variável de autenticação do firebase
@@ -63,25 +65,12 @@ class CreateCardActivity : AppCompatActivity() {
         }
 
         //Seta Voltar
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
-    /*    //AÇÕES DO BOTTOM NAVIGATION
-        binding?.btnHome?.setOnClickListener {
-            var irHome = Intent(this@CreateCardActivity, MainViewActivity::class.java)
-            startActivity(irHome)
-        }
-        binding?.btnCartoes?.setOnClickListener {
-            var irCartoes = Intent(this@CreateCardActivity, CreateCardActivity::class.java)
-            startActivity(irCartoes)
-        }
-        binding?.btnLocacoes?.setOnClickListener {
-            var irLocacoes = Intent(this@CreateCardActivity, RentManagerActivity::class.java)
-            startActivity(irLocacoes)
-        } */
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
     private fun receberId(): String{
         Log.d(TAG,"entrou receber ID")
@@ -99,7 +88,7 @@ class CreateCardActivity : AppCompatActivity() {
         if(nomeTitular.isEmpty() || numeroCartao.isEmpty() || dataVal.isEmpty()){
             Toast.makeText(baseContext,"Preencha todos os campos!",Toast.LENGTH_SHORT).show()
         }else{
-            if (dataVal.count() != 7){
+            if (dataVal.count() != 5){
                 Toast.makeText(baseContext,"Preencha a data de validade corretamente",Toast.LENGTH_SHORT).show()
             }else if(numeroCartao.count() != 16){
                 Toast.makeText(baseContext,"Numero do cartão inválido, utilize apenas numeros",Toast.LENGTH_SHORT).show()
