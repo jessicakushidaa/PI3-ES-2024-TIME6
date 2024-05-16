@@ -90,7 +90,7 @@
     <string name="nome_gerente">Nome gerente</string>
     <string name="email_gerente">Email gerente</string>
     <string name="acessar_arm_rio">Acessar Armário</string>
-    <string name="liberar_locs">Liberar locações</string>
+    <string name="liberar_locs">Liberar locação</string>
     <string name="abrir_temporariamente">Abrir armário</string>
     <string name="encerrar_loc">encerrar locação</string>
     <string name="aproxime_a_pulseira"> <b>Aproxime</b> a pulseira \n ao dispositivo</string>
