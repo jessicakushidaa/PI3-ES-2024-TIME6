@@ -94,7 +94,6 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)
-                            atualizarTela(tagLida)
                         }
                     }
                 }
@@ -113,11 +112,6 @@ class VincularPulseiraActivity : AppCompatActivity() {
     //Apresentar um Toast
     fun toastNaTela(string: String){
         Toast.makeText(baseContext,string,Toast.LENGTH_SHORT).show()
-    }
-    fun atualizarTela(string: String){
-        var tvPulseira = binding?.tvPulseira
-
-        tvPulseira?.text = "Id da pulseira: " + string
     }
 
     companion object{
