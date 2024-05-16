@@ -28,7 +28,7 @@
             android:layout_marginBottom="-13dp"
             android:text="@string/Fechar"
             />
-
+        
 
         <!-- Titulo Card-->
         <androidx.appcompat.widget.AppCompatTextView
