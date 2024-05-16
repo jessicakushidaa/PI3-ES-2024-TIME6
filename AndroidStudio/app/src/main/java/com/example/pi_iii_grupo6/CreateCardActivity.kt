@@ -115,8 +115,9 @@ class CreateCardActivity : AppCompatActivity() {
         val tvText: TextView = dialog.findViewById(R.id.tvText)
         val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
 
-        tvTitle.text = "Cartão Cadastrado!"
-        tvText.text = " Agora, toda vez que você realizar uma locação através do nosso app, será cobrada uma caução equivalente a uma diária. Esta caução será estornada proporcionalmente de acordo com o período utilizado."
+        // Adicionando o texto de cadastro do cartão à dialog padrão
+        tvTitle.text = (R.string.dialogCadastradoTitle).toString()
+        tvText.text = (R.string.dialogCadastradoText).toString()
 
         btnClose.setOnClickListener {
             dialog.dismiss()

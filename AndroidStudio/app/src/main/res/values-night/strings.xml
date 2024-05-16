@@ -1,4 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PI-III_Grupo6</string>
+    <string name="second_btn_Menu">CRIAR CARTÃO</string>
+    <string name="third_btn_Menu">LOCAÇÕES</string>
+    <string name="first_btn_Menu">MAPA</string>
+    <string name="welcome">Bem vindo ao Guardians!</string>
+    <string name="title_marker">Titulo Local</string>
+    <string name="endereco_marker_info">Rua armando armandoca lindo 382</string>
+    <string name="referencia_marker_info">Referência: Praia da Pipa</string>
+    <string name="btn_marker_route">IR ATÉ LÁ</string>
+    <string name="cardTitle">Adicione seu cartão</string>
+    <string name="location_title">LocationTitle</string>
+    <string name="enderecoLocker">Endereço:</string>
+    <string name="referencia">Referência:</string>
+    <string name="btn_text_alugar">Alugar Armário</string>
+    <string name="seta_voltar"><![CDATA[<-]]></string>
+    <string name="tempo_1">Tempo 1</string>
+    <string name="preco_1">Preco 1</string>
+    <string name="tempo_2">Tempo 2</string>
+    <string name="preco_2">Preco 2</string>
+    <string name="tempo_3">Tempo 3</string>
+    <string name="preco_3">Preco 3</string>
+    <string name="tempo_4">Tempo 4</string>
+    <string name="preco_4">Preco 4 </string>
+    <string name="btn_confirmar">Confirmar Locação</string>
+    <string name="qrcode_label">Apresente esse QrCode para o gerente!</string>
+
+    <!-- Tela de Login -->
+    <string name="cadastrar">Cadastrar</string>
+    <string name="senha">Senha</string>
+    <string name="email">Email</string>
+    <string name="esqueceu_a_senha">Esqueceu a senha?</string>
+    <string name="login">Entrar</string>
+    <string name="n_o_tem_uma_conta_cadastre_se">Não tem uma conta?
+        <b>Cadastre-se</b></string>
+    <string name="entrar_sem_login">Entrar sem login</string>
+    <string name="alugar_arm_rio">Alugar Armário</string>
+    <string name="minhas_loca_es">Minhas Locações</string>
+    <string name="alugar_arm_ri">Alugar Armário</string>
+    <string name="minhas_loca_e">Minhas locações</string>
+    <string name="loca_es">Locações</string>
+    <string name="mapa">Mapa</string>
+    <string name="cart_es">Cartões</string>
+
+    <!-- Tela Cadastro de cartão -->
+    <string name="nome_completo">Nome Completo</string>
+    <string name="numCartao">Numero do Cartão</string>
+    <string name="cvv">CVV</string>
+    <string name="dataVal">Data de Validade</string>
+    <string name="btnCadastrar">Cadastrar</string>
+
+    <!-- Tela de Cadastro de usuário -->
+    <string name="email_cadastro">Email</string>
+    <string name="cpf_cadastro">CPF</string>
+    <string name="data_de_nascimento_cadastro">Data de Nascimento</string>
+    <string name="criar_senha">Criar senha</string>
+    <string name="confirmar_senha">Confirmar senha</string>
+    <string name="nome_cadastro">Nome</string>
+    <string name="sobrenome_cadastro">Sobrenome</string>
+    <string name="telefone_cadastro">Telefone</string>
+    <string name="selecione_o_tempo_para_loca_o">Selecione o tempo para locação:</string>
+
+    <string name="locacao_title">Locação</string>
+    <string name="telefone_loc">Telefone:</string>
+    <string name="voltarQr">Voltar</string>
+    <string name="qr_codeText">QR CODE</string>
+    <string name="componenteqr">componenteQr</string>
+    <string name="nenhumCartaoInfo">Você ainda não possui nenhum cartão cadastrado</string>
+    <string name="cadastreCartao">Cadastre um cartão</string>
+
+    <string name="Fechar">X</string>
+    <string name="CartaoAviso">Hmm... Parece que você não tem um cartão cadastrado ainda</string>
+    <string name="cadastrarCartaoText">CADASTRAR CARTÃO</string>
+    <string name="dialogCadastradoText">Agora, toda vez que você realizar uma locação através do Guardian Locker App, será cobrada uma caução equivalente a uma diária.
+        Esta caução será estornada proporcionalmente de acordo com o período utilizado.</string>
+    <string name="dialogCadastradoTitle">Cartão Cadastrado!</string>
+
+    <string name="textPopCobrança">Foi cobrado o valor de uma diária \nno seu cartão \n\n
+        Quando você retornar à unidade, será extornado o valor referente ao seu tempo utilizado.</string>    <string name="TextCobracaTitle">Cobrança feita!</string>
+    <string name="xFechar">X</string>
+
+    <string name="text_nao_chegou_dialog">Hmmm... parece que você ainda não está em uma unidade de locação.
+        \n<b>Trace uma rota</b> no mapa para visualizar o caminho até uma unidade.</string>    <string name="text_abrir_mapa_btn">ABRIR MAPA</string>
+
+    <string name="infoLoc">Você ainda não possui nenhuma locação</string>
+    <string name="sair">Sair</string>
+    <string name="loca_esText">Locações</string>
+    <string name="TextCart">Cartões</string>
+    <string name="Textmapa">Mapa</string>
     <string name="locacao_pendente_popup">Você tem uma locação pendente!</string>
+    <string name="area_do_gerente">Área do Gerente</string>
+    <string name="bem_vindogerente">Bem-Vindo</string>
+    <string name="nome_gerente">Nome gerente</string>
+    <string name="email_gerente">Email gerente</string>
+    <string name="acessar_arm_rio">Acessar Armário</string>
+    <string name="liberar_locs">Liberar locações</string>
+    <string name="abrir_temporariamente">Abrir armário</string>
+    <string name="encerrar_loc">encerrar locação</string>
+    <string name="aproxime_a_pulseira"> <b>Aproxime</b> a pulseira \n ao dispositivo</string>
+    <string name="connection_icon_animation">connection icon animation</string>
+
 </resources>
