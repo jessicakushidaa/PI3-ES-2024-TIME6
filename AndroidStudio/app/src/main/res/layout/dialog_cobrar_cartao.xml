@@ -16,19 +16,17 @@
         <!--Botão Icone fechar -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClosePopup"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:padding="10dp"
             android:background="@color/zxing_transparent"
             android:layout_marginEnd="2dp"
             android:textSize="20sp"
-            android:textColor="@color/red"
+            android:textColor="@color/blue_nav"
             android:textStyle="bold"
-            android:layout_marginBottom="-13dp"
-            android:text="@string/Fechar"
+            android:layout_marginBottom="-20dp"
+            android:text="@string/xFechar"
             />
-
 
         <!-- Titulo Card-->
         <androidx.appcompat.widget.AppCompatTextView
@@ -48,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
             android:paddingBottom="20dp"
             android:text="@string/textPopCobrança"
             android:textColor="@color/black"

@@ -116,7 +116,7 @@ class CreateCardActivity : AppCompatActivity() {
         val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
 
         tvTitle.text = "Cartão Cadastrado!"
-        tvText.text = " Agora, toda vez que você realizar uma locação através do Guardian Locker App, será cobrada uma caução equivalente a uma diária.\n Esta caução será estornada proporcionalmente de acordo com o período utilizado."
+        tvText.text = " Agora, toda vez que você realizar uma locação através do nosso app, será cobrada uma caução equivalente a uma diária. Esta caução será estornada proporcionalmente de acordo com o período utilizado."
 
         btnClose.setOnClickListener {
             dialog.dismiss()
