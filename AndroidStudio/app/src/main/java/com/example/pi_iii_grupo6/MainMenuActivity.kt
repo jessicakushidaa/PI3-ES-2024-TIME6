@@ -65,13 +65,19 @@ class MainMenuActivity : AppCompatActivity() {
                 }
             }
 
+            // Consultando o cartão do usuário a partir do ID da pessoa
             consultarCartao(idDocumentPessoa)
                 .addOnCompleteListener { task->
                     if (task.isSuccessful){
-                        //Adicionando o cartao do usuário na variável do companion object cartauUsuario
                         val cartaoJson = task.result
-                        val cartao: CreateCardActivity.Cartao = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
-                        cartaoUsuario = cartao
+                        if (cartaoJson != null) {
+                            val cartao: CreateCardActivity.Cartao? = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
+                            if (cartao != null) {
+                                cartaoUsuario = cartao
+                            }
+                        } else {
+                            Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
+                        }
                     }else{
                         Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
                     }
@@ -336,8 +342,8 @@ class MainMenuActivity : AppCompatActivity() {
             .call(data)
             .continueWith{task->
                 Log.d("FunPendente", "String recebida - iniciou função")
-                val res = task.result.data as Map<String, Any>
-                val payload = res["payload"] as Map<String, Any>
+                val res = task.result.data as Map<*, *>
+                val payload = res["payload"] as Map<*, *>
                 val pendente = payload["pendente"] as Boolean
 
                 Log.d("FunPendente", "Payload - $payload")
