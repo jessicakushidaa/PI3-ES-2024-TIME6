@@ -82,6 +82,8 @@ class TirarFotoActivity : AppCompatActivity() {
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         Log.i("CAMERAX","A imagem foi salva em: ${file.toURI()}")
+                        val intent = Intent(this@TirarFotoActivity, VincularPulseiraActivity::class.java)
+                        startActivity(intent)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
