@@ -54,15 +54,14 @@ class ShowCardActivity : AppCompatActivity() {
                         val cartao: CreateCardActivity.Cartao? = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
                         if (cartao != null) {
                             cartaoUsuario = cartao
-                            consultarCartaoHandler()
+
                         } else {
                             Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
-                            removerCardInfos()
                         }
                     } else {
                         Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
-                        removerCardInfos()
                     }
+                    consultarCartaoHandler()
                 }else{
                     Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
                     removerCardInfos()
@@ -159,7 +158,7 @@ class ShowCardActivity : AppCompatActivity() {
 
     //Função que, quando nao tem um cartão, mostra a view falando que não tem cartao
     private fun mostrarNaoTem() {
-        Log.d("mostrar","Mostrando que nao tem")
+        Log.d("CARTAO","Mostrando que nao tem")
         var tvInfo = binding?.tvInfoTitle
 
         tvInfo?.visibility = VISIBLE // Definindo a visibilidade de tvInfo
@@ -227,15 +226,18 @@ class ShowCardActivity : AppCompatActivity() {
                             gson.toJson(cartaoRecebido)
                         } else {
                             Log.d("StringRecebida", "A lista de cartões está vazia")
-                            gson.toJson(null)
+                            var cartaoRecebido = null
+                            gson.toJson(cartaoRecebido)
                         }
                     } else {
                         Log.d("StringRecebida", "A lista de cartões é nula")
-                        gson.toJson(null)
+                        var cartaoRecebido = null
+                        gson.toJson(cartaoRecebido)
                     }
                 } else {
                     Log.d("StringRecebida", "A subcoleção é nula")
-                    gson.toJson(null)
+                    var cartaoRecebido = null
+                    gson.toJson(cartaoRecebido)
                 }
 
             }

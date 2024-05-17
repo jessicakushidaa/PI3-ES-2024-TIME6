@@ -77,6 +77,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     style="@style/textInputETLayout" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,6 +90,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:hint="@string/numCartao">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -153,7 +157,7 @@
                 android:background="@drawable/rounded_button"
                 android:elevation="8dp"
                 android:text="@string/btnCadastrar"
-                android:textColor="@color/light_grey"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>

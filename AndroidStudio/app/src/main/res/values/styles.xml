@@ -7,6 +7,7 @@
         <item name="android:textColorHint">@color/greyGuardian</item>
         <item name="android:textColor">@color/black</item>
         <item name="boxStrokeColor">@color/yellowbtn</item>
+        <item name="maxLines">1</item>
     </style>
     <style name="GuardianTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">2dp</item>
