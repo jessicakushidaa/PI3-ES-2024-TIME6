@@ -36,14 +36,13 @@
         android:id="@+id/btnExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_exit_to_app_24"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="15dp"
         android:background="@null"
         android:scaleX="-1"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="17dp"
+        android:src="@drawable/baseline_exit_to_app_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/tvWelcomeGerente"
@@ -131,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="30dp">
+            android:paddingVertical="60dp">
 
 
             <Button
@@ -139,12 +138,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="70dp"
                 android:background="@drawable/rounded_button"
+                android:drawableLeft="@drawable/settings_1390_svgrepo_com"
+                android:elevation="8dp"
+                android:gravity="center"
                 android:paddingHorizontal="35dp"
                 android:paddingVertical="25dp"
+                android:paddingEnd="40dp"
                 android:text="@string/acessar_arm_rio"
-                android:elevation="8dp"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -158,9 +160,12 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/blue_nav"
-                android:paddingHorizontal="35dp"
+                android:drawableLeft="@drawable/open_padlock"
                 android:elevation="8dp"
+                android:gravity="center"
+                android:paddingHorizontal="35dp"
                 android:paddingVertical="25dp"
+                android:paddingEnd="40dp"
                 android:text="@string/liberar_locs"
                 android:textColor="@color/white"
                 android:textSize="15sp"
