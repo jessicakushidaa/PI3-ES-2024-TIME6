@@ -95,7 +95,6 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)
-                            atualizarTela(tagLida)
                             avancarIntent(tagLida)
                         }
                     }
@@ -111,8 +110,14 @@ class VincularPulseiraActivity : AppCompatActivity() {
         val activity = intent.extras?.getString("Activity")
         if(activity == "vincular"){
             //Avançar para vincular pulseira (passando o id)
+            val intent = Intent(this@VincularPulseiraActivity,VincularPulseiraIdActivity::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
         }else if(activity == "buscar"){
             //Avançar para buscar locação com esse id de pulseira (passando o id)
+            val intent = Intent(this@VincularPulseiraActivity,BuscarLocIdActivity::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
         }
     }
 
