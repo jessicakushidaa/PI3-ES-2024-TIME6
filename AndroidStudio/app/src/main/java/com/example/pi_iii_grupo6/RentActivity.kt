@@ -65,7 +65,9 @@ class RentActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
 
 
-
+        // Definindo a cor do text view "Locações" para ficar imutável no nightMode
+        val tvLocTitle =binding?.tvLocTitle
+        tvLocTitle!!.setTextColor(Color.parseColor("#FF000000")) // preto
 
         var nomeRecebido = getLockerName()
         getCurrentLocation(nomeRecebido)
@@ -181,6 +183,14 @@ class RentActivity : AppCompatActivity() {
             textoTitulo?.text = "${actualLocker.nomeLocal}"
             textoEndereco?.text = "Endereço: ${actualLocker.enderecoLocal}"
             textoReferencia?.text = "Referência: ${actualLocker.referenciaLocal}"
+
+            val textViews = listOf(textoEndereco, textoReferencia)
+
+            textoTitulo!!.setTextColor(Color.parseColor("#FF000000"))
+            textViews.forEach {
+                it!!.setTextColor(Color.parseColor("#757575")) // Define a cor de todos cinza
+            }
+
         }
     }
     private fun getCurrentLocation(nomeRecebido: String?){
