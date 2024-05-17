@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.example.pi_iii_grupo6.InternetMonitor
 import com.example.pi_iii_grupo6.NoConnectionActivity
 
+// Classe para lidar com o estado de rede
 open class BasicaActivity : AppCompatActivity() {
 
     private lateinit var networkMonitor: InternetMonitor

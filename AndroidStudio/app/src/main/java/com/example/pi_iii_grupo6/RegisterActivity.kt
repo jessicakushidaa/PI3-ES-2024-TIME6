@@ -47,6 +47,26 @@ class RegisterActivity : BasicaActivity() {
         auth = Firebase.auth
         functions = Firebase.functions("southamerica-east1")
 
+        /**
+         * Formatando padrão de digitação de data de nascimento
+         */
+        val dataNascimentoET = binding?.etBirth
+        // Definindo texto guia para o usuário
+        dataNascimentoET!!.setText("DD/MM/AAAA")
+        // Adicionando o TextWatcher na editText
+        // Define um texto inicial com a barra
+        // Adicionando TextWatcher na edit text
+        dataNascimentoET.addTextChangedListener(DateTextFormat(dataNascimentoET))
+        dataNascimentoET.setOnClickListener{
+            // remove temporariamente o text Watcher
+            dataNascimentoET.removeTextChangedListener(DateTextFormat(dataNascimentoET))
+            if (dataNascimentoET.text.toString() == "MM/AA") {
+                dataNascimentoET.setText("") // limpa o edit text
+                dataNascimentoET.setSelection(0) // posiciona cursor no início
+            }
+            // adiciona novamente o método
+            dataNascimentoET.addTextChangedListener(DateTextFormat(dataNascimentoET))
+        }
 
         //Setando o que fazer ao clicar no botão registrar
         binding?.btnRegistrar?.setOnClickListener{
@@ -58,7 +78,7 @@ class RegisterActivity : BasicaActivity() {
             var nome = binding?.etNome?.text.toString()
             var sobrenome = binding?.etSobrenome?.text.toString()
             var cpf = binding?.etCPF?.text.toString()
-            var dataNascimento = binding?.etBirth?.text.toString()
+            var dataNascimento = dataNascimentoET.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
 

@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.example.pi_iii_grupo6.databinding.ActivityDetalhesBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+// Definindo classe para as funcionalidades da NavBar e toolBar
 class DetalhesActivity : AppCompatActivity() {
 
     private  var binding: ActivityDetalhesBinding? = null

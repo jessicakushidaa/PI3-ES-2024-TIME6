@@ -68,7 +68,7 @@ class CreateCardActivity : BasicaActivity() {
         /* Formatando o padrão de digitação da data de validade no formulário de
          cadastro */
         val dataVal = binding?.etValidade
-        // Define um texto inicial com a barra (opcional)
+        // Define um texto inicial com a barra
         dataVal!!.setText("MM/AA")
         // Adicionando TextWatcher na edit text
         dataVal.addTextChangedListener(DateValTextFormat(dataVal))
