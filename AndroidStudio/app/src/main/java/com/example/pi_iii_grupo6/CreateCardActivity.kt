@@ -116,8 +116,8 @@ class CreateCardActivity : AppCompatActivity() {
         val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
 
         // Adicionando o texto de cadastro do cartão à dialog padrão
-        tvTitle.text = (R.string.dialogCadastradoTitle).toString()
-        tvText.text = (R.string.dialogCadastradoText).toString()
+        tvTitle.text = this.getString(R.string.dialogCadastradoTitle)
+        tvText.text = this.getString(R.string.dialogCadastradoText)
 
         btnClose.setOnClickListener {
             dialog.dismiss()

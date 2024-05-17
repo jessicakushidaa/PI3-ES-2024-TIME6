@@ -309,19 +309,22 @@ class MainMenuActivity : AppCompatActivity() {
                             val numeroCartao = cartao["numeroCartao"] as String
                             val nomeTitular = cartao["nomeTitular"] as String
                             val dataVal = cartao["dataVal"] as String
-                            val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
+                            var cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
                             gson.toJson(cartaoRecebido)
                         } else {
                             Log.d("StringRecebida", "A lista de cartões está vazia")
-                            gson.toJson(null)
+                            var cartaoRecebido = null
+                            gson.toJson(cartaoRecebido)
                         }
                     } else {
                         Log.d("StringRecebida", "A lista de cartões é nula")
-                        gson.toJson(null)
+                        var cartaoRecebido = null
+                        gson.toJson(cartaoRecebido)
                     }
                 } else {
                     Log.d("StringRecebida", "A subcoleção é nula")
-                    gson.toJson(null)
+                    var cartaoRecebido = null
+                    gson.toJson(cartaoRecebido)
                 }
 
             }
