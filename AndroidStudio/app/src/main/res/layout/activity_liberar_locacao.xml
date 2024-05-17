@@ -1,16 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LiberarLocacaoActivity"
-    android:gravity="center">
+    android:background="@color/greyGuardian"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".LiberarLocacaoActivity">
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:id="@+id/tvLiberarLocacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Liberar Locação"/>
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/greyGuardian"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view_loc_container"
+        android:layout_width="358dp"
+        android:layout_height="529dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/select_rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearSelect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:id="@+id/TextSelect"
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:drawablePadding="20dp"
+            android:text="Liberar Locação"
+            android:drawableLeft="@drawable/baseline_lock_open_24"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextSelect1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="100dp"
+            android:textAlignment="center"
+            android:drawablePadding="20dp"
+            android:text="Escanear o QrCode do Cliente"
+            android:textColor="@color/greyGuardian"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.journeyapps.barcodescanner.BarcodeView
+            android:id="@+id/BarCode"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="60dp"
+            />
+
+        <TextView
+            android:id="@+id/tvLiberarLocacao"
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:drawablePadding="20dp"
+            android:text="Liberar Locação"
+            android:textColor="@color/black"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
