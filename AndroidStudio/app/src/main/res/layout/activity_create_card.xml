@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".CreateCardActivity"
+    >
 
     <!--Toolbar-->
     <androidx.appcompat.widget.Toolbar
@@ -75,6 +77,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     style="@style/textInputETLayout" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,6 +90,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:hint="@string/numCartao">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -131,7 +137,7 @@
                         android:id="@+id/etValidade"
                         style="@style/textInputETLayout"
                         android:inputType="date|number"
-                        android:maxLength="7" />
+                        android:maxLength="5" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -151,7 +157,7 @@
                 android:background="@drawable/rounded_button"
                 android:elevation="8dp"
                 android:text="@string/btnCadastrar"
-                android:textColor="@color/light_grey"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>

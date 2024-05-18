@@ -4,13 +4,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="10dp"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="16dp"
+    android:background="@color/white"
+    android:backgroundTint="@color/white">
 
     <!--ajuste card-->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <!--Conteudo Card-->
         <androidx.appcompat.widget.AppCompatTextView
@@ -34,7 +37,7 @@
             android:background="@color/grey"
             android:elevation="20dp"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="8dp"
             android:text="@string/text_abrir_mapa_btn"
             android:textColor="@color/blue_nav"
             android:textSize="18sp"
