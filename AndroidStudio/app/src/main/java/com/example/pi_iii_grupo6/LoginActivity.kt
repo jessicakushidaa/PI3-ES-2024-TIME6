@@ -179,13 +179,18 @@ class LoginActivity : AppCompatActivity() {
 
     //Função que checa se o usuário está logado
     private fun checkLogin(){
-        if(user == null || emailVerified == false){
+        if(user == null){
             Log.d(TAG, "signInUserWithEmail:null")
         }else{
             Log.d(TAG, "signInUserWithEmail:success")
             //Avançar para tela inicial
-            var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
-            startActivity(avancarTelaInicial)
+            if(isGerente(user?.email)){
+                var avancarTelaInicial = Intent(this@LoginActivity, MainViewGerenteActivity::class.java)
+                startActivity(avancarTelaInicial)
+            }else{
+                var avancarTelaInicial = Intent(this@LoginActivity, MainMenuActivity::class.java)
+                startActivity(avancarTelaInicial)
+            }
         }
     }
 
