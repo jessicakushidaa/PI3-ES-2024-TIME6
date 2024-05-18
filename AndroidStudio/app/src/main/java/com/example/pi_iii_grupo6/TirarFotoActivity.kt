@@ -3,11 +3,13 @@ package com.example.pi_iii_grupo6
 import android.app.Instrumentation.ActivityResult
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.util.Size
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
@@ -55,7 +57,7 @@ class TirarFotoActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCamera(){
         cameraProviderFuture.addListener({
-            imageCapture = ImageCapture.Builder().build()
+            imageCapture = ImageCapture.Builder().setTargetResolution(Size(250,400)).build()
 
             val cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
@@ -85,11 +87,16 @@ class TirarFotoActivity : AppCompatActivity() {
                         Log.d("FOTO","Entrou na capture Sucess")
                         super.onCaptureSuccess(image)
                         val bitmapImage = image.toBitmap()
-                        val base64 = convertToBase64(bitmapImage)
+                        val rotatedBitmap = rotateBitmap(bitmapImage,90)
+                        val base64 = convertToBase64(rotatedBitmap)
+                        images.add(base64)
                         runOnUiThread {
                             Toast.makeText(baseContext,"Convertida com sucesso!",Toast.LENGTH_SHORT).show()
                             Log.d("FOTO",base64)
                         }
+                        val intent = Intent(this@TirarFotoActivity, VincularPulseiraActivity::class.java)
+                        intent.putExtra("Activity","vincular")
+                        startActivity(intent)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -101,10 +108,23 @@ class TirarFotoActivity : AppCompatActivity() {
     }
 
     private fun convertToBase64(bitmapImage: Bitmap): String {
-        val stream = ByteArrayOutputStream()
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG,40,stream)
-        val image = stream.toByteArray()
-        val base64 =  Base64.encodeToString(image,Base64.DEFAULT)
-        return base64
+            val stream = ByteArrayOutputStream()
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+            val byteArray = stream.toByteArray()
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP)
+    }
+
+    fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap {
+        if (degree == 0) {
+            return bitmap
+        }
+        val matrix = Matrix()
+        matrix.postRotate(degree.toFloat())
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    companion object{
+        var images: MutableList<String> = mutableListOf()
+        var imagestring = ""
     }
 }
