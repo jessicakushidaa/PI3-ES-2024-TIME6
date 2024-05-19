@@ -72,13 +72,11 @@ class TirarFotoActivity : AppCompatActivity() {
             }
         }, ContextCompat.getMainExecutor(this))
     }
+
     //Função que tira foto ao clicar no botao de tirar foto.
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun takePicture(){
         imageCapture?.let {
-            //Nome do arquivo
-            val fileName = "JPEG_CLIENT_${System.currentTimeMillis()}"
-            val file = File(externalMediaDirs[0], fileName)
 
             it.takePicture(
                 imageCaptureExecutor,
@@ -125,6 +123,5 @@ class TirarFotoActivity : AppCompatActivity() {
 
     companion object{
         var images: MutableList<String> = mutableListOf()
-        var imagestring = ""
     }
 }
