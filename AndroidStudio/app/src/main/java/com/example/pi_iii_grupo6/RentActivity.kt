@@ -412,6 +412,7 @@ class RentActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"Selecione uma opção",Toast.LENGTH_SHORT).show()
         }else{
             var infosJson = gson.toJson(locacao)
+            Log.d("LOCACAO","JSON da Locação: $infosJson")
 
             intentQrCode.putExtra("infosJson",infosJson)
             startActivity(intentQrCode)
