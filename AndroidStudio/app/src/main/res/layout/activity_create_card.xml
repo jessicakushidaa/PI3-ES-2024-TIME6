@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CreateCardActivity"
-    >
+    tools:context=".CreateCardActivity">
 
     <!--Toolbar-->
     <androidx.appcompat.widget.Toolbar
@@ -22,9 +21,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logovetor"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -45,16 +44,16 @@
             android:layout_width="270dp"
             android:layout_height="270dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/vector_cred_card">
-        </androidx.appcompat.widget.AppCompatImageView>
+            android:src="@drawable/vector_cred_card"></androidx.appcompat.widget.AppCompatImageView>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminate="false"
+            android:layout_gravity="center"
             android:layout_marginTop="-30dp"
-            android:layout_gravity="center"/>
+            android:indeterminate="false"
+            android:visibility="gone" />
 
         <!-- Início do formulário de Cadastro de Cartão -->
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -77,9 +76,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
-                    android:singleLine="true"
+                    style="@style/textInputETLayout"
                     android:maxLines="1"
-                    style="@style/textInputETLayout" />
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo de texto para inserir o número do cartao -->
@@ -90,14 +89,16 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"
+                android:hint="@string/numCartao"
                 android:maxLines="1"
-                android:hint="@string/numCartao">
+                android:singleLine="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCardNumber"
                     style="@style/textInputETLayout"
-                    android:maxLength="16" />
+                    android:maxLength="16"
+                    android:maxLines="1"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -119,7 +120,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etCVV"
                         style="@style/textInputETLayout"
-                        android:maxLength="3" />
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Campo de texto para inserir a validade-->
@@ -137,7 +140,9 @@
                         android:id="@+id/etValidade"
                         style="@style/textInputETLayout"
                         android:inputType="date|number"
-                        android:maxLength="5" />
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -172,7 +177,6 @@
         app:itemTextColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:layout_constraintStart_toStartOf="parent"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

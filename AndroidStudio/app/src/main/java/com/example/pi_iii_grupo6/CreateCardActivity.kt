@@ -6,7 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -50,20 +53,6 @@ class CreateCardActivity : AppCompatActivity() {
         auth = Firebase.auth
         functions = Firebase.functions("southamerica-east1")
 
-        var idDocumentPessoa = ""
-        idDocumentPessoa = receberId()
-
-
-        //O que fazer quando clicar em cadastrar
-        binding?.btnCadastrar?.setOnClickListener{
-            var progressBar = findViewById<ProgressBar>(R.id.progressBar)
-
-            progressBar.isIndeterminate = true
-
-            verificarPreenchidos(idDocumentPessoa)
-            
-        }
-
         //Seta Voltar
         setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -71,6 +60,46 @@ class CreateCardActivity : AppCompatActivity() {
 
         // Define o ícone da seta como o drawable customizado
         supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
+
+        var idDocumentPessoa = ""
+        idDocumentPessoa = receberId()
+
+        /* Formatando o padrão de digitação da data de validade no formulário de
+         cadastro */
+        val dataVal = binding?.etValidade
+        // Define um texto inicial com a barra (opcional)
+        dataVal!!.setText("MM/AA")
+        // Adicionando TextWatcher na edit text
+        dataVal.addTextChangedListener(DateValTextFormat(dataVal))
+        dataVal.setOnClickListener{
+            // remove temporariamente o text Watcher
+            dataVal.removeTextChangedListener(DateValTextFormat(dataVal))
+            if (dataVal.text.toString() == "MM/AA") {
+                dataVal.setText("") // limpa o edit text
+                dataVal.setSelection(0) // posiciona cursor no início
+            }
+            // adiciona novamente o método
+            dataVal.addTextChangedListener(DateValTextFormat(dataVal))
+        }
+
+        // O que fazer quando clicar em cadastrar
+        binding?.btnCadastrar?.setOnClickListener {
+            // Verifica se recebeu o ID corretamente
+            if (idDocumentPessoa.isNotEmpty()) {
+                // Mostra a ProgressBar
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.isIndeterminate = true
+                progressBar.visibility = View.VISIBLE
+
+                // Chama a função verificarPreenchidos para cadastrar o cartão
+                verificarPreenchidos(idDocumentPessoa)
+            } else {
+                // Exibe uma mensagem de erro caso o id nao tenha sido recebido
+                Toast.makeText(this, "Ocorreu um erro ao cadastrar cartão. Recarregue a página",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
     private fun receberId(): String{
         Log.d(TAG,"entrou receber ID")
@@ -89,9 +118,11 @@ class CreateCardActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"Preencha todos os campos!",Toast.LENGTH_SHORT).show()
         }else{
             if (dataVal.count() != 5){
-                Toast.makeText(baseContext,"Preencha a data de validade corretamente",Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext,"Preencha a data de validade corretamente: MM/AA",
+                    Toast.LENGTH_SHORT).show()
             }else if(numeroCartao.count() != 16){
-                Toast.makeText(baseContext,"Numero do cartão inválido, utilize apenas numeros",Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext,"Numero do cartão inválido, utilize apenas numeros",
+                    Toast.LENGTH_SHORT).show()
             }
             else{
                 //Campos preenchidos! criar instancia cartão e chamar function
@@ -159,7 +190,7 @@ class CreateCardActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener{
-                Log.e("CADASTRAR", "Erro ao chamar funcao: $it")
+                Log.e("CADASTRAR", "Erro ao chamar funcao: $data,  $it")
             }
     }
     companion object{
