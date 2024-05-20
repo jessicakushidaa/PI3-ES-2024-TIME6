@@ -16,8 +16,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 
 class CodeActivity : AppCompatActivity() {
     private var binding: ActivityCodeBinding? = null
-    private var gson = Gson()
-    private lateinit var info: RentActivity.Info
+
     private var infoString: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

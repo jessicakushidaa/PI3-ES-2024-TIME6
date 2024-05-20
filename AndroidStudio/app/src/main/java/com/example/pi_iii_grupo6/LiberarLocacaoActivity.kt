@@ -6,18 +6,22 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.databinding.ActivityAcessarArmarioBinding
 import com.example.pi_iii_grupo6.databinding.ActivityLiberarLocacaoBinding
+import com.google.gson.Gson
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
 class LiberarLocacaoActivity : AppCompatActivity() {
-    var binding: ActivityLiberarLocacaoBinding? = null
+    private var binding: ActivityLiberarLocacaoBinding? = null
+    private lateinit var gson: Gson
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()){
                 isGranted: Boolean ->
@@ -45,9 +49,26 @@ class LiberarLocacaoActivity : AppCompatActivity() {
         resultado = string
         binding?.tvLiberarLocacao?.text = resultado.toEditable()
 
-        val intentNext = Intent(this@LiberarLocacaoActivity, SelectPessoasActivity::class.java)
-        startActivity(intentNext)
+        checkQr(string)
+
+
     }
+
+    //Função que verifica se o conteúdo do QrCode é válido e se for, transforma o conteudo de string Json para Classe Locação
+    private fun checkQr(resultado: String) {
+        try{
+            var locacaoRecebida: MainViewActivity.Locacao = gson.fromJson(resultado,MainViewActivity.Locacao::class.java)
+
+            Log.d("LOCACAO","Locação recebida, preco: ${locacaoRecebida.preco?.preco} tempo: ${locacaoRecebida.preco?.tempo}")
+
+            val intentNext = Intent(this@LiberarLocacaoActivity, SelectPessoasActivity::class.java)
+            startActivity(intentNext)
+        }catch (e: Exception){
+            Toast.makeText(baseContext,"QR code inválido",Toast.LENGTH_SHORT).show()
+            Log.e("ERRO QR CODE","Erro ao ler QrCode: $e")
+        }
+    }
+
     fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
 
@@ -56,6 +77,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLiberarLocacaoBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        gson = Gson()
         
         checkPermissionCamera(this)
     }
