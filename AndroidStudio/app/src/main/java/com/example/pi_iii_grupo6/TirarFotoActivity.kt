@@ -21,6 +21,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
+import com.example.pi_iii_grupo6.SelectPessoasActivity.Companion.numPessoas
 import com.example.pi_iii_grupo6.databinding.ActivityTirarFotoBinding
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.ByteArrayOutputStream
@@ -107,7 +108,7 @@ class TirarFotoActivity : AppCompatActivity() {
                             ).show()
                             Log.d("FOTO", base64)
 
-
+                            //Se tiver selecionado duas pessoas, repetir o processo, se não, apenas uma vez.
                             val extra = intent.getStringExtra("dupla")
                             if (extra == "true") {
                                 val intent =
@@ -120,6 +121,7 @@ class TirarFotoActivity : AppCompatActivity() {
                                     VincularPulseiraActivity::class.java
                                 )
                                 intent.putExtra("Activity", "vincular")
+                                if(numPessoas == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
                                 startActivity(intent)
                             }
                         }
