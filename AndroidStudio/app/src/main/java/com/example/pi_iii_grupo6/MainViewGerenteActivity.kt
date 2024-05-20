@@ -15,7 +15,8 @@ class MainViewGerenteActivity : AppCompatActivity() {
 
         binding?.tvAcessarArmario?.setOnClickListener {
             //Abrir acessar armario
-            val intentAcessarArmario = Intent(this@MainViewGerenteActivity,AcessarArmarioActivity::class.java)
+            val intentAcessarArmario = Intent(this@MainViewGerenteActivity,VincularPulseiraActivity::class.java)
+            intentAcessarArmario.putExtra("Activity","buscar")
             startActivity(intentAcessarArmario)
         }
 

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".CodeActivity"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/white">
 
 
     <!--ToolBar-->
@@ -91,6 +92,8 @@
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/blue_nav"
         android:text="@string/voltarQr"
+        android:paddingHorizontal="90dp"
+        android:paddingVertical="10dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/imQrCode"
         app:layout_constraintStart_toStartOf="@id/imQrCode"

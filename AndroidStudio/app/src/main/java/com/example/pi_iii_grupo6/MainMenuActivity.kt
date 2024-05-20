@@ -60,17 +60,24 @@ class MainMenuActivity : AppCompatActivity() {
                         mostrarDialogPendente(pendente)
                     }
                 }else{
+                    Log.e("FunPendente","Erro ao checar pendencia: ${task.exception}")
                     Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
                 }
             }
 
+            // Consultando o cartão do usuário a partir do ID da pessoa
             consultarCartao(idDocumentPessoa)
                 .addOnCompleteListener { task->
                     if (task.isSuccessful){
-                        //Adicionando o cartao do usuário na variável do companion object cartauUsuario
                         val cartaoJson = task.result
-                        val cartao: CreateCardActivity.Cartao = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
-                        cartaoUsuario = cartao
+                        if (cartaoJson != null) {
+                            val cartao: CreateCardActivity.Cartao? = gson.fromJson(cartaoJson, CreateCardActivity.Cartao::class.java)
+                            if (cartao != null) {
+                                cartaoUsuario = cartao
+                            }
+                        } else {
+                            Log.d("BUSCACARTAO", "Resultado da consulta é nulo")
+                        }
                     }else{
                         Log.e("BUSCACARTAO","erro ao chamar function: ${task.exception}")
                     }
@@ -199,10 +206,10 @@ class MainMenuActivity : AppCompatActivity() {
                         //Loop para pegar todos os precos da unidade
                         while (j < numPrecos){
                             Log.d("DEBUG UNIDADES","ENTROU NO WHILE DO PRECO")
-                            var precoAtual = tabelaPrecos[j] as Map<String, Any>
+                            var precoAtual = tabelaPrecos[j] as Map<*, *>
                             var preco = MainViewActivity.Preco(
                                 precoAtual["tempo"],
-                                precoAtual["preco"] as Double
+                                precoAtual["preco"] as Double,
                             )
                             listaPrecos.add(preco)
                             j++
@@ -284,19 +291,42 @@ class MainMenuActivity : AppCompatActivity() {
         return functions
             .getHttpsCallable("getDocumentFields")
             .call(data)
-            .continueWith{task ->
-                //Guardando os dados recebidos
+            .continueWith { task ->
+                // Guardando os dados recebidos
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
-                val subcoletcions = payload["subCollectionsData"] as Map<String, Any>
-                val cartoes = subcoletcions["cartoes"] as ArrayList<*>
-                val cartao = cartoes[0] as Map<String, Any>
-                val numeroCartao = cartao["numeroCartao"] as String
-                val nomeTitular = cartao["nomeTitular"] as String
-                val dataVal = cartao["dataVal"] as String
-                val cartaoRecebido = CreateCardActivity.Cartao(nomeTitular,numeroCartao,dataVal)
-                val cartoesgson = gson.toJson(cartaoRecebido)
-                cartoesgson
+                val subcoletcions = payload["subCollectionsData"] as? Map<*, *>
+
+                // Verifica se subCollectionsData não é nulo
+                if (subcoletcions != null) {
+                    val cartoes = subcoletcions["cartoes"] as? List<Map<String, Any>>
+
+                    // Verifica se cartoes não é nulo
+                    if (cartoes != null) {
+                        // Verifica se cartoes não está vazio
+                        if (cartoes.isNotEmpty()) {
+                            val cartao = cartoes[0]
+                            val numeroCartao = cartao["numeroCartao"] as String
+                            val nomeTitular = cartao["nomeTitular"] as String
+                            val dataVal = cartao["dataVal"] as String
+                            var cartaoRecebido = CreateCardActivity.Cartao(nomeTitular, numeroCartao, dataVal)
+                            gson.toJson(cartaoRecebido)
+                        } else {
+                            Log.d("StringRecebida", "A lista de cartões está vazia")
+                            var cartaoRecebido = null
+                            gson.toJson(cartaoRecebido)
+                        }
+                    } else {
+                        Log.d("StringRecebida", "A lista de cartões é nula")
+                        var cartaoRecebido = null
+                        gson.toJson(cartaoRecebido)
+                    }
+                } else {
+                    Log.d("StringRecebida", "A subcoleção é nula")
+                    var cartaoRecebido = null
+                    gson.toJson(cartaoRecebido)
+                }
+
             }
     }
     //Variáveis que poderão ser acessadas por todas as activities
@@ -314,16 +344,18 @@ class MainMenuActivity : AppCompatActivity() {
             .getHttpsCallable("checkLocacao")
             .call(data)
             .continueWith{task->
-                val res = task.result.data as Map<String, Any>
-                val payload = res["payload"] as Map<String, Any>
+                Log.d("FunPendente", "String recebida - iniciou função")
+                val res = task.result.data as Map<*, *>
+                val payload = res["payload"] as Map<*, *>
                 val pendente = payload["pendente"] as Boolean
 
+                Log.d("FunPendente", "Payload - $payload")
                 if (pendente){
                     val snapshot = payload["locSnapshot"] as Map<String, Any>
                     val data = snapshot["data"] as Map<String, Any>
                     val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
                     val preco = precoEscolhido["preco"] as Double
-                    val tempo = precoEscolhido["tempo"] as String
+                    val tempo = precoEscolhido["tempo"]
                     val armario = data["armario"] as Map<String, Any>
                     val path = armario["_path"] as Map<String, Any>
                     val segments= path["segments"] as ArrayList<*>

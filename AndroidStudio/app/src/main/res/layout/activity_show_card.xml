@@ -22,9 +22,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logovetor"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -56,6 +56,8 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,14 +67,15 @@
         android:id="@+id/linearInfo"
         android:layout_width="370dp"
         android:layout_height="80dp"
-        android:layout_marginTop="250dp"
-        android:orientation="vertical"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="250dp"
+        android:background="@drawable/time_price2"
+        android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.741"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/time_price2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--Nome cartão-->
         <androidx.appcompat.widget.AppCompatTextView
@@ -80,13 +83,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:paddingStart="20dp"
-            android:paddingTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/yellow"
-            android:textStyle="bold"
+            android:paddingStart="20dp"
+            android:paddingTop="8dp"
             android:textColor="@color/greyGuardian"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!--Numero do cartão-->
         <androidx.appcompat.widget.AppCompatTextView
@@ -94,12 +97,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:paddingStart="20dp"
-            android:paddingBottom="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/yellow"
+            android:paddingStart="20dp"
+            android:paddingBottom="5dp"
             android:text=""
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -136,7 +139,6 @@
             app:srcCompat="@drawable/baseline_add_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

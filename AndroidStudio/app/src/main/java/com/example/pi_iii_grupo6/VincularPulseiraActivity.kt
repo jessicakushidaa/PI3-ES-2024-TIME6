@@ -42,6 +42,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
          * atribuindo à uma lista de animações
          * iniciando cada um dos elementos da lista
          */
+
         val drawableConn1 = binding?.imageView3?.drawable as? AnimatedVectorDrawable
         val drawableConn2 = binding?.imageView4?.drawable as? AnimatedVectorDrawable
 
@@ -94,7 +95,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)
-                            atualizarTela(tagLida)
+                            avancarIntent(tagLida)
                         }
                     }
                 }
@@ -102,6 +103,22 @@ class VincularPulseiraActivity : AppCompatActivity() {
             flags,
             null
         )
+    }
+
+    //Função que pega a Activity que veio pela intent e avança, passando o id da pulseira também via intent;
+    private fun avancarIntent(id: String) {
+        val activity = intent.extras?.getString("Activity")
+        if(activity == "vincular"){
+            //Avançar para vincular pulseira (passando o id)
+            val intent = Intent(this@VincularPulseiraActivity,VincularPulseiraIdActivity::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
+        }else if(activity == "buscar"){
+            //Avançar para buscar locação com esse id de pulseira (passando o id)
+            val intent = Intent(this@VincularPulseiraActivity,BuscarLocIdActivity::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
+        }
     }
 
     //Ao pausar a Activity, pausa também a procura por tags NFC
@@ -113,11 +130,6 @@ class VincularPulseiraActivity : AppCompatActivity() {
     //Apresentar um Toast
     fun toastNaTela(string: String){
         Toast.makeText(baseContext,string,Toast.LENGTH_SHORT).show()
-    }
-    fun atualizarTela(string: String){
-        var tvPulseira = binding?.tvPulseira
-
-        tvPulseira?.text = "Id da pulseira: " + string
     }
 
     companion object{

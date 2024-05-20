@@ -23,9 +23,11 @@ class AcessarArmarioActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.btnAbrirTemp?.setOnClickListener {
-            //Abrir acessar armario
-            val intentAcessarArmario = Intent(this@AcessarArmarioActivity,VincularPulseiraActivity::class.java)
-            startActivity(intentAcessarArmario)
+            //Abrir armario com dialog
+            Toast.makeText(baseContext,"Armario aberto",Toast.LENGTH_SHORT).show()
+        }
+        binding?.btnEncerrarLoc?.setOnClickListener {
+            //Abrir dialog para perguntar se deseja mesmo encerrar locacao
         }
     }
 }
