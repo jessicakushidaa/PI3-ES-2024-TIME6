@@ -95,7 +95,6 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)
-                            atualizarTela(tagLida)
                             avancarIntent(tagLida)
                         }
                     }
