@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.pi_iii_grupo6.TirarFotoActivity.Companion.images
-import com.example.pi_iii_grupo6.TirarFotoActivity.Companion.imagestring
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarInfosBinding
 import kotlinx.coroutines.CoroutineStart
 import kotlin.io.encoding.Base64
