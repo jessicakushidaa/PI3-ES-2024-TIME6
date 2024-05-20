@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -31,6 +32,7 @@ class TirarFotoActivity : AppCompatActivity() {
     //Variável que será responsável pela execução em outra trhead
     private lateinit var imageCaptureExecutor: ExecutorService
 
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,13 @@ class TirarFotoActivity : AppCompatActivity() {
         binding?.btnFoto?.setOnClickListener {
             takePicture()
         }
+
+        //Seta Retorno
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
