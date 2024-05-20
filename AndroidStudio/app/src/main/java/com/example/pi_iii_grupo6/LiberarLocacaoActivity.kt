@@ -2,11 +2,13 @@ package com.example.pi_iii_grupo6
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.databinding.ActivityAcessarArmarioBinding
 import com.example.pi_iii_grupo6.databinding.ActivityLiberarLocacaoBinding
@@ -49,6 +51,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
     fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLiberarLocacaoBinding.inflate(layoutInflater)
@@ -58,6 +61,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
     }
 
     //Função que checa as permissões da câmera do usuário
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun checkPermissionCamera(context: android.content.Context) {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
             openCamera()

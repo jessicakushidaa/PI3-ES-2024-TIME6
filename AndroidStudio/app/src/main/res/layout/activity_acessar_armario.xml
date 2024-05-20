@@ -123,6 +123,7 @@
             android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/btnEncerrarLoc"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"

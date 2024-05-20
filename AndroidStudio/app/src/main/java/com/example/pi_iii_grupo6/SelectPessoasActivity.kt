@@ -3,29 +3,62 @@ package com.example.pi_iii_grupo6
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivitySelectPessoasBinding
 
 class SelectPessoasActivity : AppCompatActivity() {
     private var binding: ActivitySelectPessoasBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectPessoasBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //Seta Retorno
+        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
         //Voltando o numero escolhido para 0
         numPessoas = 0
 
-        //Chamando função que recebe os dados da locação via intent, esses dados precisam ser recebidos para posteriormente serem passados à proxima intent;
+        /*
+        Chamando função que recebe os dados da locação via intent, esses dados precisam ser
+        recebidos para posteriormente serem passados à proxima intent;
+        */
         receberDados()
 
-        //Setando cliques do layout
-        binding?.tvUmaPessoa?.setOnClickListener {
-            adicionarPessoa(1)
+        /** Verificar se as CheckBoxes não são nulas antes de adicionar os listeners
+        Setando listeners para quando a checkbox for selecionada, desmarcar a outra
+        e chamar função de adicionarPessoa, passando seu respectivo valor como parametro
+        **/
+        binding?.tvUmaPessoa?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Se "Uma Pessoa" está selecionada, desmarcar "Duas Pessoas" (se não for nulo)
+                binding?.tvDuasPessoas?.isChecked = false
+                adicionarPessoa(1)
+                Log.d("adicionarPessoa","quantidade de pessoas selecionadas: $numPessoas")
+            } else if (!binding?.tvDuasPessoas?.isChecked!!) {
+                // Se ambos os CheckBoxes estiverem desmarcados, define numPessoas como 0
+                numPessoas = 0
+            }
         }
 
-        binding?.tvDuasPessoas?.setOnClickListener {
-            adicionarPessoa(2)
+        // Verificar se as CheckBoxes não são nulas antes de adicionar os listeners
+        binding?.tvDuasPessoas?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Se "Uma Pessoa" está selecionada, desmarcar "Duas Pessoas" (se não for nulo)
+                binding?.tvUmaPessoa?.isChecked = false
+                adicionarPessoa(2)
+                Log.d("adicionarPessoa","quantidade de pessoas selecionadas: $numPessoas")
+            } else if (!binding?.tvUmaPessoa?.isChecked!!) {
+                // Se ambos os CheckBoxes estiverem desmarcados, define numPessoas como 0
+                numPessoas = 0
+            }
         }
 
         binding?.btnEnviar?.setOnClickListener {
@@ -33,8 +66,9 @@ class SelectPessoasActivity : AppCompatActivity() {
         }
     }
 
+
     //Função que recebe o número de pessoas que usarão a pulseira e guarda no companion object para acesso via outra Activity.
-    fun adicionarPessoa(numero: Int){
+    private fun adicionarPessoa(numero: Int){
         numPessoas = numero
     }
 

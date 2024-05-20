@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-sdk android:minSdkVersion="10"/>
+    <uses-sdk android:minSdkVersion="10" />
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -27,17 +29,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PIIII_Grupo6"
         tools:targetApi="31">
-
+        <activity
+            android:name=".MostrarInfosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MostrarLocacaoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VincularPulseiraIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuscarLocIdActivity"
+            android:exported="false" />
         <activity
             android:name=".VincularPulseiraActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".TirarFotoActivity"
             android:exported="false" />
@@ -103,7 +115,6 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
