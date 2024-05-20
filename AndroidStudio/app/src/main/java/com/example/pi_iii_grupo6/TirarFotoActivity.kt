@@ -20,6 +20,7 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.databinding.ActivityTirarFotoBinding
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.ByteArrayOutputStream
@@ -97,13 +98,31 @@ class TirarFotoActivity : AppCompatActivity() {
                         val rotatedBitmap = rotateBitmap(bitmapImage,90)
                         val base64 = convertToBase64(rotatedBitmap)
                         images.add(base64)
+                        atualLocacao.foto.add(base64)
                         runOnUiThread {
-                            Toast.makeText(baseContext,"Convertida com sucesso!",Toast.LENGTH_SHORT).show()
-                            Log.d("FOTO",base64)
+                            Toast.makeText(
+                                baseContext,
+                                "Convertida com sucesso!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d("FOTO", base64)
+
+
+                            val extra = intent.getStringExtra("dupla")
+                            if (extra == "true") {
+                                val intent =
+                                    Intent(this@TirarFotoActivity, TirarFotoActivity::class.java)
+                                intent.putExtra("dupla", "false")
+                                startActivity(intent)
+                            } else {
+                                val intent = Intent(
+                                    this@TirarFotoActivity,
+                                    VincularPulseiraActivity::class.java
+                                )
+                                intent.putExtra("Activity", "vincular")
+                                startActivity(intent)
+                            }
                         }
-                        val intent = Intent(this@TirarFotoActivity, VincularPulseiraActivity::class.java)
-                        intent.putExtra("Activity","vincular")
-                        startActivity(intent)
                     }
 
                     override fun onError(exception: ImageCaptureException) {

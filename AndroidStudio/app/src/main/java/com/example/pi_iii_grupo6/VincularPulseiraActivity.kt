@@ -22,6 +22,7 @@ import java.nio.charset.Charset
 import kotlin.properties.Delegates
 import android.graphics.drawable.AnimatedVectorDrawable
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
+import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 
 
 class VincularPulseiraActivity : AppCompatActivity() {
@@ -92,6 +93,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         val textoesperado = text.substring(3)
                         Log.d("NFC", "Tag detectada: $textoesperado")
                         tagLida = textoesperado
+                        atualLocacao.pulseiras.add(tagLida)
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela(tagLida)

@@ -22,6 +22,8 @@ class MostrarInfosActivity : AppCompatActivity() {
 
         binding?.btnFinalizar?.setOnClickListener {
             Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
+            //Limpando a lista de imagens transformadas em string
+            images.clear()
             val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
             startActivity(intent)
         }
