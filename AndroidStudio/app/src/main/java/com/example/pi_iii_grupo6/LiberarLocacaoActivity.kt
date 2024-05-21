@@ -22,6 +22,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
     private var binding: ActivityLiberarLocacaoBinding? = null
     private lateinit var gson: Gson
 
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()){
                 isGranted: Boolean ->
@@ -50,15 +51,15 @@ class LiberarLocacaoActivity : AppCompatActivity() {
         binding?.tvLiberarLocacao?.text = resultado.toEditable()
 
         checkQr(string)
-
-
     }
 
     //Função que verifica se o conteúdo do QrCode é válido e se for, transforma o conteudo de string Json para Classe Locação
     private fun checkQr(resultado: String) {
         try{
             var locacaoRecebida: MainViewActivity.Locacao = gson.fromJson(resultado,MainViewActivity.Locacao::class.java)
-
+            atualLocacao = locacaoRecebida
+            atualLocacao.foto = mutableListOf()
+            atualLocacao.pulseiras = mutableListOf()
             Log.d("LOCACAO","Locação recebida, preco: ${locacaoRecebida.preco?.preco} tempo: ${locacaoRecebida.preco?.tempo}")
 
             val intentNext = Intent(this@LiberarLocacaoActivity, SelectPessoasActivity::class.java)
@@ -108,5 +109,6 @@ class LiberarLocacaoActivity : AppCompatActivity() {
 
     companion object{
         lateinit var resultado: String
+        lateinit var atualLocacao: MainViewActivity.Locacao
     }
 }
