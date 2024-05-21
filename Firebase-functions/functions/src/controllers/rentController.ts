@@ -203,7 +203,7 @@ export const confirmarLoc = functions
       const locRef= colLocacao.doc(idLocacao);
 
       if (locRef != null) {
-        const res = await atualizarArmario(idUnidade);
+        const res = await alugarArmario(idUnidade);
 
         if (res.status === "SUCCESS") {
           const idArmario = res.payload.idArmario;
@@ -244,6 +244,7 @@ export const confirmarLoc = functions
               data: null,
             })),
           };
+          return result;
         }
       } else {
         // Caso erro ao localizar documento de locação
@@ -277,10 +278,10 @@ export const confirmarLoc = functions
  * Função que busca se há armários disponiveis nessa unidade e, caso haja,
  * retorna id do primeiro disponível, atualizando o seu status para "alugado"
  */
-async function atualizarArmario(idUnidade: string) {
+async function alugarArmario(idUnidade: string) {
   let res;
 
-  // Caso a request não conste os campos esperados
+  // Caso não conste o parametro esperado
   if (!idUnidade) {
     functions.logger.error("confirmarLoc " +
         "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
@@ -300,7 +301,7 @@ async function atualizarArmario(idUnidade: string) {
       "disponivel").limit(1).get();
 
     // Verificar se o documento do armario existe e se o status é "disponível"
-    if (lockerSnapshot != null) {
+    if (!lockerSnapshot.empty) {
       // acessar primeiro documento de armário retornado pela busca
       const armario = lockerSnapshot.docs[0];
       // atualiza status do armário
@@ -344,3 +345,89 @@ async function atualizarArmario(idUnidade: string) {
   }
   return res;
 }
+
+export const buscarLoc = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+
+    const idTag = data.idTag;
+    if (!idTag) {
+      functions.logger.error("buscarLoc "+
+      "- Erro: Dados não recebidos corretamente");
+      result = {
+        status: "ERROR",
+        message: "Erro ao receber parâmetros.",
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: null,
+          data: null})),
+      };
+    }
+    try {
+      /* Buscar na collection "locação" documento que contenha
+      o id da tag recebida dentro do array */
+      const locSnapshot = await colLocacao
+        .where("tags", "array-contains", idTag).limit(1).get();
+
+      // Caso a busca não retorne vazia
+      if (!locSnapshot.empty) {
+        // Sucesso - Atribui 1o resultado da busca à variável
+        const locacao =locSnapshot.docs[0];
+
+        result = {
+          status: "SUCCESS",
+          message: "Locacao encontrada via tag.",
+          payload: JSON.parse(JSON.stringify({
+            idLocacao: locacao.id,
+            data: locacao.data()})),
+        };
+      } else {
+        result = {
+          status: "ERROR",
+          message: "Locação não encontrada ou não existe.",
+          payload: JSON.parse(JSON.stringify({
+            idLocacao: null,
+            data: null})),
+        };
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      functions.logger.error("buscarLoc" + "Erro ao buscar locação: " +
+       error.message);
+
+      result = {
+        status: "ERROR",
+        message: "Erro ao buscar locação." + error.message,
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: null,
+          data: null})),
+      };
+    }
+    return result;
+  });
+
+
+/* Função que volta o armário para o status "disponível"
+async function liberarArmario(idUnidade:string, idArmario: string) {
+  let res;
+  // Caso não conste o parametro esperado
+  if (!idArmario) {
+    functions.logger.error("confirmarLoc " +
+          "- Erro ao liberar armario: Dados não recebidos corretamente"),
+    res = {
+      status: "ERROR",
+      message: "Parâmetros não recebidos corretamente",
+    };
+  }
+  try {
+    // referenciando documentos do bd e collections
+    const unitRef = colUnidades.doc(idUnidade); // doc UnidadeLocacao
+    const colArmarios = unitRef.collection("armarios");
+    const armarioRef = colArmarios.doc(idArmario); // doc armario
+
+    await armarioRef.update({status: "disponivel"});
+  } catch (error) {
+    // aaa
+  }
+}
+*/
