@@ -21,7 +21,6 @@ const colUnidades = db.collection("unidadeLocacao");
  * id do armario que está na unidade de loc - pegar pelo getDocumentFields
  (document)
  *
- * @todo- **verificar se há armários disponiveis nessa unidade**
 */
 export const addLocacao = functions
   .region("southamerica-east1")
