@@ -64,4 +64,7 @@ dependencies {
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation ("androidx.vectordrawable:vectordrawable:1.2.0")
     implementation ("androidx.vectordrawable:vectordrawable-animated:1.2.0")
+    implementation("com.github.yuriy-budiyev:code-scanner:2.3.0")
+
+
 }
