@@ -29,14 +29,29 @@ class AcessarArmarioActivity : AppCompatActivity() {
 
         binding?.btnAbrirTemp?.setOnClickListener {
             //Abrir armario com dialog
-            Toast.makeText(baseContext,"Armario aberto",Toast.LENGTH_SHORT).show()
+            mostrarDialogAberto()
         }
         binding?.btnEncerrarLoc?.setOnClickListener {
             //Abrir dialog para perguntar se deseja mesmo encerrar locacao
             mostrarDialog()
         }
     }
+    //Função que mostra a dialog dizendo que o armario está aberto
+    private fun mostrarDialogAberto() {
+        var dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_armario_aberto)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val btnClose: Button = dialog.findViewById(R.id.btnClosePopupAberto)
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+    //Função que mostra a dialog perguntando se o gerente realmente deseja encerrar a locação
     private fun mostrarDialog() {
         var dialog = Dialog(this)
         dialog.setCancelable(false)
