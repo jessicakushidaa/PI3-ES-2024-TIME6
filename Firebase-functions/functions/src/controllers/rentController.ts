@@ -166,11 +166,10 @@ export const checkLocacao = functions
 /**
    * Função que atualiza o status da locação para confirmada a partir da ação
    *  do gerente. Chamada após a checkLoc.
-   *  Vincula um armário com status disponível à locação e, por consequencia,
-   *  ao cliente
+   *  Chama função de vincular um armário com status disponível à locação
    *  Adiciona vetor de strings de foto(s) do(s) usuário(s) com acesso
-   *  ao armário
-   *  Adiciona vetor de strings com as tags do(s) usuário(s)
+   *  ao armário ao banco
+   *  Adiciona vetor de strings com a(s) tag(s) do(s) usuário(s) ao banco
    * @param {string} idLocacao - id do documento da locacao que está pendente
    *  no firebase.
    * @param {string[]} idTag - vetor de id's da(s) pulseira(s) que
