@@ -39,18 +39,26 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvArmario"
+        android:id="@+id/tvPreco1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="numero armario"
+        android:text="preco"
         android:textSize="22sp"
         />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvPorta"
+        android:id="@+id/tvTempo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="numero porta"
+        android:text="tempo"
+        android:textSize="22sp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPulseiras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pulseira"
         android:textSize="22sp"
         />
 

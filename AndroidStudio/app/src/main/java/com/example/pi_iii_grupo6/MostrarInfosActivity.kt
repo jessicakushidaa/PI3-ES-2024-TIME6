@@ -34,6 +34,10 @@ class MostrarInfosActivity : AppCompatActivity() {
     }
 
     private fun carregarImagem() {
+        val tvPreco = binding?.tvPreco1
+        val tvTempo = binding?.tvTempo1
+        val tvPulseiras = binding?.tvPulseiras
+
         if(numPessoas == 2){
             val string1 = atualLocacao.foto[0]
             val string2 = atualLocacao.foto[1]
@@ -47,6 +51,9 @@ class MostrarInfosActivity : AppCompatActivity() {
             var ivImage2 = binding?.ivImage2
             ivImage1?.setImageBitmap(bitmap1)
             ivImage2?.setImageBitmap(bitmap2)
+
+            //Setando o texto da pulseira
+            tvPulseiras?.text = "Pulseiras: ${atualLocacao.pulseiras[0]}, ${atualLocacao.pulseiras[1]}"
         }else if(numPessoas == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
             var ivImage2 = binding?.ivImage2
@@ -62,8 +69,12 @@ class MostrarInfosActivity : AppCompatActivity() {
 
             var ivImage = binding?.ivImage
             ivImage?.setImageBitmap(bitmap)
-        }
 
+            //Setando o texto da pulseira
+            tvPulseiras?.text = "Pulseira: ${atualLocacao.pulseiras[0]}"
+        }
+        tvPreco?.text = "Preço: ${atualLocacao.preco?.preco}"
+        tvTempo?.text = "Tempo: ${atualLocacao.preco?.tempo}"
     }
     //Função que recebe uma string base64 e decodifica a mesma para Bitmap
 

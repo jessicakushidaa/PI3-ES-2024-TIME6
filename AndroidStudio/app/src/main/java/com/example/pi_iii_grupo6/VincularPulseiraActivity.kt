@@ -93,7 +93,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         val textoesperado = text.substring(3)
                         Log.d("NFC", "Tag detectada: $textoesperado")
                         tagLida = textoesperado
-                        atualLocacao.pulseiras.add(tagLida)
+                        if (intent.extras?.getString("Activity") == "vincular") atualLocacao.pulseiras.add(tagLida)
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
                             toastNaTela("Pulseira Lida")
