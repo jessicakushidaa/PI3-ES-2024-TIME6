@@ -176,8 +176,8 @@ export const checkLocacao = functions
    * @param {string[]} idTag - vetor de id's da(s) pulseira(s) que
    *  serão vinculadas à loc
    * @param {string[]} foto - vetor com bitmaps da(s) foto(s) dos clientes
-   * @param {string} idUnidade - id da unidade de onde o gerente está
-   *  solicitando a locação -> buscar armários disponíveis
+   * @param {string} idUnidade - id da unidade de locação -> buscar armários
+   *  disponíveis
    */
 export const confirmarLoc = functions
   .region("southamerica-east1")
