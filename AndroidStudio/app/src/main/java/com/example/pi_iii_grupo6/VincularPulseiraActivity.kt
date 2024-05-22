@@ -60,12 +60,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
 
         //instanciando o Adapter do NFC (Conexão código -> hardware)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-
-        //TEMPORARIA
-        val intent =
-            Intent(this@VincularPulseiraActivity, BuscarLocIdActivity::class.java)
-        intent.putExtra("id", "9187")
-        startActivity(intent)
+        
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
