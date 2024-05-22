@@ -18,13 +18,13 @@ class RentManagerActivity : AppCompatActivity() {
         binding = ActivityRentManagerBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        // Configurar um clique no botão "Rent" - inicia tela de alugar
+        // Configurar um clique no botão "Alugar armário" - inicia tela de alugar
         binding?.btnRent?.setOnClickListener{
             var irRent = Intent(this@RentManagerActivity, RentActivity::class.java)
             startActivity(irRent)
         }
 
-        // Configurar um clique no botão "Rentals" - inicia tela "minhas Locações"
+        // Configurar um clique no botão "Minhas Locações" - inicia tela "minhas Locações"
         binding?.btnRentals?.setOnClickListener {
             var irMinhasLocs = Intent(this@RentManagerActivity, MinhasLocacoesActivity::class.java)
             startActivity(irMinhasLocs)

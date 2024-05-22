@@ -1,13 +1,18 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import {CallableResponse} from "../models/customResponse";
+
 // Retorno do método de admin - inicializa o app do firebase
 const db = admin.firestore(); // chamada do banco de dados
 
 // Referenciando a collection "locacao" do projeto firebase
 const colLocacao = db.collection("locacao");
+// Referenciando a collection "unidadeLocacao" do projeto firebase
+const colUnidades = db.collection("unidadeLocacao");
+
 
 /** Função que adiciona a locação ao database
  * precisa passar como parâmetro/data:
@@ -29,7 +34,6 @@ export const addLocacao = functions
     const unidadeLocacao = data.idUnidade;
 
     const locacaoData = {
-      armario: data.idArmario,
       cliente: data.idPessoa,
       precoTempoEscolhido: {
         tempo: data.tempoEscolhido,
@@ -51,36 +55,28 @@ export const addLocacao = functions
       };
     }
 
-    // Verificar se há armário na collection unidadeData
     /* A verificação da existência do armário é feita também na function
     getDocumentFields,aqui ela é feita para verificar o caminho coerente */
-    if (locacaoData.armario && locacaoData.armario!=null) {
-      try {
-        // Extrair os dados recebidos do cliente
-        const pathArmario =
-         `unidadeLocacao/${data.idUnidade}/armarios/${data.idArmario}`;
-        const armarioRef = db.doc(pathArmario);
+    try {
+      // Recuperar caminho do documento do cliente que alugou armário
+      const clienteRefs = await Promise
+        .all(locacaoData.cliente.map(async (pessoa: {path: string}) => {
+          const clienteRef = admin.firestore().doc(`pessoas/${pessoa}`);
+          const clienteSnapshot = await clienteRef.get();
+          if (!clienteSnapshot.exists) {
+            throw new Error(`Cliente não encontrado para o ID: ${pessoa}`);
+          }
+          return clienteRef;
+        }));
 
-        // Recuperar caminho do documento do cliente que alugou armário
-        const clienteRefs = await Promise
-          .all(locacaoData.cliente.map(async (pessoa: {path: string}) => {
-            const clienteRef = admin.firestore().doc(`pessoas/${pessoa}`);
-            const clienteSnapshot = await clienteRef.get();
-            if (!clienteSnapshot.exists) {
-              throw new Error(`Cliente não encontrado para o ID: ${pessoa}`);
-            }
-            return clienteRef;
-          }));
-
-        // Substituir o path do(s) cliente(s) pelas referências aos documentos
-        locacaoData.cliente = clienteRefs;
-        locacaoData.armario = armarioRef;
-      } catch (error) {
-        console.error("Erro ao obter referências à pessoa ou armário:", error);
-        throw new functions.https.HttpsError("unknown",
-          "Falha ao obter referências à pessoa e/ou armário", error);
-      }
+      // Substituir o path do(s) cliente(s) pelas referências aos documentos
+      locacaoData.cliente = clienteRefs;
+    } catch (error) {
+      console.error("Erro ao obter referências à pessoa ou armário:", error);
+      throw new functions.https.HttpsError("unknown",
+        "Falha ao obter referências à pessoa e/ou armário", error);
     }
+
     try {
       // Adicionar dados recebidos a um novo documento de locação
       const locDocRef = await colLocacao.add(locacaoData);
@@ -151,6 +147,7 @@ export const checkLocacao = functions
             locSnapshot: []})),
         };
       }
+      functions.logger.info("Busca realizada com sucesso." + result);
     } catch (error: any) {
       // Lidar com erros
       result = {
@@ -164,3 +161,186 @@ export const checkLocacao = functions
     // Retorna a resposta
     return result;
   });
+
+
+/**
+   * Função que atualiza o status da locação para confirmada a partir da ação
+   *  do gerente. Chamada após a checkLoc.
+   *  Chama função de vincular um armário com status disponível à locação
+   *  Adiciona vetor de strings de foto(s) do(s) usuário(s) com acesso
+   *  ao armário ao banco
+   *  Adiciona vetor de strings com a(s) tag(s) do(s) usuário(s) ao banco
+   * @param {string} idLocacao - id do documento da locacao que está pendente
+   *  no firebase.
+   * @param {string[]} idTag - vetor de id's da(s) pulseira(s) que
+   *  serão vinculadas à loc
+   * @param {string[]} foto - vetor com bitmaps da(s) foto(s) dos clientes
+   * @param {string} idUnidade - id da unidade de locação -> buscar armários
+   *  disponíveis
+   */
+export const confirmarLoc = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+
+    // Extrair os dados recebidos do cliente
+    const {idLocacao, idTag, foto, idUnidade} = data;
+
+    functions.logger.info("Function confirmarLoc - iniciada.");
+
+    // Caso a request não conste os campos esperados
+    if (!idLocacao || !idTag || !foto || !idUnidade) {
+      functions.logger.error("confirmarLoc " +
+        "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
+      result = {
+        status: "ERROR",
+        message: "Parâmetros não recebidos corretamente",
+        payload: JSON.parse(JSON.stringify({docId: null})),
+      };
+    }
+    try {
+      // referencia ao documento de locação
+      const locRef= colLocacao.doc(idLocacao);
+
+      if (locRef != null) {
+        const res = await atualizarArmario(idUnidade);
+
+        if (res.status === "SUCCESS") {
+          const idArmario = res.payload.idArmario;
+
+          // Criando campo "armario" que faz referencia ao doc do
+          // armário da unidade
+          const pathArmario =
+         `unidadeLocacao/${data.idUnidade}/armarios/${idArmario}`;
+          const armarioRef = db.doc(pathArmario);
+
+          // Adicionando novos campos ao documento e atualizando status da loc
+          locRef.set({
+            armario: armarioRef,
+            tags: idTag,
+            foto: foto,
+            status: "confirmada",
+          }, {merge: true});
+
+          result = {
+            status: "SUCCESS",
+            message: "Novos campos inseridos",
+            payload: JSON.parse(JSON.stringify({
+              idLocacao: locRef,
+              data: {
+                armario: armarioRef,
+                tags: idTag,
+                foto: foto,
+              }})),
+          };
+        } else {
+          // Caso erro na chamada de atualizarArmario()
+          functions.logger.error("Erro:", res.message);
+          result = {
+            status: "ERROR",
+            message: res.message,
+            payload: JSON.parse(JSON.stringify({
+              idLocacao: idLocacao,
+              data: null,
+            })),
+          };
+        }
+      } else {
+        // Caso erro ao localizar documento de locação
+        result = {
+          status: "ERROR",
+          message: "Locacao pendente nao existe",
+          payload: JSON.parse(JSON.stringify({
+            idLocacao: idLocacao,
+            data: null,
+          })),
+        };
+      }
+    } catch (error: any) {
+      functions.logger.error("confirmarLoc " +
+      "- Erro ao confirmar locacao:" + error.message);
+
+      result = {
+        status: "ERROR",
+        message: "Não foi possivel adicionar campos - erro inesperado",
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: idLocacao,
+          data: null,
+        })),
+      };
+    }
+    return result;
+  });
+
+
+/**
+ * Função que busca se há armários disponiveis nessa unidade e, caso haja,
+ * retorna id do primeiro disponível, atualizando o seu status para "alugado"
+ */
+async function atualizarArmario(idUnidade: string) {
+  let res;
+
+  // Caso a request não conste os campos esperados
+  if (!idUnidade) {
+    functions.logger.error("confirmarLoc " +
+        "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
+    res = {
+      status: "ERROR",
+      message: "Parâmetros não recebidos corretamente",
+      payload: {docId: null},
+    };
+  }
+  try {
+  // Referenciar unidade de locação e collection de armários daquela unidade
+    const unitRef = colUnidades.doc(idUnidade);
+    const colArmarios = unitRef.collection("armarios");
+
+    // Buscar armario que esteja disponivel
+    const lockerSnapshot = await colArmarios.where("status", "==",
+      "disponivel").limit(1).get();
+
+    // Verificar se o documento do armario existe e se o status é "disponível"
+    if (lockerSnapshot != null) {
+      // acessar primeiro documento de armário retornado pela busca
+      const armario = lockerSnapshot.docs[0];
+      // atualiza status do armário
+      await armario.ref.update({status: "alugado"});
+
+      functions.logger
+        .info("Sucesso - Status do armário atualizado para 'alugado'.");
+
+      res = {
+        status: "SUCCESS",
+        message: "Armário disponível encontrado e atualizado.",
+        payload: {
+          idArmario: armario.id,
+          data: armario.data(),
+        },
+      };
+    } else {
+      functions.logger
+        .info("Não há armários disponíveis no momento.");
+
+      res = {
+        status: "ERROR",
+        message: "Não há armários disponíveis no momento.",
+        payload: {
+          idArmario: null,
+          data: null,
+        },
+      };
+    }
+  } catch (error: any) {
+    res = {
+      status: "ERROR",
+      message: "Erro ao buscar armário: " + error.message,
+      payload: {
+        idArmario: null,
+        data: null,
+      },
+    };
+    functions.logger.error("atualizarArmario - Erro ao buscar armário: " +
+     error.message);
+  }
+  return res;
+}
