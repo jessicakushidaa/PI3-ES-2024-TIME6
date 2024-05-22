@@ -71,6 +71,8 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var preco: Preco?,
         var foto: MutableList<String> = mutableListOf(),
         var pulseiras: MutableList<String> = mutableListOf(),
+        var locId: String = "",
+        var unidadeId: String = "",
     )
     class Preco (
         var tempo: Any?,

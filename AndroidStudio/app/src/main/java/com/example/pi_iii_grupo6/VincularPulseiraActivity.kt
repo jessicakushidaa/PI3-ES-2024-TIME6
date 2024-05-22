@@ -60,7 +60,7 @@ class VincularPulseiraActivity : AppCompatActivity() {
 
         //instanciando o Adapter do NFC (Conexão código -> hardware)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-
+        
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
