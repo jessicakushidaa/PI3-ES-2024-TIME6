@@ -8,4 +8,5 @@ export interface Locacao {
     precoTempoEscolhido: PrecoTempo
     status: string
     foto: string[]
+    tags: string[]
 }
