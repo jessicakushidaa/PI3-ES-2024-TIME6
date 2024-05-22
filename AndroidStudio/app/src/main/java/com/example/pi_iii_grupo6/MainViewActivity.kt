@@ -63,7 +63,8 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var nomeLocal: String,
         var enderecoLocal: String,
         var referenciaLocal: String,
-        var precos: List<Preco>
+        var precos: List<Preco>,
+        var telefone: String
     )
     class Locacao (
         var userId: String?,
@@ -186,6 +187,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                         val endereco = unidade["endereco"] as String
                         val descricao = unidade["descricao"] as String
                         val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val telefone = unidade["telefone"] as String
                         val numPrecos = tabelaPrecos.count()
                         //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
                         var j = 0
@@ -199,7 +201,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
                         }
 
                         //Montar uma Place com os dados coletados e guardar na lugares: listOf<Places>
-                        var unidadeLocacao = Place(id,latitude, longitude, nome, endereco, descricao, listaPrecos)
+                        var unidadeLocacao = Place(id,latitude, longitude, nome, endereco, descricao, listaPrecos,telefone)
                         listaDeUnidades.add(unidadeLocacao)
                         i++
                     }

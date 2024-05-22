@@ -175,13 +175,15 @@ class RentActivity : AppCompatActivity() {
             textoTitulo?.text = "Você ainda não está em nenhum local"
         }else{
             //Usuário está em uma unidade de locação
-            var textoTitulo = binding?.etTitleLocation
-            var textoEndereco = binding?.etEndereco
-            var textoReferencia = binding?.etReferencia
+            val textoTitulo = binding?.etTitleLocation
+            val textoEndereco = binding?.etEndereco
+            val textoReferencia = binding?.etReferencia
+            val textoTelefone = binding?.etTelefone
 
             textoTitulo?.text = "${actualLocker.nomeLocal}"
             textoEndereco?.text = "Endereço: ${actualLocker.enderecoLocal}"
             textoReferencia?.text = "Referência: ${actualLocker.referenciaLocal}"
+            textoTelefone?.text = "Telefone: ${actualLocker.telefone}"
 
             val textViews = listOf(textoEndereco, textoReferencia)
 
