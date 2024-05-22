@@ -76,13 +76,11 @@
     <string name="dialogCadastradoTitle">Cartão Cadastrado!</string>
 
     <string name="textPopCobrança">Foi cobrado o valor de uma diária \nno seu cartão \n\n
-        Quando você retornar à unidade, será extornado o valor referente ao seu tempo utilizado.</string>
-    <string name="TextCobracaTitle">Cobrança feita!</string>
+        Quando você retornar à unidade, será extornado o valor referente ao seu tempo utilizado.</string>    <string name="TextCobracaTitle">Cobrança feita!</string>
     <string name="xFechar">X</string>
 
     <string name="text_nao_chegou_dialog">Hmmm... parece que você ainda não está em uma unidade de locação.
-        \n<b>Trace uma rota</b> no mapa para visualizar o caminho até uma unidade.</string>
-    <string name="text_abrir_mapa_btn">ABRIR MAPA</string>
+        \n<b>Trace uma rota</b> no mapa para visualizar o caminho até uma unidade.</string>    <string name="text_abrir_mapa_btn">ABRIR MAPA</string>
 
     <string name="infoLoc">Você ainda não possui nenhuma locação</string>
     <string name="sair">Sair</string>
