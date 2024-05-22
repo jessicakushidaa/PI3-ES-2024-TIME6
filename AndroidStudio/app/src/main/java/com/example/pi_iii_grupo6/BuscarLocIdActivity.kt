@@ -30,6 +30,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
         binding?.btnSimular?.setOnClickListener {
             avancarTela()
         }
+
         buscarLocacao().addOnCompleteListener { task->
             if (task.isSuccessful){
                 Log.d("BUSCARLOC", "DATA: ${task.result}")
@@ -53,6 +54,26 @@ class BuscarLocIdActivity : AppCompatActivity() {
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
                 val data = payload["data"] as Map<String, Any>
+                //Pegando o preco escolhido
+                val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
+                val preco = precoEscolhido["preco"] as Double
+                val tempo = precoEscolhido["tempo"]
+                //Pegando as fotos
+                val vetFotos = data["foto"] as ArrayList<String>
+                val size = vetFotos.size
+                val vetorFotos: MutableList<String> = mutableListOf()
+                vetorFotos.add(vetFotos[0])
+                if(size == 2) vetorFotos.add(vetFotos[1])
+                //Pegando as tags
+                val tags = data["tags"] as ArrayList<String>
+                val vetorTags: MutableList<String> = mutableListOf()
+                val sizeTags = tags.size
+                vetorTags.add(tags[0])
+                if(sizeTags == 2) vetorTags.add(tags[1])
+
+                //Adicionando na classe
+                locRecebida = MainViewActivity.Locacao(null,null,MainViewActivity.Preco(tempo,preco),vetorFotos,vetorTags)
+
                 data
             }
     }
@@ -67,7 +88,6 @@ class BuscarLocIdActivity : AppCompatActivity() {
 
     companion object{
         //Variavel de TESTE
-        var locRecebidaTESTE: MainViewActivity.Locacao = atualLocacao
-        lateinit var latlocRecebida: MainViewActivity.Locacao
+        lateinit var locRecebida: MainViewActivity.Locacao
     }
 }
