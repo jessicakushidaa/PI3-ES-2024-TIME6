@@ -53,12 +53,12 @@ class MostrarInfosActivity : AppCompatActivity() {
     private fun confirmarLoc(): Task<String> {
         val data = hashMapOf(
             "idLocacao" to atualLocacao.locId,
-            "idUnidade" to atualLocacao.armario.id,
+            "idUnidade" to atualLocacao.armario?.id,
             "idTag" to atualLocacao.pulseiras,
             "foto" to atualLocacao.foto
         )
 
-        Log.i("INFOS","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
+        Log.i("INFOS","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario?.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
 
         return functions
             .getHttpsCallable("confirmarLoc")
