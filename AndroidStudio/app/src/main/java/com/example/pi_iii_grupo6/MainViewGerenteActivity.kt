@@ -17,7 +17,6 @@ class MainViewGerenteActivity : AppCompatActivity() {
             //Abrir acessar armario
             val intentAcessarArmario = Intent(this@MainViewGerenteActivity,VincularPulseiraActivity::class.java)
             intentAcessarArmario.putExtra("Activity","buscar")
-            intentAcessarArmario.putExtra("dupla","false")
             startActivity(intentAcessarArmario)
         }
 
