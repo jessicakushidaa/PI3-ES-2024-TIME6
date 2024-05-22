@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pi_iii_grupo6.databinding.ActivityMinhasLocacoesBinding
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
@@ -17,11 +20,33 @@ import com.google.gson.Gson
 class MinhasLocacoesActivity : AppCompatActivity() {
     private var binding: ActivityMinhasLocacoesBinding? = null
     private var gson = Gson()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var locList: ArrayList<LocacaoItem>
+    private lateinit var locacaoAdapter: LocacaoAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMinhasLocacoesBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Setar as variáveis da Recycler View
+        recyclerView = findViewById(R.id.RecyclerView)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        locList = ArrayList()
+        //Adicionando exemplo
+        locList.add(LocacaoItem("Guarde e Deus te Guarde"))
+        adicionarElementosLista(locList)
+        if (locList.size != 0){
+            //Excluir a mensagem de nenhuma loc se tiver alguma
+            var tvNenhum:TextView = findViewById(R.id.appCompatTextView)
+            val parentViewGroup = tvNenhum?.parent as ViewGroup
+
+            parentViewGroup.removeView(tvNenhum)
+        }
+        locacaoAdapter = LocacaoAdapter(locList)
+        recyclerView.adapter = locacaoAdapter
 
         //Seta Retorno
         val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
@@ -57,23 +82,10 @@ class MinhasLocacoesActivity : AppCompatActivity() {
 
             }
         }
-
-
-
-    checarLocacoes()
     }
-
-    fun checarLocacoes(){
-        var numLocs = locacoesConfirmadas.count()
-        if (locacoesPendentes.isNotEmpty()){
-            Toast.makeText(baseContext,"Voce possui uma locação pendente!",Toast.LENGTH_SHORT).show()
-            var pendente = locacoesPendentes[0]
-            confirmacao(pendente)
-        } else if (numLocs > 0){
-            Toast.makeText(baseContext,"Voce possui ${numLocs} locações",Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(baseContext,"Voce NAO possui locações concluídas",Toast.LENGTH_SHORT).show()
-        }
+    //Função que chama a function que retorna as locações confirmadas do cliente
+    private fun adicionarElementosLista(lista: ArrayList<LocacaoItem>) {
+        //Implementar function que retorna as locações confirmadas do cliente
     }
 
     fun confirmacao(locacao: MainViewActivity.Locacao){
