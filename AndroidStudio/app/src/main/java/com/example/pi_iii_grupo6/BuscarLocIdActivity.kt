@@ -33,14 +33,15 @@ class BuscarLocIdActivity : AppCompatActivity() {
 
         buscarLocacao().addOnCompleteListener { task->
             if (task.isSuccessful){
-                Log.d("BUSCARLOC", "DATA: ${task.result}")
+                var loc: MainViewActivity.Locacao = task.result
+                Log.d("BUSCARLOC", "locId: ${loc.locId}, userId: ${loc.userId}, unidadeId: ${loc.unidadeId}")
             }else{
                 Log.e("BUSCARLOC","ERRO AO BUSCAR: ${task.exception}")
             }
         }
     }
     //Função que recebe o id da Pulseira via intent e busca no banco a locação
-    private fun buscarLocacao(): Task<Map<String, Any>> {
+    private fun buscarLocacao(): Task<MainViewActivity.Locacao> {
         val idRecebido = intent.getStringExtra("id")
 
         val data = hashMapOf(
@@ -53,19 +54,23 @@ class BuscarLocIdActivity : AppCompatActivity() {
             .continueWith{task ->
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
-                val id = payload["idLocacao"] as Map<String, Any>
-                val idLoc = id["id"] as String
+                //Id da locação
+                val id = payload["idLocacao"] as String
+                //Informações da locação
                 val data = payload["data"] as Map<String, Any>
+
                 //Pegando o preco escolhido
                 val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
                 val preco = precoEscolhido["preco"] as Double
                 val tempo = precoEscolhido["tempo"]
+
                 //Pegando as fotos
                 val vetFotos = data["foto"] as ArrayList<String>
                 val size = vetFotos.size
                 val vetorFotos: MutableList<String> = mutableListOf()
                 vetorFotos.add(vetFotos[0])
                 if(size == 2) vetorFotos.add(vetFotos[1])
+
                 //Pegando as tags
                 val tags = data["tags"] as ArrayList<String>
                 val vetorTags: MutableList<String> = mutableListOf()
@@ -73,10 +78,23 @@ class BuscarLocIdActivity : AppCompatActivity() {
                 vetorTags.add(tags[0])
                 if(sizeTags == 2) vetorTags.add(tags[1])
 
-                //Adicionando na classe
-                locRecebida = MainViewActivity.Locacao(null,null,MainViewActivity.Preco(tempo,preco),vetorFotos,vetorTags,idLoc)
+                //Pegando o id do usuário
+                val cliente = data["cliente"] as ArrayList<*>
+                val cliente1 = cliente[0] as Map<String, Any>
+                val path = cliente1["_path"] as Map<String, Any>
+                val segments = path["segments"] as ArrayList<*>
+                val userId = segments[1] as String
 
-                data
+                //Pegando o id da Unidade de Locação
+                val armario = data["armario"] as Map<String, Any>
+                val pathArmario = armario["_path"] as Map<String, Any>
+                val segmentsArmario = pathArmario["segments"] as ArrayList<*>
+                val idUnidade = segmentsArmario[1] as String
+
+                //Adicionando na classe
+                locRecebida = MainViewActivity.Locacao(userId,null,MainViewActivity.Preco(tempo,preco),vetorFotos,vetorTags,id,idUnidade)
+
+                locRecebida
             }
     }
 
