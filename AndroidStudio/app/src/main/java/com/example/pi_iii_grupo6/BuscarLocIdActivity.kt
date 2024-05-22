@@ -53,6 +53,8 @@ class BuscarLocIdActivity : AppCompatActivity() {
             .continueWith{task ->
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
+                val id = payload["idLocacao"] as Map<String, Any>
+                val idLoc = id["id"] as String
                 val data = payload["data"] as Map<String, Any>
                 //Pegando o preco escolhido
                 val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
@@ -72,7 +74,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
                 if(sizeTags == 2) vetorTags.add(tags[1])
 
                 //Adicionando na classe
-                locRecebida = MainViewActivity.Locacao(null,null,MainViewActivity.Preco(tempo,preco),vetorFotos,vetorTags)
+                locRecebida = MainViewActivity.Locacao(null,null,MainViewActivity.Preco(tempo,preco),vetorFotos,vetorTags,idLoc)
 
                 data
             }
