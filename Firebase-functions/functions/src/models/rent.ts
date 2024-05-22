@@ -7,5 +7,4 @@ export interface Locacao {
     cliente: Pessoa[],
     precoTempoEscolhido: PrecoTempo
     status: string
-    foto: string[]
 }
