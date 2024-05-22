@@ -55,8 +55,6 @@ export const addLocacao = functions
       };
     }
 
-    /* A verificação da existência do armário é feita também na function
-    getDocumentFields,aqui ela é feita para verificar o caminho coerente */
     try {
       // Recuperar caminho do documento do cliente que alugou armário
       const clienteRefs = await Promise
@@ -101,8 +99,8 @@ export const addLocacao = functions
  * Função que checa se a pessoa tem uma locação no banco de dados e a
   situação da locação - pendente ou não
  * Parâmetro passado na requisição pelo cliente:
- * idPessoa - id do documento da pessoa na collection
- * Retorna id da Locação, status e outros campos do documento
+ * @param idPessoa - id do documento da pessoa na collection
+ * @returns - Retorna id da Locação, status e outros campos do documento
  */
 export const checkLocacao = functions
   .region("southamerica-east1")
@@ -203,7 +201,7 @@ export const confirmarLoc = functions
       const locRef= colLocacao.doc(idLocacao);
 
       if (locRef != null) {
-        const res = await atualizarArmario(idUnidade);
+        const res = await alugarArmario(idUnidade);
 
         if (res.status === "SUCCESS") {
           const idArmario = res.payload.idArmario;
@@ -244,6 +242,7 @@ export const confirmarLoc = functions
               data: null,
             })),
           };
+          return result;
         }
       } else {
         // Caso erro ao localizar documento de locação
@@ -277,10 +276,10 @@ export const confirmarLoc = functions
  * Função que busca se há armários disponiveis nessa unidade e, caso haja,
  * retorna id do primeiro disponível, atualizando o seu status para "alugado"
  */
-async function atualizarArmario(idUnidade: string) {
+async function alugarArmario(idUnidade: string) {
   let res;
 
-  // Caso a request não conste os campos esperados
+  // Caso não conste o parametro esperado
   if (!idUnidade) {
     functions.logger.error("confirmarLoc " +
         "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
@@ -300,7 +299,7 @@ async function atualizarArmario(idUnidade: string) {
       "disponivel").limit(1).get();
 
     // Verificar se o documento do armario existe e se o status é "disponível"
-    if (lockerSnapshot != null) {
+    if (!lockerSnapshot.empty) {
       // acessar primeiro documento de armário retornado pela busca
       const armario = lockerSnapshot.docs[0];
       // atualiza status do armário
@@ -344,3 +343,198 @@ async function atualizarArmario(idUnidade: string) {
   }
   return res;
 }
+
+/**
+ * Função que busca o documento de uma locação via número da tag fornecido
+ * documento será encontrado caso idTag esteja presente no campo de array
+ * "tags"
+ * @param idTag - identificação da pulseira nfc, campo presente no documento de
+ * locação
+ */
+export const buscarLoc = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+
+    const idTag = data.idTag;
+
+    functions.logger.info("Function buscarLoc - iniciada.");
+
+    if (!idTag) {
+      functions.logger.error("buscarLoc "+
+      "- Erro: Dados não recebidos corretamente");
+      result = {
+        status: "ERROR",
+        message: "Erro ao receber parâmetros.",
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: null,
+          data: null})),
+      };
+    }
+    try {
+      /* Buscar na collection "locação" documento que contenha
+      o id da tag recebida dentro do array */
+      const locSnapshot = await colLocacao
+        .where("tags", "array-contains", idTag).limit(1).get();
+
+      // Caso a busca não retorne vazia
+      if (!locSnapshot.empty) {
+        // Sucesso - Atribui 1o resultado da busca à variável
+        const locacao =locSnapshot.docs[0];
+
+        result = {
+          status: "SUCCESS",
+          message: "Locacao encontrada via tag.",
+          payload: JSON.parse(JSON.stringify({
+            idLocacao: locacao.id,
+            data: locacao.data()})),
+        };
+        functions.logger.info("buscarLoc " +
+         "- Locação encontrada com sucesso.");
+        functions.logger.info("Function buscarLoc - finalizando.");
+      } else {
+        result = {
+          status: "ERROR",
+          message: "Locação não encontrada ou não existe.",
+          payload: JSON.parse(JSON.stringify({
+            idLocacao: null,
+            data: null})),
+        };
+        throw new functions.https.HttpsError("not-found", result.message);
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      functions.logger.error("buscarLoc" + "Erro ao buscar locação: " +
+       error.message);
+
+      result = {
+        status: "ERROR",
+        message: "Erro ao buscar locação." + error.message,
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: null,
+          data: null})),
+      };
+
+      throw new functions.https.HttpsError("internal", result.message);
+    }
+    return result;
+  });
+
+/**
+ * Função que exclui um documento de locação do firebase db e chama outra
+ * função para atualizar status do armário alugado.
+ * @param {string} idLocacao - id da locação que deseja encerrar
+ * @param {string} idUnidade - id da unidade onde está feita a locação
+ * @todo - nao está pegando o idArmario !!
+ */
+export const encerrarLoc = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result;
+
+    // Extraindo dados da request
+    const idLocacao = data.idLocacao;
+    const idUnidade = data.idUnidade;
+
+
+    functions.logger.info("Function encerrarLoc - iniciada.");
+    // Caso ausência do dado idLocacao, preparar resposta de erro
+    if (!idLocacao || !idUnidade) {
+      functions.logger.error("confirmarLoc " +
+      "- Erro ao encerrar locacao: Dados não recebidos corretamente");
+      throw new functions.https
+        .HttpsError("invalid-argument", "Parametros inválidos.");
+    }
+    try {
+      // Referenciando documento de locação do banco
+      const locRef = colLocacao.doc(idLocacao);
+      const locSnapshot = await locRef.get();
+
+      // Obtendo campo "armario" do documento de locação
+      const armarioPath = locSnapshot.get("armario");
+
+      if (!armarioPath) {
+        throw new functions.https.HttpsError("invalid-argument",
+          "Referência do armário não encontrada no documento de locação.");
+      }
+      // Transformando o path para pegar o id do armario referenciado
+      const idArmario = armarioPath.id;
+
+      // Atualizando status do armário de "alugado" para "disponivel"
+      await liberarArmario(idUnidade, idArmario);
+
+      // Método para deletar documento
+      await locRef.delete();
+
+      result = {
+        status: "SUCCESS",
+        message: "Locação encerrada com sucesso: documento deletado",
+      };
+
+      functions.logger.info("encerrarLoc " + "- " + result.message);
+    } catch (error: any) {
+      result = {
+        status: "ERROR",
+        message: "Parâmetros não recebidos corretamente",
+        payload: JSON.parse(JSON.stringify({
+          idLocacao: idLocacao,
+          idUnidade: idUnidade,
+        })),
+      };
+    }
+    return result;
+  });
+
+/**
+ * Função que volta o armário para o status "disponível"
+ * @param {string} idArmario - id do armario que está presente no doc de locação
+ * @param {string} idUnidade - id da unidade de locação onde o armário está
+ *  presente
+ * */
+async function liberarArmario(idUnidade:string, idArmario: string) {
+  let res;
+
+  functions.logger.info("Function liberarArmario - iniciada.");
+  // Caso não conste o parametro esperado
+  if (!idArmario) {
+    functions.logger.error("confirmarLoc " +
+          "- Erro ao liberar armario: Dados não recebidos corretamente " +
+           idArmario),
+    res = {
+      status: "ERROR",
+      message: "Parâmetros não recebidos corretamente",
+    };
+    throw new functions.https.HttpsError("invalid-argument", res.message);
+  }
+  try {
+    // referenciando documentos do bd e collections
+    const unitRef = colUnidades.doc(idUnidade); // doc UnidadeLocacao
+    const colArmarios = unitRef.collection("armarios");
+    const armarioRef = colArmarios.doc(idArmario); // doc armario
+
+    // Atualizando campo 'status' do armário para 'disponivel'
+    await armarioRef.update({status: "disponivel"});
+
+    res = {
+      status: "SUCCESS",
+      message: "Armário liberado com sucesso.",
+      payload: {
+        idArmario: armarioRef,
+      },
+    };
+
+    functions.logger.info("liberarArmario " + res.message);
+  } catch (error:any) {
+    // Lidar com erros e preparar resposta de retorno
+    functions.logger.error("Erro ao buscar ou atualizar armário.", +
+    error.message);
+    res = {
+      status: "ERROR",
+      message: "Erro ao buscar armário.",
+    };
+    throw new functions.https.HttpsError("not-found",
+      "Documento não encontrado.");
+  }
+  return res;
+}
+

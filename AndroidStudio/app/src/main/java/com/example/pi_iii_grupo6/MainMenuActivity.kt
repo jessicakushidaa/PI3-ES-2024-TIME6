@@ -198,6 +198,7 @@ class MainMenuActivity : AppCompatActivity() {
                         val endereco = unidade["endereco"] as String
                         val descricao = unidade["descricao"] as String
                         val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val telefone = unidade["telefone"] as String
                         val numPrecos = tabelaPrecos.count()
                         //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
                         var j = 0
@@ -223,7 +224,8 @@ class MainMenuActivity : AppCompatActivity() {
                             nome,
                             endereco,
                             descricao,
-                            listaPrecos
+                            listaPrecos,
+                            telefone
                         )
                         listaDeUnidades.add(unidadeLocacao)
                         i++
