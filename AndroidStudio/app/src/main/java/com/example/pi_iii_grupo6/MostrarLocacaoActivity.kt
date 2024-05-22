@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
-import com.example.pi_iii_grupo6.BuscarLocIdActivity.Companion.locRecebidaTESTE
+import com.example.pi_iii_grupo6.BuscarLocIdActivity.Companion.locRecebida
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarLocacaoBinding
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -56,14 +56,14 @@ class MostrarLocacaoActivity : AppCompatActivity() {
     }
 
     private fun carregarImagem() {
-        var numRecebido = locRecebidaTESTE.foto.size
+        var numRecebido = locRecebida.foto.size
         val tvPreco = binding?.tvPreco
         val tvTempo = binding?.tvTempo
         val tvPulseiras = binding?.tvPulseira
 
         if(numRecebido == 2){
-            val string1 = locRecebidaTESTE.foto[0]
-            val string2 = locRecebidaTESTE.foto[1]
+            val string1 = locRecebida.foto[0]
+            val string2 = locRecebida.foto[1]
 
             val bitmap1 = base64ToBitmap(string1)
             val bitmap2 = base64ToBitmap(string2)
@@ -76,7 +76,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             ivImage2?.setImageBitmap(bitmap2)
 
             //Setar o texto das pulseiras
-            tvPulseiras?.text = "Pulseiras: ${locRecebidaTESTE.pulseiras[0]}, ${locRecebidaTESTE.pulseiras[1]}"
+            tvPulseiras?.text = "Pulseiras: ${locRecebida.pulseiras[0]}, ${locRecebida.pulseiras[1]}"
         }else if(numRecebido == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
             var ivImage2 = binding?.ivImage2
@@ -85,7 +85,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             parentViewGroup.removeView(ivImage2)
             //Carregar a única imagem
 
-            val string = locRecebidaTESTE.foto[0]
+            val string = locRecebida.foto[0]
             val bitmap = base64ToBitmap(string)
 
             Log.d("RECEBIDA",string)
@@ -94,9 +94,9 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto das pulseiras
-            tvPulseiras?.text = "Pulseira: ${locRecebidaTESTE.pulseiras[0]}"
+            tvPulseiras?.text = "Pulseira: ${locRecebida.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${locRecebidaTESTE.preco?.preco}"
-        tvTempo?.text = "Tempo: ${locRecebidaTESTE.preco?.tempo}"
+        tvPreco?.text = "Preço: ${locRecebida.preco?.preco}"
+        tvTempo?.text = "Tempo: ${locRecebida.preco?.tempo}"
     }
 }

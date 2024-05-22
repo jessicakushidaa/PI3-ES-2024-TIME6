@@ -48,7 +48,6 @@ class RentActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
 
 
-
     class Info(
         var userId: String?,
         var preco: MainViewActivity.Preco
