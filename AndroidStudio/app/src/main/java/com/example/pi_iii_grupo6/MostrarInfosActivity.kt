@@ -12,25 +12,62 @@ import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.SelectPessoasActivity.Companion.numPessoas
 import com.example.pi_iii_grupo6.TirarFotoActivity.Companion.images
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarInfosBinding
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Firebase
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class MostrarInfosActivity : AppCompatActivity() {
     private var binding: ActivityMostrarInfosBinding? = null
+    private lateinit var functions: FirebaseFunctions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMostrarInfosBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        binding?.btnFinalizar?.setOnClickListener {
-            Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
-            //Limpando a lista de imagens transformadas em string
-            images.clear()
-            val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
-            startActivity(intent)
-        }
+        functions = Firebase.functions("southamerica-east1")
 
+        //Ao clicar no botão de finalizar locação, chama a função confirmarLoc
+        binding?.btnFinalizar?.setOnClickListener {
+            confirmarLoc().addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
+                    Log.i("CONFIRMAR LOC","loc confirmada!: ${task.result}")
+                    //Limpando a lista de imagens transformadas em string
+                    images.clear()
+                    val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(baseContext,"Houve um erro ao concluir locação",Toast.LENGTH_SHORT).show()
+                    Log.e("CONFIRMAR LOC","erro ao confirmar loc: ${task.exception}")
+                }
+            }
+        }
+        //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
+    }
+    //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
+    private fun confirmarLoc(): Task<String> {
+        val data = hashMapOf(
+            "idLocacao" to atualLocacao.locId,
+            "idUnidade" to atualLocacao.armario.id,
+            "idTag" to atualLocacao.pulseiras,
+            "foto" to atualLocacao.foto
+        )
+
+        Log.i("INFOS","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
+
+        return functions
+            .getHttpsCallable("confirmarLoc")
+            .call(data)
+            .continueWith{ task->
+                //Lidar com o resultado retornado/
+                val sucess = "SUCESS"
+                sucess
+            }
     }
 
     private fun carregarImagem() {
