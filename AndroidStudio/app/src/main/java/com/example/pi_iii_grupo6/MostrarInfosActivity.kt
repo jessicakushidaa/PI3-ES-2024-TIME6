@@ -34,12 +34,18 @@ class MostrarInfosActivity : AppCompatActivity() {
         binding?.btnFinalizar?.setOnClickListener {
             confirmarLoc().addOnCompleteListener { task->
                 if (task.isSuccessful){
+                    if (task.result == "Não há armários disponíveis no momento."){
+                        Toast.makeText(baseContext,task.result,Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
+                        startActivity(intent)
+                    }else{
                     Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
                     Log.i("CONFIRMAR LOC","loc confirmada!: ${task.result}")
                     //Limpando a lista de imagens transformadas em string
                     images.clear()
                     val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
                     startActivity(intent)
+                    }
                 }else{
                     Toast.makeText(baseContext,"Houve um erro ao concluir locação",Toast.LENGTH_SHORT).show()
                     Log.e("CONFIRMAR LOC","erro ao confirmar loc: ${task.exception}")
@@ -65,8 +71,9 @@ class MostrarInfosActivity : AppCompatActivity() {
             .call(data)
             .continueWith{ task->
                 //Lidar com o resultado retornado/
-                val sucess = "SUCESS"
-                sucess
+                val res = task.result.data as Map<String, Any>
+                val message = res["message"] as String
+                message
             }
     }
 
