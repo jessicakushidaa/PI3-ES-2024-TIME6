@@ -21,6 +21,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityVincularPulseiraBinding
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.nfc.NdefRecord
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 
@@ -77,28 +78,59 @@ class VincularPulseiraActivity : AppCompatActivity() {
             { tag ->
                 //Se entrou, tag foi detectada
                 Log.d("NFC", "Tag detectada: $tag")
-                //Guardando o que tiver de NDEF dentro da tag
-                val ndef = Ndef.get(tag)
-                ndef?.let {
-                    it.connect()
-                    val ndefMessage = it.ndefMessage
-                    it.close()
-                    //Tendo o NDEF, guardar em uma variável e ldiar com as informações
-                    val informacoes = ndefMessage.records
-                    if (informacoes.isNotEmpty()) {
-                        val firstRecord = informacoes[0]
-                        val payload = firstRecord.payload
-                        val text = String(payload, Charset.forName("UTF-8"))
-                        //Remover o prefixo que vem com a gravação da tag
-                        val textoesperado = text.substring(3)
-                        Log.d("NFC", "Tag detectada: $textoesperado")
-                        tagLida = textoesperado
-                        if (intent.extras?.getString("Activity") == "vincular") atualLocacao.pulseiras.add(tagLida)
-                        //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
-                        runOnUiThread {
-                            toastNaTela("Pulseira Lida")
-                            avancarIntent(tagLida)
+                val activityExtra = intent.getStringExtra("Activity")
+                //Checar se precisa entrar no modo leitura, modo escrever ou modo limpar TAG
+                if (activityExtra == "buscar"){
+                    //Guardando o que tiver de NDEF dentro da tag
+                    val ndef = Ndef.get(tag)
+                    ndef?.let {
+                        it.connect()
+                        val ndefMessage = it.ndefMessage
+                        it.close()
+                        //Tendo o NDEF, guardar em uma variável e ldiar com as informações
+                        val informacoes = ndefMessage.records
+                        if (informacoes.isNotEmpty()) {
+                            val firstRecord = informacoes[0]
+                            val payload = firstRecord.payload
+                            val text = String(payload, Charset.forName("UTF-8"))
+                            //Remover o prefixo que vem com a gravação da tag
+                            val textoesperado = text.substring(3)
+                            Log.d("NFC", "Tag detectada: $textoesperado")
+                            tagLida = textoesperado
+                            if (intent.extras?.getString("Activity") == "vincular") atualLocacao.pulseiras.add(tagLida)
+                            //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
+                            runOnUiThread {
+                                toastNaTela("Pulseira Lida")
+                                avancarIntent(tagLida)
+                            }
                         }
+                    }
+                }else if (activityExtra == "vincular"){
+                    //LOGICA PARA GRAVAR NA TAG NFC
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Log.d("ESCREVER","Modo de escrever")
+                        escreverTag(tag, atualLocacao.locId)
+                        atualLocacao.pulseiras.add(atualLocacao.locId)
+                        avancarIntent(atualLocacao.locId)
+                    }else{
+                        Log.e("ESCREVER","ERRO DE VERSAO")
+                    }
+                }else if (activityExtra == "limpar"){
+                    //Lógica para limpar a tag
+                    Log.d("LIMPAR","MODO LIMPAR")
+                    limparTag(tag)
+                    val duplaextra = intent.getStringExtra("dupla")
+                    if (duplaextra != "true"){
+                        runOnUiThread {
+                            Toast.makeText(baseContext,"Locação encerrada com sucesso",Toast.LENGTH_SHORT).show()
+                        }
+                        val intent = Intent(this@VincularPulseiraActivity,MainViewGerenteActivity::class.java)
+                        startActivity(intent)
+                    }else if(duplaextra == "true"){
+                        val intent = Intent(this@VincularPulseiraActivity,VincularPulseiraActivity::class.java)
+                        intent.putExtra("Activity","limpar")
+                        intent.putExtra("dupla","false")
+                        startActivity(intent)
                     }
                 }
             },
@@ -130,6 +162,67 @@ class VincularPulseiraActivity : AppCompatActivity() {
                 val intent = Intent(this@VincularPulseiraActivity, BuscarLocIdActivity::class.java)
                 intent.putExtra("id", id)
                 startActivity(intent)
+            }
+        }
+    }
+    //Função que limpa a TAG NFC
+    private fun limparTag(tag: Tag) {
+        val ndef = Ndef.get(tag)
+        //Verificando se a tag suporta NDEF
+        if (ndef != null) {
+            //Limpando a tag
+            try {
+                ndef.connect()
+                // Criar um NdefRecord vazio
+                val emptyRecord = NdefRecord(NdefRecord.TNF_EMPTY, byteArrayOf(), byteArrayOf(), byteArrayOf())
+                // Criar um NdefMessage com o NdefRecord vazio
+                val ndefMessage = NdefMessage(arrayOf(emptyRecord))
+                ndef.writeNdefMessage(ndefMessage)
+                ndef.close()
+                runOnUiThread {
+                    toastNaTela("Tag limpa com sucesso!")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("LIMPAR","erro: $e")
+                runOnUiThread {
+                    toastNaTela("Falha ao limpar a tag!")
+                }
+            }
+        } else {
+            runOnUiThread {
+                toastNaTela("Tag não suporta NDEF!")
+            }
+        }
+    }
+
+    //Função responsável por escrever string na tag de NFC
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun escreverTag(tag: Tag, data: String) {
+        Log.d("ESCREVER","Entrou na escreverTag")
+        val ndef = Ndef.get(tag)
+        //Checando se a tag suporta NDEF
+        if (ndef != null) {
+            //Escrevendo na tag
+            try {
+                ndef.connect()
+                val ndefRecord = NdefRecord.createTextRecord("en", data)
+                val ndefMessage = NdefMessage(arrayOf(ndefRecord))
+                ndef.writeNdefMessage(ndefMessage)
+                ndef.close()
+                runOnUiThread {
+                    toastNaTela("Tag escrita com sucesso!")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    toastNaTela("Falha ao escrever na tag!")
+                }
+                Log.e("ESCREVER","erro: $e")
+            }
+        } else {
+            runOnUiThread {
+                toastNaTela("Tag não suporta NDEF!")
             }
         }
     }
