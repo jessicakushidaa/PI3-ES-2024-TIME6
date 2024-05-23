@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.content.Intent
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -24,11 +25,16 @@ class ExcluirLocActivity : AppCompatActivity() {
         setContentView(R.layout.activity_excluir_loc)
         functions = Firebase.functions("southamerica-east1")
 
-        /**
+        val size = locRecebida.pulseiras.size
+        Log.d("Tamanho","quantidade pulseiras: $size")
+
         encerrarLocacao().addOnCompleteListener { task->
             if (task.isSuccessful){
                 Log.i("ENCERRRARLOC",task.result)
-                Toast.makeText(baseContext,"Locação encerrada com sucesso",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ExcluirLocActivity, VincularPulseiraActivity::class.java)
+                intent.putExtra("Activity", "limpar")
+                if (size == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
+                startActivity(intent)
             }else{
                 Log.e("ENCERRRARLOC","Erro ao encerrar loc: ${task.exception}")
             }

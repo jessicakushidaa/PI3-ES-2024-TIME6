@@ -10,8 +10,8 @@ import {getDocumentId, getDocumentFields} from
 import {addCartao} from "./controllers/cardController";
 import {getAllUnits, addUnidadeLocacao}
   from "./controllers/rentalUnityController";
-import {addLocacao, checkLocacao, confirmarLoc, buscarLoc, encerrarLoc} from
-  "./controllers/rentController";
+import {addLocacao, checkLocacao, confirmarLoc, buscarLoc, encerrarLoc,
+  buscarConfirmadas} from "./controllers/rentController";
 import {CallableResponse} from "./models/customResponse";
 import * as user from "./models/user";
 import * as card from "./models/card";
@@ -21,6 +21,6 @@ import * as rent from "./models/rent";
 // Exportar as funções e interfaces
 export {addPessoa, getDocumentId, getDocumentFields, addCartao, getAllUnits,
   addUnidadeLocacao, addLocacao, checkLocacao, confirmarLoc, buscarLoc,
-  encerrarLoc};
+  encerrarLoc, buscarConfirmadas};
 export {CallableResponse, user, card, rentalUnit, rent};
 
