@@ -189,7 +189,9 @@ export const confirmarLoc = functions
     // Caso a request não conste os campos esperados
     if (!idLocacao || !idTag || !foto || !idUnidade) {
       functions.logger.error("confirmarLoc " +
-        "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
+        `- Erro ao confirmar locacao: Dados não recebidos corretamente =>
+        idUnidade: ${idUnidade}; idTag: ${idTag}; foto: ${foto}; idLocacao:
+         ${idLocacao}` ),
       result = {
         status: "ERROR",
         message: "Parâmetros não recebidos corretamente",
@@ -261,7 +263,8 @@ export const confirmarLoc = functions
 
       result = {
         status: "ERROR",
-        message: "Não foi possivel adicionar campos - erro inesperado",
+        message: "Não foi possivel adicionar campos - erro inesperado " +
+         error.message,
         payload: JSON.parse(JSON.stringify({
           idLocacao: idLocacao,
           data: null,
