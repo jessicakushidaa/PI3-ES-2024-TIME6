@@ -23,3 +23,4 @@ export {addPessoa, getDocumentId, getDocumentFields, addCartao, getAllUnits,
   addUnidadeLocacao, addLocacao, checkLocacao, confirmarLoc, buscarLoc,
   encerrarLoc, buscarConfirmadas};
 export {CallableResponse, user, card, rentalUnit, rent};
+

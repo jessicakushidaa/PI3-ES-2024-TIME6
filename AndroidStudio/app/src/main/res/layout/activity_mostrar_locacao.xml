@@ -11,6 +11,7 @@
     android:orientation="vertical"
     tools:context=".MostrarInfosActivity">
 
+
     <!--Toolbar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -131,6 +131,7 @@ async function addArmarios(data:
     const lockerDoc = lockersRef.doc();
     batch.set(lockerDoc, {
       tag: lockerTag,
+      status: "disponivel",
     });
   }
 

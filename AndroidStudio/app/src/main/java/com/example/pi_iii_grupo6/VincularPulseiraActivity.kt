@@ -22,6 +22,7 @@ import java.nio.charset.Charset
 import kotlin.properties.Delegates
 import android.graphics.drawable.AnimatedVectorDrawable
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
+import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 
 
 class VincularPulseiraActivity : AppCompatActivity() {
@@ -92,9 +93,10 @@ class VincularPulseiraActivity : AppCompatActivity() {
                         val textoesperado = text.substring(3)
                         Log.d("NFC", "Tag detectada: $textoesperado")
                         tagLida = textoesperado
+                        if (intent.extras?.getString("Activity") == "vincular") atualLocacao.pulseiras.add(tagLida)
                         //Para atualizar a tela do usuário, precisa voltar para a thread principal (runOnUiThread)
                         runOnUiThread {
-                            toastNaTela(tagLida)
+                            toastNaTela("Pulseira Lida")
                             avancarIntent(tagLida)
                         }
                     }
@@ -107,17 +109,28 @@ class VincularPulseiraActivity : AppCompatActivity() {
 
     //Função que pega a Activity que veio pela intent e avança, passando o id da pulseira também via intent;
     private fun avancarIntent(id: String) {
+        //Verificando se são duas pessoas ou uma.
+        val extra = intent.getStringExtra("dupla")
         val activity = intent.extras?.getString("Activity")
-        if(activity == "vincular"){
-            //Avançar para vincular pulseira (passando o id)
-            val intent = Intent(this@VincularPulseiraActivity,VincularPulseiraIdActivity::class.java)
-            intent.putExtra("id",id)
+
+        if(extra == "true"){
+            val intent = Intent(this@VincularPulseiraActivity, VincularPulseiraActivity::class.java)
+            intent.putExtra("Activity", activity)
+            intent.putExtra("dupla", "false")
             startActivity(intent)
-        }else if(activity == "buscar"){
-            //Avançar para buscar locação com esse id de pulseira (passando o id)
-            val intent = Intent(this@VincularPulseiraActivity,BuscarLocIdActivity::class.java)
-            intent.putExtra("id",id)
-            startActivity(intent)
+        }else if(extra == "false"){
+            if (activity == "vincular") {
+                //Avançar para vincular pulseira (passando o id)
+                val intent =
+                    Intent(this@VincularPulseiraActivity, VincularPulseiraIdActivity::class.java)
+                intent.putExtra("id", id)
+                startActivity(intent)
+            } else if (activity == "buscar") {
+                //Avançar para buscar locação com esse id de pulseira (passando o id)
+                val intent = Intent(this@VincularPulseiraActivity, BuscarLocIdActivity::class.java)
+                intent.putExtra("id", id)
+                startActivity(intent)
+            }
         }
     }
 
