@@ -14,9 +14,11 @@ import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.ActivityBuscarLocIdBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.gson.Gson
+import java.util.Date
 
 class BuscarLocIdActivity : AppCompatActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
@@ -44,7 +46,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
             else{
                 var loc: MainViewActivity.Locacao = task.result
                 Toast.makeText(baseContext,"Encontrada com sucesso",Toast.LENGTH_SHORT).show()
-                Log.d("BUSCARLOC", "locId: ${loc.locId}, userId: ${loc.userId}, unidadeId: ${loc.unidadeId}")
+                Log.d("BUSCARLOC", "locId: ${loc.locId}, userId: ${loc.userId}, unidadeId: ${loc.unidadeId}, date: ${loc.horaLocacao}")
             }
         }
     }
@@ -84,6 +86,13 @@ class BuscarLocIdActivity : AppCompatActivity() {
                     vetorFotos.add(vetFotos[0])
                     if (size == 2) vetorFotos.add(vetFotos[1])
 
+                    //Pegando a hora da locacao
+                    val horaLoc = data["horaLocacao"] as Map<String, Any>
+                    val segundos = (horaLoc["_seconds"] as Number).toLong()
+                    val nanosegundos = horaLoc["_nanoseconds"] as Int
+                    val timestamp = Timestamp(segundos,nanosegundos)
+                    val datetime = timestamp.toDate()
+
                     //Pegando as tags
                     val tags = data["tags"] as ArrayList<String>
                     val vetorTags: MutableList<String> = mutableListOf()
@@ -112,7 +121,8 @@ class BuscarLocIdActivity : AppCompatActivity() {
                         vetorFotos,
                         vetorTags,
                         id,
-                        idUnidade
+                        idUnidade,
+                        datetime
                     )
 
                     locRecebida
