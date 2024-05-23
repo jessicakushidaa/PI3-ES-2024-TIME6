@@ -102,5 +102,6 @@
     <string name="connection_icon_animation">connection icon animation</string>
     <string name="btnEnviar">Enviar</string>
     <string name="btnRefazer">Refazer</string>
+    <string name="confirmar_envio">Confirmar Envio</string>
 
 </resources>
