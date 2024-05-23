@@ -34,13 +34,18 @@ class MostrarInfosActivity : AppCompatActivity() {
         binding?.btnFinalizar?.setOnClickListener {
             confirmarLoc().addOnCompleteListener { task->
                 if (task.isSuccessful){
-                    if (task.result == "Não há armários disponíveis no momento."){
-                        Toast.makeText(baseContext,task.result,Toast.LENGTH_SHORT).show()
+                    val result = task.result
+                    val status = result["status"]
+                    val message = result["message"]
+                    Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
+                            " - $message")
+                    if (status == "ERROR"){
+                        Toast.makeText(baseContext,"",Toast.LENGTH_LONG).show()
                         val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
                         startActivity(intent)
                     }else{
                     Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
-                    Log.i("CONFIRMAR LOC","loc confirmada!: ${task.result}")
+                    Log.i("CONFIRMAR LOC","loc confirmada!: ${message}")
                     //Limpando a lista de imagens transformadas em string
                     images.clear()
                     val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
@@ -56,7 +61,7 @@ class MostrarInfosActivity : AppCompatActivity() {
         carregarImagem()
     }
     //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
-    private fun confirmarLoc(): Task<String> {
+    private fun confirmarLoc(): Task<Map<String, String>> {
         val data = hashMapOf(
             "idLocacao" to atualLocacao.locId,
             "idUnidade" to atualLocacao.armario?.id,
@@ -64,7 +69,7 @@ class MostrarInfosActivity : AppCompatActivity() {
             "foto" to atualLocacao.foto
         )
 
-        Log.i("INFOS","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario?.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
+        Log.i("CONFIRMAR LOC","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario?.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
 
         return functions
             .getHttpsCallable("confirmarLoc")
@@ -72,8 +77,9 @@ class MostrarInfosActivity : AppCompatActivity() {
             .continueWith{ task->
                 //Lidar com o resultado retornado/
                 val res = task.result.data as Map<String, Any>
+                val status = res["status"] as String
                 val message = res["message"] as String
-                message
+                mapOf("status" to status, "message" to message)
             }
     }
 
