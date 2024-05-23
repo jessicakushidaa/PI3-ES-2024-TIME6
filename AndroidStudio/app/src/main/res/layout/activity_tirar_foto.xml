@@ -36,6 +36,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
         android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -58,9 +59,9 @@
         <!--camera-->
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraPreview"
-            android:layout_width="303dp"
+            android:layout_width="290dp"
             android:layout_gravity="center"
-            android:layout_height="290dp"
+            android:layout_height="320dp"
             android:layout_marginTop="50dp" />
 
         <!--botão tirar foto-->

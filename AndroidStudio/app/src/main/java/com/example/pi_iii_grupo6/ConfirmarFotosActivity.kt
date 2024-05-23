@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.databinding.ActivityConfirmarFotosBinding
 import kotlin.io.encoding.Base64
@@ -20,6 +21,8 @@ class ConfirmarFotosActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         carregarInfos()
+
+        binding.btnConfirmar.setBackgroundColor(ContextCompat.getColor(this, R.color.yellowbtn));
 
         binding.btnRefazer.setOnClickListener {
             if (atualLocacao.foto.size == 2){
