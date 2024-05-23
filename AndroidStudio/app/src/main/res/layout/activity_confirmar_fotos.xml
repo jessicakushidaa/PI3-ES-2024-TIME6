@@ -29,10 +29,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearSelect"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:orientation="vertical"
+        style="@style/VerticalLayoutStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
@@ -41,15 +38,7 @@
         <!--Texto titulo-->
         <TextView
             android:id="@+id/TextInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@drawable/baseline_lock_open_24"
-            android:drawablePadding="20dp"
-            android:text="Liberar Locação"
-            android:textColor="@color/blue_nav"
-            android:textSize="23sp"
-            android:textStyle="bold" />
+            style="@style/TextInfoStyle" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
