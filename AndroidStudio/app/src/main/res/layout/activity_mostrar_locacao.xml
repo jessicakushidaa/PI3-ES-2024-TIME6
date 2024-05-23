@@ -8,8 +8,7 @@
     android:background="@color/white"
     android:backgroundTint="@color/white"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".MostrarInfosActivity">
+    android:orientation="vertical">
 
 
     <!--Toolbar-->
