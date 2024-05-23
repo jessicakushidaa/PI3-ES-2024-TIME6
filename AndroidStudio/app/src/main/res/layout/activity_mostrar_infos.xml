@@ -99,6 +99,7 @@
 
 
     <LinearLayout
+        android:id="@+id/Lineartxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -187,6 +188,14 @@
                 android:textColor="@color/white"
                 />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="-100dp"
+        app:layout_constraintBottom_toBottomOf="@id/Lineartxt">
 
         <Button
             android:id="@+id/btnFinalizar"
@@ -194,7 +203,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="Finalizar"
-            android:layout_marginTop="80dp"
             android:layout_gravity="center"/>
     </LinearLayout>
 
