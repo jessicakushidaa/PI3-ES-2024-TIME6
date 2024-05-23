@@ -57,7 +57,7 @@
             android:id="@+id/TextInfo2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="INFORMAÇÕES"
             android:textColor="@color/blue_nav"
@@ -65,7 +65,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
@@ -91,111 +91,60 @@
         android:id="@+id/shape_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@id/linearSelect"
         app:layout_constraintEnd_toEndOf="@id/linearSelect"
         app:layout_constraintTop_toBottomOf="@id/linearSelect"
         android:background="@drawable/infos_rectangle"/>
 
-
     <LinearLayout
         android:id="@+id/Lineartxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@id/shape_info">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="@id/shape_info">
-
-            <TextView
-                android:id="@+id/textInfoPreco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Preço: "
-                android:textSize="17dp"
-                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/tvPreco1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text=""
+                android:text="ggggggg"
                 android:textSize="17dp"
                 android:textColor="@color/white"
                 />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="@id/shape_info">
-
-            <TextView
-                android:id="@+id/textInfoTempo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Tempo: "
-                android:textSize="17dp"
-                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/tvTempo1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:maxLines="2"
-                android:text=""
+                android:text="gggggg"
                 android:textSize="17dp"
                 android:textColor="@color/white"
                 />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="@id/shape_info">
-
-            <TextView
-                android:id="@+id/textInfoPulseira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Pulseira: "
-                android:textSize="17dp"
-                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/tvPulseiras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text=""
+                android:layout_marginTop="15dp"
+                android:text="gggggg"
                 android:textSize="17dp"
                 android:textColor="@color/white"
                 />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="-100dp"
-        app:layout_constraintBottom_toBottomOf="@id/Lineartxt">
+        android:layout_marginTop="120dp"
+        app:layout_constraintTop_toTopOf="@id/Lineartxt">
 
         <Button
             android:id="@+id/btnFinalizar"
