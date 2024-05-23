@@ -12,7 +12,6 @@ import android.util.Log
 import android.util.Size
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.Toolbar
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -20,8 +19,6 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
-import com.example.pi_iii_grupo6.SelectPessoasActivity.Companion.numPessoas
 import com.example.pi_iii_grupo6.databinding.ActivityTirarFotoBinding
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.ByteArrayOutputStream
@@ -40,7 +37,6 @@ class TirarFotoActivity : AppCompatActivity() {
     //Variável que será responsável pela execução em outra trhead
     private lateinit var imageCaptureExecutor: ExecutorService
 
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +52,6 @@ class TirarFotoActivity : AppCompatActivity() {
         binding?.btnFoto?.setOnClickListener {
             takePicture()
         }
-
-        //Seta Retorno
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -99,7 +88,6 @@ class TirarFotoActivity : AppCompatActivity() {
                         val rotatedBitmap = rotateBitmap(bitmapImage,90)
                         val base64 = convertToBase64(rotatedBitmap)
                         images.add(base64)
-                        atualLocacao.foto.add(base64)
                         runOnUiThread {
                             Toast.makeText(
                                 baseContext,
@@ -125,6 +113,9 @@ class TirarFotoActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         }
+                        val intent = Intent(this@TirarFotoActivity, VincularPulseiraActivity::class.java)
+                        intent.putExtra("Activity","vincular")
+                        startActivity(intent)
                     }
 
                     override fun onError(exception: ImageCaptureException) {

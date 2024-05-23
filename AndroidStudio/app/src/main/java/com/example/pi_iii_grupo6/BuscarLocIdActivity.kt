@@ -22,7 +22,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
-
+  
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBuscarLocIdBinding.inflate(layoutInflater)

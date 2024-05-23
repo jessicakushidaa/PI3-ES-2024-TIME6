@@ -1,16 +1,12 @@
 package com.example.pi_iii_grupo6
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import com.example.pi_iii_grupo6.BuscarLocIdActivity.Companion.locRecebida
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarLocacaoBinding
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 class MostrarLocacaoActivity : AppCompatActivity() {
     private var binding: ActivityMostrarLocacaoBinding? = null
@@ -23,7 +19,6 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             val intent = Intent(this@MostrarLocacaoActivity, AcessarArmarioActivity::class.java)
             startActivity(intent)
         }
-
         carregarImagem()
     }
 
@@ -98,5 +93,6 @@ class MostrarLocacaoActivity : AppCompatActivity() {
         }
         tvPreco?.text = "Preço: ${locRecebida.preco?.preco}"
         tvTempo?.text = "Tempo: ${locRecebida.preco?.tempo}"
+
     }
 }

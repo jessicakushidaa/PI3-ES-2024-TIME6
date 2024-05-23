@@ -19,6 +19,7 @@ class MainViewGerenteActivity : AppCompatActivity() {
             intentVincular.putExtra("Activity","buscar")
             intentVincular.putExtra("dupla","false")
             startActivity(intentVincular)
+
         }
 
         binding?.tvLiberarLocacao?.setOnClickListener {

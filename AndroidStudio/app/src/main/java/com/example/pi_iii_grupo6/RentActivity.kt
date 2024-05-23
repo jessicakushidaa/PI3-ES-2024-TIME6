@@ -47,6 +47,8 @@ class RentActivity : AppCompatActivity() {
     private lateinit var locAtual: MainViewActivity.Locacao
     private lateinit var functions: FirebaseFunctions
 
+
+
     class Info(
         var userId: String?,
         var preco: MainViewActivity.Preco
@@ -360,8 +362,6 @@ class RentActivity : AppCompatActivity() {
                         .addOnCompleteListener { task->
                             if (task.isSuccessful){
                                 Log.d("ADDLOC","Locacao adicionada com sucesso! ${task.result}")
-                                locAtual.locId = task.result
-                                confirmacao(locAtual)
                             }else{
                                 Log.e("ERROR","erro ao adicionar loc: ${task.exception}")
                             }
@@ -371,6 +371,7 @@ class RentActivity : AppCompatActivity() {
                 }
             }
             locacoesPendentes.add(locAtual)
+            confirmacao(locAtual)
         }
     }
     //Essa função passa o Id do documento e o nome da colecction, e retorna o ID do armário dessa unidade de locação.
@@ -414,7 +415,7 @@ class RentActivity : AppCompatActivity() {
                 //Lidar com o retorno, se houver.
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
-                val docId = payload["locId"] as String
+                val docId = payload["docId"] as String
 
                 docId
             }
@@ -423,7 +424,6 @@ class RentActivity : AppCompatActivity() {
     }
     //Função chamada ao clicar no botão de confirmar a solicitação de locação.
     fun confirmacao(locacao: MainViewActivity.Locacao){
-        Log.i("LOCACAO","ADICIONAR LOC: ${locacao.locId}")
         var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
 
         //Se a pessoa não tiver selecionado nenhuma das opções, avisar que é preciso selecionar ao menos uma.
