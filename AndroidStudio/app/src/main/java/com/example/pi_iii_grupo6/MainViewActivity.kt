@@ -40,6 +40,7 @@ import com.google.firebase.functions.functions
 import com.google.gson.Gson
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
+import java.util.Date
 
 class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
@@ -74,6 +75,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var pulseiras: MutableList<String> = mutableListOf(),
         var locId: String = "",
         var unidadeId: String = "",
+        var horaLocacao: Date = Date()
     )
     class Preco (
         var tempo: Any?,
