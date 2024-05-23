@@ -34,7 +34,6 @@
         android:id="@+id/linearSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
@@ -46,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
             android:drawablePadding="20dp"
             android:text="Liberar Locação"
             android:drawableLeft="@drawable/baseline_lock_open_24"
@@ -83,27 +83,122 @@
                 android:layout_margin="10dp"
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>
-        
-        <Button
-            android:id="@+id/btnFinalizar"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="200dp"
-            android:text="Finalizar"
-            android:textColor="@color/white"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <!--Shape-->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/shape_infos"
+    <ImageView
+        android:id="@+id/shape_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/infos_rectangle"
-        app:layout_constraintStart_toStartOf="@id/toolbar"
-        app:layout_constraintEnd_toEndOf="@id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="560dp"/>
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/linearSelect"
+        app:layout_constraintEnd_toEndOf="@id/linearSelect"
+        app:layout_constraintTop_toBottomOf="@id/linearSelect"
+        android:background="@drawable/infos_rectangle"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/shape_info">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@id/shape_info">
+
+            <TextView
+                android:id="@+id/textInfoPreco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Preço: "
+                android:textSize="17dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvPreco1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text=""
+                android:textSize="17dp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@id/shape_info">
+
+            <TextView
+                android:id="@+id/textInfoTempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Tempo: "
+                android:textSize="17dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvTempo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text=""
+                android:textSize="17dp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@id/shape_info">
+
+            <TextView
+                android:id="@+id/textInfoPulseira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Pulseira: "
+                android:textSize="17dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvPulseiras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text=""
+                android:textSize="17dp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnFinalizar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Finalizar"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
 
 
 
