@@ -76,8 +76,19 @@ class SelectPessoasActivity : AppCompatActivity() {
     fun avancarIntent(){
         if(numPessoas != 0){
             Toast.makeText(baseContext,"numero escolhido: $numPessoas",Toast.LENGTH_SHORT).show()
-            val intentCamera = Intent(this@SelectPessoasActivity, TirarFotoActivity::class.java)
-            startActivity(intentCamera)
+            if (numPessoas == 2){
+                val intentCamera = Intent(this@SelectPessoasActivity, TirarFotoActivity::class.java)
+                intentCamera.putExtra("dupla","true")
+                intentCamera.putExtra("primeiro","true")
+                startActivity(intentCamera)
+            }else if (numPessoas == 1){
+                val intentCamera = Intent(this@SelectPessoasActivity, TirarFotoActivity::class.java)
+                intentCamera.putExtra("dupla","false")
+                intentCamera.putExtra("primeiro","true")
+                startActivity(intentCamera)
+            }else{
+                Toast.makeText(baseContext,"Erro, tente novamente mais tarde.",Toast.LENGTH_SHORT).show()
+            }
         }else{
             Toast.makeText(baseContext,"Escolha uma opção",Toast.LENGTH_SHORT).show()
         }

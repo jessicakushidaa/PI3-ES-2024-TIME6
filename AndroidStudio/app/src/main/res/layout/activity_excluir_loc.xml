@@ -4,25 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuscarLocIdActivity"
     android:background="@color/white"
     android:backgroundTint="@color/white"
-    android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".ExcluirLocActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvBuscando"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buscando Locação"
-        android:textSize="22sp"
-        />
+        android:text="Excluindo sua Locacao" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSimular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Simular Sucesso"
-        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

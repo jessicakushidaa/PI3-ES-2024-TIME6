@@ -89,8 +89,29 @@ class TirarFotoActivity : AppCompatActivity() {
                         val base64 = convertToBase64(rotatedBitmap)
                         images.add(base64)
                         runOnUiThread {
-                            Toast.makeText(baseContext,"Convertida com sucesso!",Toast.LENGTH_SHORT).show()
-                            Log.d("FOTO",base64)
+                            Toast.makeText(
+                                baseContext,
+                                "Convertida com sucesso!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d("FOTO", base64)
+
+                            //Se tiver selecionado duas pessoas, repetir o processo, se não, apenas uma vez.
+                            val extra = intent.getStringExtra("dupla")
+                            if (extra == "true") {
+                                val intent =
+                                    Intent(this@TirarFotoActivity, TirarFotoActivity::class.java)
+                                intent.putExtra("dupla", "false")
+                                startActivity(intent)
+                            } else {
+                                val intent = Intent(
+                                    this@TirarFotoActivity,
+                                    ConfirmarFotosActivity::class.java
+                                )
+                                intent.putExtra("Activity", "vincular")
+                                if(numPessoas == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
+                                startActivity(intent)
+                            }
                         }
                         val intent = Intent(this@TirarFotoActivity, VincularPulseiraActivity::class.java)
                         intent.putExtra("Activity","vincular")

@@ -21,12 +21,55 @@ class MostrarInfosActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.btnFinalizar?.setOnClickListener {
-            Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
-            startActivity(intent)
+            confirmarLoc().addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    val result = task.result
+                    val status = result["status"]
+                    val message = result["message"]
+                    Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
+                            " - $message")
+                    if (status == "ERROR"){
+                        Toast.makeText(baseContext,"",Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                    Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
+                    Log.i("CONFIRMAR LOC","loc confirmada!: ${message}")
+                    //Limpando a lista de imagens transformadas em string
+                    images.clear()
+                    val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
+                    startActivity(intent)
+                    }
+                }else{
+                    Toast.makeText(baseContext,"Houve um erro ao concluir locação",Toast.LENGTH_SHORT).show()
+                    Log.e("CONFIRMAR LOC","erro ao confirmar loc: ${task.exception}")
+                }
+            }
         }
-
+        //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
+    }
+    //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
+    private fun confirmarLoc(): Task<Map<String, String>> {
+        val data = hashMapOf(
+            "idLocacao" to atualLocacao.locId,
+            "idUnidade" to atualLocacao.armario?.id,
+            "idTag" to atualLocacao.pulseiras,
+            "foto" to atualLocacao.foto
+        )
+
+        Log.i("CONFIRMAR LOC","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario?.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
+
+        return functions
+            .getHttpsCallable("confirmarLoc")
+            .call(data)
+            .continueWith{ task->
+                //Lidar com o resultado retornado/
+                val res = task.result.data as Map<String, Any>
+                val status = res["status"] as String
+                val message = res["message"] as String
+                mapOf("status" to status, "message" to message)
+            }
     }
 
     private fun carregarImagem() {
