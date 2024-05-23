@@ -14,17 +14,15 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class ConfirmarFotosActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityConfirmarFotosBinding
+    private var binding: ActivityConfirmarFotosBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmarFotosBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         carregarInfos()
 
-        binding.btnConfirmar.setBackgroundColor(ContextCompat.getColor(this, R.color.yellowbtn));
-
-        binding.btnRefazer.setOnClickListener {
+        binding?.btnRefazer?.setOnClickListener {
             if (atualLocacao.foto.size == 2){
                 val intentCamera = Intent(this@ConfirmarFotosActivity, TirarFotoActivity::class.java)
                 intentCamera.putExtra("dupla","true")
@@ -38,7 +36,7 @@ class ConfirmarFotosActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnConfirmar.setOnClickListener {
+        binding?.btnConfirmar?.setOnClickListener {
             val intent = Intent(
                 this@ConfirmarFotosActivity,
                 VincularPulseiraActivity::class.java
@@ -52,8 +50,8 @@ class ConfirmarFotosActivity : AppCompatActivity() {
     private fun carregarInfos() {
         if (atualLocacao.foto.size == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
-            var ivImage2 = binding.ivImagem2
-            val parentViewGroup = ivImage2.parent as ViewGroup
+            var ivImage2 = binding?.ivImagem2
+            val parentViewGroup = ivImage2?.parent as ViewGroup
 
             parentViewGroup.removeView(ivImage2)
             //Carregar a única imagem
@@ -63,8 +61,8 @@ class ConfirmarFotosActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA",string)
 
-            var ivImage = binding.ivImagem1
-            ivImage.setImageBitmap(bitmap)
+            var ivImage = binding?.ivImagem1
+            ivImage?.setImageBitmap(bitmap)
         }else if(atualLocacao.foto.size == 2){
             val string1 = atualLocacao.foto[0]
             val string2 = atualLocacao.foto[1]
@@ -74,10 +72,10 @@ class ConfirmarFotosActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA","duas: $string2")
 
-            var ivImage1 = binding.ivImagem1
-            var ivImage2 = binding.ivImagem2
-            ivImage1.setImageBitmap(bitmap1)
-            ivImage2.setImageBitmap(bitmap2)
+            var ivImage1 = binding?.ivImagem1
+            var ivImage2 = binding?.ivImagem2
+            ivImage1!!.setImageBitmap(bitmap1)
+            ivImage2!!.setImageBitmap(bitmap2)
         }
     }
 
