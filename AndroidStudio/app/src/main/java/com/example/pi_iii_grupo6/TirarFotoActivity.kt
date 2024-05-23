@@ -65,6 +65,13 @@ class TirarFotoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("RESUME","Entrou na onresume")
+        val extra = intent.getStringExtra("primeiro")
+        if (extra == "true") atualLocacao.foto.clear()
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCamera(){
         cameraProviderFuture.addListener({
@@ -114,6 +121,7 @@ class TirarFotoActivity : AppCompatActivity() {
                                 val intent =
                                     Intent(this@TirarFotoActivity, TirarFotoActivity::class.java)
                                 intent.putExtra("dupla", "false")
+                                intent.putExtra("primeiro", "false")
                                 startActivity(intent)
                             } else {
                                 val intent = Intent(
