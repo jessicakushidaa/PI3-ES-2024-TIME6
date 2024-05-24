@@ -17,7 +17,7 @@
         android:text="Buscando Locação"
         android:textSize="22sp"
         />
-
+<!--
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
@@ -25,5 +25,15 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
+-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_fileName="loadingPalette.json"
+        android:visibility="gone"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

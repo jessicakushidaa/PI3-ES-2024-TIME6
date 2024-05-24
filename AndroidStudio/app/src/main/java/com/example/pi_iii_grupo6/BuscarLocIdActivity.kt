@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
 import com.example.pi_iii_grupo6.databinding.ActivityBuscarLocIdBinding
@@ -27,7 +28,7 @@ class BuscarLocIdActivity : BasicaActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
-    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar: LottieAnimationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
