@@ -23,6 +23,9 @@ class SelectPessoasActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
+
         //Voltando o numero escolhido para 0
         numPessoas = 0
 

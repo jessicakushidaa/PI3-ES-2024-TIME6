@@ -37,6 +37,7 @@ class AcessarArmarioActivity : AppCompatActivity() {
         }
 
         binding?.btnHome?.setOnClickListener{
+            //botão home volta pro menu do gerente
             val intentHome = Intent(this@AcessarArmarioActivity, MainViewGerenteActivity::class.java)
             startActivity(intentHome)
         }
