@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -24,7 +25,7 @@ import com.google.gson.Gson
 class Pendente(
     var pendente: Boolean,
     var preco: MainViewActivity.Preco,
-    var idUnidade: String
+    var idUnidade: String?
 )
 class MainMenuActivity : AppCompatActivity() {
     private var binding: ActivityMainMenuBinding? = null
@@ -46,7 +47,7 @@ class MainMenuActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
 
         checarLocacaoPendente()
-
+        
         //pegando o id do docmuento do usuário no banco de dados
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
@@ -59,7 +60,6 @@ class MainMenuActivity : AppCompatActivity() {
                         mostrarDialogPendente(pendente)
                     }
                 }else{
-                    Log.e("FunPendente","Erro ao checar pendencia: ${task.exception}")
                     Log.e("ERROR","Erro ao checar pendencia: ${task.exception}")
                 }
             }
@@ -193,6 +193,7 @@ class MainMenuActivity : AppCompatActivity() {
                         val endereco = unidade["endereco"] as String
                         val descricao = unidade["descricao"] as String
                         val tabelaPrecos = unidade["tabelaPrecos"] as ArrayList<*>
+                        val telefone = unidade["telefone"] as String
                         val numPrecos = tabelaPrecos.count()
                         //Logica para pegar cada um dos precos, transformar na classe Preco e guardar em uma listOf<Preco>
                         var j = 0
@@ -218,7 +219,8 @@ class MainMenuActivity : AppCompatActivity() {
                             nome,
                             endereco,
                             descricao,
-                            listaPrecos
+                            listaPrecos,
+                            telefone
                         )
                         listaDeUnidades.add(unidadeLocacao)
                         i++
@@ -351,11 +353,7 @@ class MainMenuActivity : AppCompatActivity() {
                     val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
                     val preco = precoEscolhido["preco"] as Double
                     val tempo = precoEscolhido["tempo"]
-                    val armario = data["armario"] as Map<String, Any>
-                    val path = armario["_path"] as Map<String, Any>
-                    val segments= path["segments"] as ArrayList<*>
-                    val idUnidade = segments[1] as String
-                    var pendentetrue = Pendente(true, MainViewActivity.Preco(tempo, preco),idUnidade)
+                    var pendentetrue = Pendente(true, MainViewActivity.Preco(tempo, preco),null)
                     pendentetrue
                 }else{
                     var pendentefalse = Pendente(false, MainViewActivity.Preco(0, 0.0), "")
@@ -363,5 +361,9 @@ class MainMenuActivity : AppCompatActivity() {
                 }
 
             }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }

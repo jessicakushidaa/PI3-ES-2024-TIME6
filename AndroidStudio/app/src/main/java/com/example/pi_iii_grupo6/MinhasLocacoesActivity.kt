@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
@@ -36,6 +38,7 @@ class MinhasLocacoesActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private lateinit var handler: Handler
     private lateinit var progressBar: ProgressBar
+    private var gson = Gson()
 
     
     override fun onCreate(savedInstanceState: Bundle?) {

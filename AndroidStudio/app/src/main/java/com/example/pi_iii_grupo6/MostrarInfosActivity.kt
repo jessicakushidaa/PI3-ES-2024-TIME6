@@ -12,25 +12,75 @@ import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.SelectPessoasActivity.Companion.numPessoas
 import com.example.pi_iii_grupo6.TirarFotoActivity.Companion.images
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarInfosBinding
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Firebase
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.functions
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class MostrarInfosActivity : AppCompatActivity() {
     private var binding: ActivityMostrarInfosBinding? = null
+    private lateinit var functions: FirebaseFunctions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMostrarInfosBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        binding?.btnFinalizar?.setOnClickListener {
-            Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
-            //Limpando a lista de imagens transformadas em string
-            images.clear()
-            val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
-            startActivity(intent)
-        }
+        functions = Firebase.functions("southamerica-east1")
 
+        //Ao clicar no botão de finalizar locação, chama a função confirmarLoc
+        binding?.btnFinalizar?.setOnClickListener {
+            confirmarLoc().addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    val result = task.result
+                    val status = result["status"]
+                    val message = result["message"]
+                    Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
+                            " - $message")
+                    if (status == "ERROR"){
+                        Toast.makeText(baseContext,message,Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                    Toast.makeText(baseContext,"Locação feita com sucesso",Toast.LENGTH_SHORT).show()
+                    Log.i("CONFIRMAR LOC","loc confirmada!: ${message}")
+                    //Limpando a lista de imagens transformadas em string
+                    images.clear()
+                    val intent = Intent(this@MostrarInfosActivity,MainViewGerenteActivity::class.java)
+                    startActivity(intent)
+                    }
+                }else{
+                    Toast.makeText(baseContext,"Houve um erro ao concluir locação",Toast.LENGTH_SHORT).show()
+                    Log.e("CONFIRMAR LOC","erro ao confirmar loc: ${task.exception}")
+                }
+            }
+        }
+        //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
+    }
+    //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
+    private fun confirmarLoc(): Task<Map<String, String>> {
+        val data = hashMapOf(
+            "idLocacao" to atualLocacao.locId,
+            "idUnidade" to atualLocacao.armario?.id,
+            "idTag" to atualLocacao.pulseiras,
+            "foto" to atualLocacao.foto
+        )
+
+        Log.i("CONFIRMAR LOC","INFOS: idLocacao: ${atualLocacao.locId}, idArmario: ${atualLocacao.armario?.id}, tags: ${atualLocacao.pulseiras}, fotos: ${atualLocacao.foto}")
+
+        return functions
+            .getHttpsCallable("confirmarLoc")
+            .call(data)
+            .continueWith{ task->
+                //Lidar com o resultado retornado/
+                val res = task.result.data as Map<String, Any>
+                val status = res["status"] as String
+                val message = res["message"] as String
+                mapOf("status" to status, "message" to message)
+            }
     }
 
     private fun carregarImagem() {
@@ -47,16 +97,16 @@ class MostrarInfosActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA","duas: $string2")
 
-            var ivImage1 = binding?.ivImage
-            var ivImage2 = binding?.ivImage2
+            var ivImage1 = binding?.ivImagem1
+            var ivImage2 = binding?.ivImagem2
             ivImage1?.setImageBitmap(bitmap1)
             ivImage2?.setImageBitmap(bitmap2)
 
             //Setando o texto da pulseira
-            tvPulseiras?.text = "Pulseiras: ${atualLocacao.pulseiras[0]}, ${atualLocacao.pulseiras[1]}"
+            tvPulseiras?.text = " ${atualLocacao.pulseiras[0]}, ${atualLocacao.pulseiras[1]}"
         }else if(numPessoas == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
-            var ivImage2 = binding?.ivImage2
+            var ivImage2 = binding?.ivImagem2
             val parentViewGroup = ivImage2?.parent as ViewGroup
 
             parentViewGroup.removeView(ivImage2)
@@ -67,14 +117,14 @@ class MostrarInfosActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA",string)
 
-            var ivImage = binding?.ivImage
+            var ivImage = binding?.ivImagem1
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto da pulseira
-            tvPulseiras?.text = "Pulseira: ${atualLocacao.pulseiras[0]}"
+            tvPulseiras?.text = " ${atualLocacao.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${atualLocacao.preco?.preco}"
-        tvTempo?.text = "Tempo: ${atualLocacao.preco?.tempo}"
+        tvPreco?.text = " ${atualLocacao.preco?.preco}"
+        tvTempo?.text = " ${atualLocacao.preco?.tempo}"
     }
     //Função que recebe uma string base64 e decodifica a mesma para Bitmap
 

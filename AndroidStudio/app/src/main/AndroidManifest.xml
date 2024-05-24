@@ -30,6 +30,12 @@
         android:theme="@style/Theme.PIIII_Grupo6"
         tools:targetApi="31">
         <activity
+            android:name=".ConfirmarFotosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExcluirLocActivity"
+            android:exported="false" />
+        <activity
             android:name=".MostrarInfosActivity"
             android:exported="false" />
         <activity
@@ -43,8 +49,7 @@
             android:exported="false" />
         <activity
             android:name=".VincularPulseiraActivity"
-            android:exported="false"
-            >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -56,10 +61,13 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/nfc_tech_filter"/>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
             android:name=".TirarFotoActivity"

@@ -59,7 +59,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
         var numRecebido = locRecebida.foto.size
         val tvPreco = binding?.tvPreco
         val tvTempo = binding?.tvTempo
-        val tvPulseiras = binding?.tvPulseira
+        val tvPulseiras = binding?.tvPulseiras
 
         if(numRecebido == 2){
             val string1 = locRecebida.foto[0]
@@ -70,8 +70,8 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA","duas: $string2")
 
-            var ivImage1 = binding?.ivImage
-            var ivImage2 = binding?.ivImage2
+            var ivImage1 = binding?.ivImagem1
+            var ivImage2 = binding?.ivImagem2
             ivImage1?.setImageBitmap(bitmap1)
             ivImage2?.setImageBitmap(bitmap2)
 
@@ -79,7 +79,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             tvPulseiras?.text = "Pulseiras: ${locRecebida.pulseiras[0]}, ${locRecebida.pulseiras[1]}"
         }else if(numRecebido == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
-            var ivImage2 = binding?.ivImage2
+            var ivImage2 = binding?.ivImagem2
             val parentViewGroup = ivImage2?.parent as ViewGroup
 
             parentViewGroup.removeView(ivImage2)
@@ -90,13 +90,13 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA",string)
 
-            var ivImage = binding?.ivImage
+            var ivImage = binding?.ivImagem1
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto das pulseiras
-            tvPulseiras?.text = "Pulseira: ${locRecebida.pulseiras[0]}"
+            tvPulseiras?.text = " ${locRecebida.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${locRecebida.preco?.preco}"
-        tvTempo?.text = "Tempo: ${locRecebida.preco?.tempo}"
+        tvPreco?.text = " ${locRecebida.preco?.preco}"
+        tvTempo?.text = " ${locRecebida.preco?.tempo}"
     }
 }

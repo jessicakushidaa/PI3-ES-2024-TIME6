@@ -1,17 +1,25 @@
 package com.example.pi_iii_grupo6
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewGerenteBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainViewGerenteActivity : AppCompatActivity() {
     var binding: ActivityMainViewGerenteBinding? = null
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainViewGerenteBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        auth = Firebase.auth
 
         binding?.tvAcessarArmario?.setOnClickListener {
             //Abrir acessar armario
@@ -28,13 +36,16 @@ class MainViewGerenteActivity : AppCompatActivity() {
         }
 
         binding?.btnExit?.setOnClickListener{
-            // Encerra a atividade atual
-            finish()
-
-            //inicia a LoginActivity
-            val intentExitGerente = Intent(this,LoginActivity::class.java)
-            startActivity(intentExitGerente)
+            Firebase.auth.signOut()
+            //Voltando para a pagina de login
+            var voltarLogin = Intent(this@MainViewGerenteActivity, LoginActivity::class.java)
+            startActivity(voltarLogin)
+            Toast.makeText(baseContext, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }

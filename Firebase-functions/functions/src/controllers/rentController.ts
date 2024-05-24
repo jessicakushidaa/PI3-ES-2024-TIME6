@@ -189,7 +189,9 @@ export const confirmarLoc = functions
     // Caso a request não conste os campos esperados
     if (!idLocacao || !idTag || !foto || !idUnidade) {
       functions.logger.error("confirmarLoc " +
-        "- Erro ao confirmar locacao: Dados não recebidos corretamente"),
+        `- Erro ao confirmar locacao: Dados não recebidos corretamente =>
+        idUnidade: ${idUnidade}; idTag: ${idTag}; foto: ${foto}; idLocacao:
+         ${idLocacao}` ),
       result = {
         status: "ERROR",
         message: "Parâmetros não recebidos corretamente",
@@ -212,12 +214,15 @@ export const confirmarLoc = functions
          `unidadeLocacao/${data.idUnidade}/armarios/${idArmario}`;
           const armarioRef = db.doc(pathArmario);
 
+          const horaLocacao = admin.firestore.Timestamp.now();
+
           // Adicionando novos campos ao documento e atualizando status da loc
           locRef.set({
             armario: armarioRef,
             tags: idTag,
             foto: foto,
             status: "confirmada",
+            horaLocacao: horaLocacao,
           }, {merge: true});
 
           result = {
@@ -261,7 +266,8 @@ export const confirmarLoc = functions
 
       result = {
         status: "ERROR",
-        message: "Não foi possivel adicionar campos - erro inesperado",
+        message: "Não foi possivel adicionar campos - erro inesperado " +
+         error.message,
         payload: JSON.parse(JSON.stringify({
           idLocacao: idLocacao,
           data: null,
@@ -538,3 +544,100 @@ async function liberarArmario(idUnidade:string, idArmario: string) {
   return res;
 }
 
+/**
+ * Função que checa se a pessoa tem uma locação no banco de dados e se
+ * possui locação/locações confirmadas. Chamada no cliente na activity
+ * MinhasLocacoesActivity
+ * Parâmetro passado na requisição pelo cliente:
+ * @param idPessoa - id do documento da pessoa na collection
+ * @returns - Retorna array com locações confirmadas "locSnapshot":
+ *  com id da locação e campos do documento se existir
+ * se não houver locacoes confirmadas, retorna array vazio [].
+ */
+export const buscarConfirmadas = functions
+  .region("southamerica-east1")
+  .https.onCall(async (data, context) => {
+    let result: CallableResponse;
+
+    functions.logger.info("Function buscarConfirmadas - iniciada.");
+
+    const idPessoa = data.idPessoa;
+
+    // Caso ausência do dado idLocacao, preparar resposta de erro
+    if (!idPessoa) {
+      functions.logger.error("buscarConfirmadas " +
+      "- Erro ao buscar locs confirmadas: Dados não recebidos corretamente");
+      throw new functions.https
+        .HttpsError("invalid-argument", "Parametros inválidos.");
+    }
+    try {
+      // Referenciar documento da pessoa - path
+      const pessoaRef = db.doc(`pessoas/${idPessoa}`);
+
+      // Buscar locações onde haja o cliente no array de clientes
+      // e na qual o status seja confirmada
+      const locSnapshot = await colLocacao
+        .where("cliente", "array-contains", pessoaRef)
+        .where("status", "==", "confirmada").get();
+
+      // Lidar caso Snapshot retorne array vazio - ou seja,
+      // caso nao haja confirmadas
+      if (!locSnapshot.empty) {
+        // Processar os documentos retornados - itera sobre cada doc
+        const locsConfirmadas = locSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          const armario = data.armario;
+          const idUnidade = armario?._path?.segments[1];
+          const tempoEscolhido = data.precoTempoEscolhido["tempo"];
+
+          return {
+            id: doc.id,
+            data: {
+              idUnidade: idUnidade,
+              horaLocacao: data.horaLocacao,
+              tempoEscolhido: tempoEscolhido,
+            },
+          };
+        });
+        // Definir resultado para o cliente
+        result = {
+          status: "SUCCESS",
+          message: "Locações confirmadas encontradas com sucesso",
+          payload: JSON.parse(JSON.stringify({
+            locSnapshot: locsConfirmadas,
+          })),
+        };
+        // Definir resultado para o cliente
+        result = {
+          status: "SUCCESS",
+          message: "Locações confirmadas encontradas com sucesso",
+          payload: JSON.parse(JSON.stringify({
+            locSnapshot: locsConfirmadas,
+          })),
+        };
+        functions.logger.info("buscarConfirmadas - " + result.message);
+      } else {
+        result = {
+          status: "SUCCESS",
+          message: `Não há locações confirmadas para o cliente de id
+           ${idPessoa}`,
+          payload: JSON.parse(JSON.stringify({
+            locSnapshot: locSnapshot,
+          })),
+        };
+        functions.logger.info("buscarConfirmadas - " + result.message);
+      }
+    } catch (error: any) {
+      // Lidar com erros
+      result = {
+        status: "ERROR",
+        message: "Erro ao obter documentos: " + error.message,
+        payload: JSON.parse(JSON.stringify({locSnapshot: null})),
+      };
+      functions.logger.error("buscarConfirmadas " +
+          "- Erro ao buscar documentos:" + error.message);
+    }
+    functions.logger.info("Function buscarConfirmadas - finalizando.");
+    // Retornar resposta
+    return result;
+  });

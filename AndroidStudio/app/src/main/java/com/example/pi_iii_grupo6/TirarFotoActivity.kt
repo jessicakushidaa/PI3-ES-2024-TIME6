@@ -118,7 +118,7 @@ class TirarFotoActivity : AppCompatActivity() {
                             } else {
                                 val intent = Intent(
                                     this@TirarFotoActivity,
-                                    VincularPulseiraActivity::class.java
+                                    ConfirmarFotosActivity::class.java
                                 )
                                 intent.putExtra("Activity", "vincular")
                                 if(numPessoas == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
