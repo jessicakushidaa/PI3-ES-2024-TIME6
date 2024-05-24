@@ -114,6 +114,9 @@ class MainViewActivity : BasicaActivity(), OnMapReadyCallback{
         setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
+
         //Seta Retorno aparece na ToolBar caso o usuário esteja logado
         if (user != null) {
             // Configurando a Toolbar para permitir voltar à tela anterior
