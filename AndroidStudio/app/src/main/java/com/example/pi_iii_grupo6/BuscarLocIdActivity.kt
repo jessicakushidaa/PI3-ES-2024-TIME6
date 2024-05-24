@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
@@ -29,6 +31,7 @@ class BuscarLocIdActivity : BasicaActivity() {
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
     private lateinit var progressBar: LottieAnimationView
+    private lateinit var meuHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +47,17 @@ class BuscarLocIdActivity : BasicaActivity() {
         buscarLocacao()?.addOnCompleteListener { task->
             if(task.result == null){
                 Log.e("BUSCARLOC","ERRO AO BUSCAR: ${task.exception}")
-                mostrarDialogNaoEncontrou()
+                meuHandler = Handler(Looper.getMainLooper())
+
+                meuHandler.postDelayed({
+                    showProgressBar(false)
+                    mostrarDialogNaoEncontrou()
+                }, 3500)
             }
             else{
                 var loc: MainViewActivity.Locacao = task.result
-                Toast.makeText(baseContext,"Encontrada com sucesso",Toast.LENGTH_SHORT).show()
-                showProgressBar(false)
                 avancarTela()
+                Toast.makeText(baseContext,"Encontrada com sucesso. Aguarde",Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -174,8 +181,13 @@ class BuscarLocIdActivity : BasicaActivity() {
 
     //TEMPORARIA
     private fun avancarTela() {
-        var intent = Intent(this@BuscarLocIdActivity,MostrarLocacaoActivity::class.java)
-        startActivity(intent)
+        meuHandler = Handler(Looper.getMainLooper())
+
+        meuHandler.postDelayed({
+            //Avançar para tela de mostrar infos
+            val intent = Intent(this@BuscarLocIdActivity,MostrarLocacaoActivity::class.java)
+            startActivity(intent)
+        }, 3500)
     }
 
     //IMPLEMENTAR FUNCTION QUE BUSCA A LOCAÇÃO NO BANCO, BASEADO NO ID DA PULSEIRA.

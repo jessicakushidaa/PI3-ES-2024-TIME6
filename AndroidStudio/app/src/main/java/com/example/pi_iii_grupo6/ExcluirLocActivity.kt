@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -20,7 +22,7 @@ import java.util.Date
 
 class ExcluirLocActivity : BasicaActivity() {
     private lateinit var functions: FirebaseFunctions
-
+    private lateinit var meuHandler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excluir_loc)
@@ -67,7 +69,12 @@ class ExcluirLocActivity : BasicaActivity() {
 
         val precoPagar = vetPrices[indexPreco]
 
-        mostrarDialogTempo(hourDiference,minuteDiference, precoPagar)
+        meuHandler = Handler(Looper.getMainLooper())
+
+        meuHandler.postDelayed({
+            //Mostra dialog do tempo de locaçao
+            mostrarDialogTempo(hourDiference,minuteDiference, precoPagar)
+        }, 2500)
 
     }
 
