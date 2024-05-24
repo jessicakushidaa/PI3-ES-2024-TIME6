@@ -39,7 +39,6 @@ class ExcluirLocActivity : AppCompatActivity() {
                 Log.e("ENCERRRARLOC","Erro ao encerrar loc: ${task.exception}")
             }
         }
-        **/
 
         calcularTempo()
 
