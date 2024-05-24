@@ -1,5 +1,7 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,7 +16,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityConfirmarFotosBinding
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class ConfirmarFotosActivity : AppCompatActivity() {
+class ConfirmarFotosActivity : BasicaActivity() {
     private var binding: ActivityConfirmarFotosBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,5 +115,9 @@ class ConfirmarFotosActivity : AppCompatActivity() {
             Log.e("Base64ToBitmap", "Erro inesperado ao converter Base64 para Bitmap", e)
             null
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }

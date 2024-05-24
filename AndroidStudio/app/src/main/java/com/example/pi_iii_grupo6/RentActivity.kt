@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -35,7 +36,7 @@ import com.google.firebase.functions.functions
 import com.google.gson.Gson
 import java.util.Calendar
 
-class RentActivity : AppCompatActivity() {
+class RentActivity : BasicaActivity() {
     private var binding: ActivityRentBinding? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var userLocation: LatLng

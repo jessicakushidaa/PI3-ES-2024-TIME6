@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
@@ -27,7 +28,7 @@ class Pendente(
     var preco: MainViewActivity.Preco,
     var idUnidade: String?
 )
-class MainMenuActivity : AppCompatActivity() {
+class MainMenuActivity : BasicaActivity() {
     private var binding: ActivityMainMenuBinding? = null
     private lateinit var functions: FirebaseFunctions
     private var gson = Gson()
@@ -46,6 +47,8 @@ class MainMenuActivity : AppCompatActivity() {
 
         functions = Firebase.functions("southamerica-east1")
 
+        checarLocacaoPendente()
+        
         //pegando o id do docmuento do usuário no banco de dados
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
@@ -81,9 +84,6 @@ class MainMenuActivity : AppCompatActivity() {
                 }
         }
 
-
-
-
         //Chamar funcao que busca todos os armarios
         buscarArmarios().addOnCompleteListener { task->
             if (task.isSuccessful){
@@ -94,7 +94,6 @@ class MainMenuActivity : AppCompatActivity() {
                 Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
             }
         }
-
 
         //Setando o clique em MAPA que vai abrir o mapa
         binding?.llMapa?.setOnClickListener{

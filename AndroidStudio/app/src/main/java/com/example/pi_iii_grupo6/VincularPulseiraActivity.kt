@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -27,7 +28,7 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat //
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 
 
-class VincularPulseiraActivity : AppCompatActivity() {
+class VincularPulseiraActivity : BasicaActivity() {
     //Declaração do NFCAdapter (Conexão código -> hardware)
     private var nfcAdapter: NfcAdapter? = null
     private var binding: ActivityVincularPulseiraBinding? = null

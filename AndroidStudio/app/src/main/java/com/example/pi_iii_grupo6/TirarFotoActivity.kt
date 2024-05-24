@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Instrumentation.ActivityResult
 import android.content.Intent
 import android.graphics.Bitmap
@@ -29,7 +30,7 @@ import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class TirarFotoActivity : AppCompatActivity() {
+class TirarFotoActivity : BasicaActivity() {
     private var binding: ActivityTirarFotoBinding? = null
     //Variável que controla as intâncias da câmera que estão abertas
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>

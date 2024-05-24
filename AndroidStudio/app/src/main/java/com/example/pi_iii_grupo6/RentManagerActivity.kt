@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +11,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
 import com.example.pi_iii_grupo6.databinding.ActivityRentManagerBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class RentManagerActivity : AppCompatActivity() {
+class RentManagerActivity : BasicaActivity() {
     private var binding: ActivityRentManagerBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

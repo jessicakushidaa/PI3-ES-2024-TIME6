@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -42,7 +43,7 @@ import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import java.util.Date
 
-class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
+class MainViewActivity : BasicaActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
     private var binding: ActivityMainViewBinding? = null
     private lateinit var mMap: GoogleMap

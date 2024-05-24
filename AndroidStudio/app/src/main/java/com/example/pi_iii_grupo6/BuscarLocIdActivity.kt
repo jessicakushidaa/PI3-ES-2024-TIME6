@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -22,7 +23,7 @@ import com.google.gson.Gson
 import io.opencensus.stats.View
 import java.util.Date
 
-class BuscarLocIdActivity : AppCompatActivity() {
+class BuscarLocIdActivity : BasicaActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
@@ -59,7 +60,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
     //Função que recebe o id da Pulseira via intent e busca no banco a locação
     private fun buscarLocacao(): Task<MainViewActivity.Locacao>? {
         val idRecebido = intent.getStringExtra("id")
-
+        Log.d("BUSCARLOC","Entrou no buscar")
         val data = hashMapOf(
             "idTag" to idRecebido
         )
@@ -68,69 +69,89 @@ class BuscarLocIdActivity : AppCompatActivity() {
             .getHttpsCallable("buscarLoc")
             .call(data)
             .continueWith{task ->
-                val res = task.result.data as Map<String, Any>
-                val status = res["status"] as String
-                if (status=="ERROR"){
+                Log.d("BUSCARLOC","Dentro da task")
+                if (task.result.data == null){
+                    Log.d("BUSCARLOC","Resultado null")
                     null
                 }else {
-                    val payload = res["payload"] as Map<String, Any>
-                    //Id da locação
-                    val id = payload["idLocacao"] as String
-                    //Informações da locação
-                    val data = payload["data"] as Map<String, Any>
+                    Log.d("BUSCARLOC","Resultado nao null")
+                    Log.d("BUSCARLOC","pegou res")
+                    val res = task.result.data as Map<String, Any>
+                    val status = res["status"] as String
+                    if (status == "ERROR"){
+                        Log.d("BUSCARLOC","NAO TEM")
+                        null
+                    }else{
+                        Log.d("BUSCARLOC","payload")
+                        val payload = res["payload"] as Map<String, Any>
+                        //Id da locação
+                        Log.d("BUSCARLOC","idloc")
+                        val id = payload["idLocacao"] as String
+                        //Informações da locação
+                        Log.d("BUSCARLOC","infosLoc")
+                        val data = payload["data"] as Map<String, Any>
 
-                    //Pegando o preco escolhido
-                    val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
-                    val preco = precoEscolhido["preco"] as Double
-                    val tempo = precoEscolhido["tempo"]
+                        //Pegando o preco escolhido
+                        Log.d("BUSCARLOC","precotempo")
+                        val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
+                        val preco = precoEscolhido["preco"] as Double
+                        val tempo = precoEscolhido["tempo"]
 
-                    //Pegando as fotos
-                    val vetFotos = data["foto"] as ArrayList<String>
-                    val size = vetFotos.size
-                    val vetorFotos: MutableList<String> = mutableListOf()
-                    vetorFotos.add(vetFotos[0])
-                    if (size == 2) vetorFotos.add(vetFotos[1])
+                        //Pegando as fotos
+                        Log.d("BUSCARLOC","fotos")
+                        val vetFotos = data["foto"] as ArrayList<String>
+                        val size = vetFotos.size
+                        val vetorFotos: MutableList<String> = mutableListOf()
+                        vetorFotos.add(vetFotos[0])
+                        if (size == 2) vetorFotos.add(vetFotos[1])
 
-                    //Pegando a hora da locacao
-                    val horaLoc = data["horaLocacao"] as Map<String, Any>
-                    val segundos = (horaLoc["_seconds"] as Number).toLong()
-                    val nanosegundos = horaLoc["_nanoseconds"] as Int
-                    val timestamp = Timestamp(segundos,nanosegundos)
-                    val datetime = timestamp.toDate()
+                        //Pegando a hora da locacao
+                        Log.d("BUSCARLOC","lcoacao")
+                        val horaLoc = data["horaLocacao"] as Map<String, Any>
+                        val segundos = (horaLoc["_seconds"] as Number).toLong()
+                        val nanosegundos = horaLoc["_nanoseconds"] as Int
+                        val timestamp = Timestamp(segundos,nanosegundos)
+                        val datetime = timestamp.toDate()
 
-                    //Pegando as tags
-                    val tags = data["tags"] as ArrayList<String>
-                    val vetorTags: MutableList<String> = mutableListOf()
-                    val sizeTags = tags.size
-                    vetorTags.add(tags[0])
-                    if (sizeTags == 2) vetorTags.add(tags[1])
+                        //Pegando as tags
+                        Log.d("BUSCARLOC","tags")
+                        val tags = data["tags"] as ArrayList<String>
+                        val vetorTags: MutableList<String> = mutableListOf()
+                        val sizeTags = tags.size
+                        vetorTags.add(tags[0])
+                        if (sizeTags == 2) vetorTags.add(tags[1])
 
-                    //Pegando o id do usuário
-                    val cliente = data["cliente"] as ArrayList<*>
-                    val cliente1 = cliente[0] as Map<String, Any>
-                    val path = cliente1["_path"] as Map<String, Any>
-                    val segments = path["segments"] as ArrayList<*>
-                    val userId = segments[1] as String
+                        //Pegando o id do usuário
+                        Log.d("BUSCARLOC","usuario")
+                        val cliente = data["cliente"] as ArrayList<*>
+                        val cliente1 = cliente[0] as Map<String, Any>
+                        val path = cliente1["_path"] as Map<String, Any>
+                        val segments = path["segments"] as ArrayList<*>
+                        val userId = segments[1] as String
 
-                    //Pegando o id da Unidade de Locação
-                    val armario = data["armario"] as Map<String, Any>
-                    val pathArmario = armario["_path"] as Map<String, Any>
-                    val segmentsArmario = pathArmario["segments"] as ArrayList<*>
-                    val idUnidade = segmentsArmario[1] as String
+                        //Pegando o id da Unidade de Locação
+                        Log.d("BUSCARLOC","armario")
+                        val armario = data["armario"] as Map<String, Any>
+                        val pathArmario = armario["_path"] as Map<String, Any>
+                        val segmentsArmario = pathArmario["segments"] as ArrayList<*>
+                        val idUnidade = segmentsArmario[1] as String
 
-                    //Adicionando na classe
-                    locRecebida = MainViewActivity.Locacao(
-                        userId,
-                        null,
-                        MainViewActivity.Preco(tempo, preco),
-                        vetorFotos,
-                        vetorTags,
-                        id,
-                        idUnidade,
-                        datetime
-                    )
+                        //Adicionando na classe
+                        locRecebida = MainViewActivity.Locacao(
+                            userId,
+                            null,
+                            MainViewActivity.Preco(tempo, preco),
+                            vetorFotos,
+                            vetorTags,
+                            id,
+                            idUnidade,
+                            datetime
+                        )
 
-                    locRecebida
+                        locRecebida
+                    }
+
+
                 }
             }
     }

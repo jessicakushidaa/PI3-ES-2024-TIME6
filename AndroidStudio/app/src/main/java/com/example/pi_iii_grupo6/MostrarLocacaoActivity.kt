@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,7 +13,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityMostrarLocacaoBinding
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class MostrarLocacaoActivity : AppCompatActivity() {
+class MostrarLocacaoActivity : BasicaActivity() {
     private var binding: ActivityMostrarLocacaoBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

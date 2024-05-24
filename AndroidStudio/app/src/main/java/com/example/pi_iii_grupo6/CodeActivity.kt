@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,7 +15,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 
-class CodeActivity : AppCompatActivity() {
+class CodeActivity : BasicaActivity() {
     private var binding: ActivityCodeBinding? = null
 
     private var infoString: String? = null

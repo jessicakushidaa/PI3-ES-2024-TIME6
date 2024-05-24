@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +17,7 @@ import com.google.firebase.functions.functions
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BasicaActivity() {
     //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
     //criando variável de functions do firebase

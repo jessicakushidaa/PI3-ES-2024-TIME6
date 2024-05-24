@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -19,7 +20,7 @@ import com.google.firebase.functions.functions
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class MostrarInfosActivity : AppCompatActivity() {
+class MostrarInfosActivity : BasicaActivity() {
     private var binding: ActivityMostrarInfosBinding? = null
     private lateinit var functions: FirebaseFunctions
 
