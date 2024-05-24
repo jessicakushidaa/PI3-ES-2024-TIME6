@@ -40,7 +40,7 @@ class MostrarInfosActivity : AppCompatActivity() {
                     Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
                             " - $message")
                     if (status == "ERROR"){
-                        Toast.makeText(baseContext,message,Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Não há armários livres no momento.",Toast.LENGTH_LONG).show()
                         val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
                         startActivity(intent)
                     }else{
