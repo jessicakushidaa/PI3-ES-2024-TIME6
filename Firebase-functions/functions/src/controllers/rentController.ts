@@ -583,11 +583,30 @@ export const buscarConfirmadas = functions
       // Lidar caso Snapshot retorne array vazio - ou seja,
       // caso nao haja confirmadas
       if (!locSnapshot.empty) {
-        // Processar os documentos retornados
-        const locsConfirmadas = locSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }));
+        // Processar os documentos retornados - itera sobre cada doc
+        const locsConfirmadas = locSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          const armario = data.armario;
+          const idUnidade = armario?._path?.segments[1];
+          const tempoEscolhido = data.precoTempoEscolhido["tempo"];
+
+          return {
+            id: doc.id,
+            data: {
+              idUnidade: idUnidade,
+              horaLocacao: data.horaLocacao,
+              tempoEscolhido: tempoEscolhido,
+            },
+          };
+        });
+        // Definir resultado para o cliente
+        result = {
+          status: "SUCCESS",
+          message: "Locações confirmadas encontradas com sucesso",
+          payload: JSON.parse(JSON.stringify({
+            locSnapshot: locsConfirmadas,
+          })),
+        };
         // Definir resultado para o cliente
         result = {
           status: "SUCCESS",
