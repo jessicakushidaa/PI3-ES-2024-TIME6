@@ -59,7 +59,7 @@ class MostrarInfosActivity : AppCompatActivity() {
         }
         //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
-        
+
     }
     //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
     private fun confirmarLoc(): Task<Map<String, String>> {

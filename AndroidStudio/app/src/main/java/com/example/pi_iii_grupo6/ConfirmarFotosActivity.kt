@@ -50,6 +50,9 @@ class ConfirmarFotosActivity : AppCompatActivity() {
         setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
     //Função que carrega as fotos de acordo com o nuero de fotos
     private fun carregarInfos() {
