@@ -39,6 +39,8 @@ class LiberarLocacaoActivity : BasicaActivity() {
             run {
                 if (result.contents == null) {
                     Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LiberarLocacaoActivity, MainViewGerenteActivity::class.java)
+                    startActivity(intent)
                 } else {
                     setResult(result.contents)
 
