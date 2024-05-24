@@ -59,7 +59,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
         var numRecebido = locRecebida.foto.size
         val tvPreco = binding?.tvPreco
         val tvTempo = binding?.tvTempo
-        val tvPulseiras = binding?.tvPulseira
+        val tvPulseiras = binding?.tvPulseiras
 
         if(numRecebido == 2){
             val string1 = locRecebida.foto[0]
@@ -94,9 +94,9 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto das pulseiras
-            tvPulseiras?.text = "Pulseira: ${locRecebida.pulseiras[0]}"
+            tvPulseiras?.text = " ${locRecebida.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${locRecebida.preco?.preco}"
-        tvTempo?.text = "Tempo: ${locRecebida.preco?.tempo}"
+        tvPreco?.text = " ${locRecebida.preco?.preco}"
+        tvTempo?.text = " ${locRecebida.preco?.tempo}"
     }
 }

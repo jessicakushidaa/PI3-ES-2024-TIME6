@@ -31,15 +31,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!--Shape-->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:orientation="vertical"
-        android:layout_marginTop="50dp"
         app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/shape_info">
 
 
         <!--Texto titulo-->
@@ -51,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
+
             <TextView
                 android:id="@+id/TextInfo2"
                 style="@style/TextGuide"
@@ -63,42 +66,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            >
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="20dp"
                 android:background="@drawable/rounded_button"
-                android:backgroundTint="@color/almost_white"
+                android:backgroundTint="@color/blue_nav"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingStart="30dp"
+                android:paddingStart="25dp"
                 android:paddingEnd="20dp">
 
-                <ImageView
-                    android:id="@+id/ivImagem1"
-                    android:layout_width="140dp"
-                    android:layout_height="250dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
-                    />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="15dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
 
-                <ImageView
-                    android:id="@+id/ivImagem2"
-                    android:layout_width="140dp"
-                    android:layout_height="250dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginEnd="10dp" />
+                    <ImageView
+                        android:id="@+id/ivImagem1"
+                        android:layout_width="120dp"
+                        android:layout_height="250dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginVertical="10dp" />
+
+                    <ImageView
+                        android:id="@+id/ivImagem2"
+                        android:layout_width="120dp"
+                        android:layout_height="250dp"
+                        android:layout_marginVertical="10dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <!--Shape-->
     <ImageView
         android:id="@+id/shape_info"
         android:layout_width="wrap_content"
@@ -107,73 +117,134 @@
         android:background="@drawable/infos_rectangle"
         app:layout_constraintEnd_toEndOf="@id/linearSelect"
         app:layout_constraintStart_toStartOf="@id/linearSelect"
-        app:layout_constraintTop_toBottomOf="@id/linearSelect" />
+        app:layout_constraintTop_toBottomOf="@id/linearSelect"
+        app:layout_constraintBottom_toTopOf="@id/linearBtn"/>
 
     <LinearLayout
         android:id="@+id/Lineartxt"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="@id/shape_info"
-        app:layout_constraintEnd_toEndOf="@+id/shape_info"
-        app:layout_constraintStart_toStartOf="@+id/shape_info"
+        app:layout_constraintEnd_toEndOf="@id/shape_info"
+        app:layout_constraintStart_toStartOf="@id/shape_info"
         app:layout_constraintTop_toTopOf="@id/shape_info">
 
-        <TextView
-            android:id="@+id/tvPreco1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/textbox_custom_outline">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Preço : "
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+                <TextView
+                    android:id="@+id/tvPreco1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvTempo1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="15dp"
+                    android:text="Tempo : "
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+                <TextView
+                    android:id="@+id/tvTempo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="10dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvPulseiras"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Pulseira(s) : "
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPulseiras"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="10dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/shape_info"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Lineartxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20dp">
+        android:padding="5dp"
+        android:layout_marginBottom="50dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFinalizar"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/yellowbtn"
             android:text="Finalizar"
+            android:elevation="8dp"
             android:textColor="@color/white" />
     </LinearLayout>
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

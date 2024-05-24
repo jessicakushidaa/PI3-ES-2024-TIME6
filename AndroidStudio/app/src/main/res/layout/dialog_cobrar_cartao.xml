@@ -30,7 +30,7 @@
             />
 
 
-        <!-- Titulo Card-->
+        <!-- Titulo Card  ..-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"

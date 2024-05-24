@@ -51,6 +51,8 @@ class VincularPulseiraActivity : AppCompatActivity() {
         val animationList = listOf(drawableConn1, drawableConn2)
         animationList.forEach { it?.start() }
 
+        // Mudando text view do título da tela
+        binding?.tvAcessarArmario!!.text = "Liberar Locação"
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE
         } else {

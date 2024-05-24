@@ -121,10 +121,10 @@ class MostrarInfosActivity : AppCompatActivity() {
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto da pulseira
-            tvPulseiras?.text = "Pulseira: ${atualLocacao.pulseiras[0]}"
+            tvPulseiras?.text = " ${atualLocacao.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${atualLocacao.preco?.preco}"
-        tvTempo?.text = "Tempo: ${atualLocacao.preco?.tempo}"
+        tvPreco?.text = " ${atualLocacao.preco?.preco}"
+        tvTempo?.text = " ${atualLocacao.preco?.tempo}"
     }
     //Função que recebe uma string base64 e decodifica a mesma para Bitmap
 
