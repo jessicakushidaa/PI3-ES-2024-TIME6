@@ -77,6 +77,11 @@ class RentActivity : AppCompatActivity() {
                 dialogFaltaCartao()
             }
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
     private fun dialogNaoChegou(){
         var dialog = Dialog(this)
@@ -90,13 +95,6 @@ class RentActivity : AppCompatActivity() {
             val intentMapa = Intent(this@RentActivity, MainViewActivity::class.java)
             startActivity(intentMapa)
         }
-
-        //Seta Voltar
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
         dialog.show()
     }

@@ -81,6 +81,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
         gson = Gson()
         
         checkPermissionCamera(this)
+
     }
 
     //Função que checa as permissões da câmera do usuário
@@ -98,7 +99,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
     private fun openCamera() {
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
-        options.setPrompt("Scan QR code")
+        options.setPrompt("Scannear QR Code")
         options.setCameraId(0)
         options.setBeepEnabled(false)
         options.setBarcodeImageEnabled(false)
