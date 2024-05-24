@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivityMainViewGerenteBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import java.util.Locale
 
 class MainViewGerenteActivity : AppCompatActivity() {
     var binding: ActivityMainViewGerenteBinding? = null
@@ -20,6 +23,10 @@ class MainViewGerenteActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         auth = Firebase.auth
+
+        Log.d("IDGERENTE","${auth.currentUser?.uid}")
+
+        carregarInfosGerente()
 
         binding?.tvAcessarArmario?.setOnClickListener {
             //Abrir acessar armario
@@ -44,6 +51,18 @@ class MainViewGerenteActivity : AppCompatActivity() {
         }
 
     }
+    //Função que busca e mostra as informações do gerente
+    private fun carregarInfosGerente() {
+        val tvEmail: TextView? = binding?.tvEmailGerente
+        val tvNome: TextView? = binding?.tvNomeGerente
+
+        val email = auth.currentUser?.email
+        val nomeGerente = email?.split('@')?.get(0)?.capitalize(Locale.ROOT)
+
+        tvEmail?.text = "$email"
+        tvNome?.text = nomeGerente
+    }
+
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
