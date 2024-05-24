@@ -57,10 +57,9 @@
             android:layout_marginEnd="50dp"
             android:textAlignment="center"
             android:drawablePadding="20dp"
-            android:text="Fotografe a pessoa responsável pela pulseira"
+            android:text="@string/fotografe_a_pessoa"
             android:textColor="@color/greyGuardian"
-            android:textSize="23sp"
-            android:textStyle="bold"/>
+            android:textSize="20sp" />
 
         <!--camera-->
         <androidx.camera.view.PreviewView
