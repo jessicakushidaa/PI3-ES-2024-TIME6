@@ -28,6 +28,16 @@
             android:text="@string/Fechar"
             android:layout_gravity="end"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Armário Aberto!"
+            android:textColor="@color/blue_nav"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
         <!--Conteudo Card-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTextoAberto"
