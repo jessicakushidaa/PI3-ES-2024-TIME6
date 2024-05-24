@@ -25,22 +25,16 @@ class ExcluirLocActivity : AppCompatActivity() {
         setContentView(R.layout.activity_excluir_loc)
         functions = Firebase.functions("southamerica-east1")
 
-        val size = locRecebida.pulseiras.size
-        Log.d("Tamanho","quantidade pulseiras: $size")
 
-        encerrarLocacao().addOnCompleteListener { task->
+        buscarVetorHorarios().addOnCompleteListener { task->
             if (task.isSuccessful){
-                Log.i("ENCERRRARLOC",task.result)
-                val intent = Intent(this@ExcluirLocActivity, VincularPulseiraActivity::class.java)
-                intent.putExtra("Activity", "limpar")
-                if (size == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
-                startActivity(intent)
+                Log.i("BUSCARHORARIOS","${task.result}")
+                calcularTempo()
             }else{
-                Log.e("ENCERRRARLOC","Erro ao encerrar loc: ${task.exception}")
+                Log.e("BUSCARHORARIOS","ERRO: ${task.exception}")
             }
         }
 
-        calcularTempo()
 
     }
     //Função que pega a hora da locação e a atual, e calcula o tempo
@@ -64,43 +58,39 @@ class ExcluirLocActivity : AppCompatActivity() {
         val diference = totalCurrentMinutes - minutosTotais
         val minuteDiference = diference % 60
         val hourDiference = diference / 60
+        Log.d("DIFERENCA","$diference")
+        var indexPreco = 0
+        if(diference in 31..90) indexPreco = 1
+        else if(diference in 91..180) indexPreco = 2
+        else if(diference > 180) indexPreco = 3
 
-        //Pegando as horas e minutos escolhidos pelo usuário
-        val minutosEscolhidosTotais = converterStringParaMinutos(locRecebida.preco?.tempo)
-        Log.d("ESCOLHIDOS","$minutosEscolhidosTotais")
-        if (minutosEscolhidosTotais == null){
-            val diaria = true
+        val precoPagar = vetPrices[indexPreco]
 
-        }
-        val horasEscolhidas = minutosEscolhidosTotais?.div(60)
-        val minutosEscolhidos = minutosEscolhidosTotais?.rem(60)
-
-        mostrarDialogTempo(hourDiference,minuteDiference,horasEscolhidas,minutosEscolhidos)
+        mostrarDialogTempo(hourDiference,minuteDiference, precoPagar)
 
     }
 
-    private fun converterStringParaMinutos(string: Any?): Int? {
-        //Identificando partes da string
-        val regex = Regex("""(\d+)\s*[hH][rR]?\s*(\d+)?\s*[mM][iI]?[nN]?|(\d+)\s*[mM][iI]?[nN]?""")
-        var totalMinutes = 0
-        var stringRecebida = string.toString()
+    private fun buscarVetorHorarios():Task<Any?> {
+        val data = hashMapOf(
+            "documentId" to locRecebida.unidadeId,
+            "collectionName" to "unidadeLocacao"
+        )
 
-        val matchResults = regex.findAll(stringRecebida)
-        for (matchResult in matchResults) {
-            val (hours, minutes, onlyMinutes) = matchResult.destructured
+        return functions
+            .getHttpsCallable("getDocumentFields")
+            .call(data)
+            .continueWith{task->
+                val res = task.result.data as Map<String, Any>
+                val payload = res["payload"] as Map<String, Any>
+                val mainData = payload["mainData"] as Map<String, Any>
+                val tabelaPrecos = mainData["tabelaPrecos"] as ArrayList<Map<String, Any>>
 
-            if (hours.isNotEmpty()) {
-                totalMinutes += hours.toInt() * 60
-            }
-            if (minutes.isNotEmpty()) {
-                totalMinutes += minutes.toInt()
-            }
-            if (onlyMinutes.isNotEmpty()) {
-                totalMinutes += onlyMinutes.toInt()
-            }
-        }
+                for (price in tabelaPrecos){
+                    vetPrices.add(price["preco"])
+                }
 
-        return totalMinutes
+                vetPrices
+            }
     }
 
     //Função que retorna o datetime atual
@@ -109,14 +99,14 @@ class ExcluirLocActivity : AppCompatActivity() {
     }
 
     //Função que mostra a dialog com o tempo de locação
-    private fun mostrarDialogTempo(hora: Int, minutos: Int,horasEscolhidas: Int?,minutosEscolhidos: Int?) {
+    private fun mostrarDialogTempo(hora: Int, minutos: Int, preco: Any?) {
         var dialog = Dialog(this)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_tempo_usado)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val tvTempo: TextView = dialog.findViewById(R.id.tvTextoTempoLoc)
-        val tvTempoEscolhido:TextView = dialog.findViewById(R.id.tvTextoTempoLocEscolhido)
+        val textView: TextView = dialog.findViewById(R.id.tvTextoTempoLocEscolhido)
         val btnClose: Button = dialog.findViewById(R.id.btnClosePopupAberto)
 
         if (hora == 1){
@@ -127,22 +117,20 @@ class ExcluirLocActivity : AppCompatActivity() {
             tvTempo.text = "O cliente utilizou o armário por $hora horas e $minutos minutos."
         }
 
-        if (horasEscolhidas == 1){
-            tvTempoEscolhido.text = "O cliente alugou $horasEscolhidas hora e $minutosEscolhidos minutos"
-        }else if (horasEscolhidas == 0){
-            tvTempoEscolhido.text = "O cliente alugou $minutosEscolhidos minutos"
-        }else{
-            tvTempoEscolhido.text = "O cliente alugou $horasEscolhidas horas e $minutosEscolhidos minutos"
-        }
-
+        textView.text = "O restante do valor será estornado, sendo cobrado apenas o valor de R$ $preco"
 
 
         btnClose.setOnClickListener {
             dialog.dismiss()
             encerrarLocacao().addOnCompleteListener { task->
+                val size = locRecebida.pulseiras.size
+
                 if (task.isSuccessful){
                     Log.i("ENCERRRARLOC",task.result)
-                    Toast.makeText(baseContext,"Locação encerrada com sucesso",Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@ExcluirLocActivity, VincularPulseiraActivity::class.java)
+                    intent.putExtra("Activity", "limpar")
+                    if (size == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
+                    startActivity(intent)
                 }else{
                     Log.e("ENCERRRARLOC","Erro ao encerrar loc: ${task.exception}")
                 }
@@ -167,5 +155,9 @@ class ExcluirLocActivity : AppCompatActivity() {
                 val message = res["message"] as String
                 message
             }
+    }
+
+    companion object{
+        val vetPrices: MutableList<Any?> = mutableListOf()
     }
 }
