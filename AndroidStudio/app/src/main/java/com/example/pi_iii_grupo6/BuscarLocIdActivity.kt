@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 import com.example.pi_iii_grupo6.MainViewActivity.Companion.places
@@ -18,12 +19,14 @@ import com.google.firebase.Timestamp
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.gson.Gson
+import io.opencensus.stats.View
 import java.util.Date
 
 class BuscarLocIdActivity : AppCompatActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +36,9 @@ class BuscarLocIdActivity : AppCompatActivity() {
         gson = Gson()
         functions = Firebase.functions("southamerica-east1")
 
+        progressBar = findViewById(R.id.progressBar)
 
-        binding?.btnSimular?.setOnClickListener {
-            avancarTela()
-        }
-
+        showProgressBar(true)
         buscarLocacao()?.addOnCompleteListener { task->
             if(task.result == null){
                 Log.e("BUSCARLOC","ERRO AO BUSCAR: ${task.exception}")
@@ -46,9 +47,14 @@ class BuscarLocIdActivity : AppCompatActivity() {
             else{
                 var loc: MainViewActivity.Locacao = task.result
                 Toast.makeText(baseContext,"Encontrada com sucesso",Toast.LENGTH_SHORT).show()
-                Log.d("BUSCARLOC", "locId: ${loc.locId}, userId: ${loc.userId}, unidadeId: ${loc.unidadeId}, date: ${loc.horaLocacao}")
+                showProgressBar(false)
+                avancarTela()
             }
         }
+    }
+    // Função para controlar a visibilidade da ProgressBar
+    private fun showProgressBar(show: Boolean) {
+        progressBar.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
     }
     //Função que recebe o id da Pulseira via intent e busca no banco a locação
     private fun buscarLocacao(): Task<MainViewActivity.Locacao>? {
