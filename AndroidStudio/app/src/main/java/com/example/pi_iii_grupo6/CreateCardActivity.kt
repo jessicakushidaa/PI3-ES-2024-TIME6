@@ -108,7 +108,7 @@ class CreateCardActivity : BasicaActivity() {
         val nomeTitular = binding?.etName?.text.toString()
         val numeroCartao = binding?.etCardNumber?.text.toString()
         val dataVal = binding?.etValidade?.text.toString()
-
+        val anoVal = dataVal.substring(3)
 
         if(nomeTitular.isEmpty() || numeroCartao.isEmpty() || dataVal.isEmpty()){
             Toast.makeText(baseContext,"Preencha todos os campos!",Toast.LENGTH_SHORT).show()
@@ -118,6 +118,9 @@ class CreateCardActivity : BasicaActivity() {
                     Toast.LENGTH_SHORT).show()
             }else if(numeroCartao.count() != 16){
                 Toast.makeText(baseContext,"Numero do cartão inválido, utilize apenas numeros",
+                    Toast.LENGTH_SHORT).show()
+            }else if (anoVal.toInt() < 24){
+                Toast.makeText(baseContext,"Data de validade incorreta",
                     Toast.LENGTH_SHORT).show()
             }
             else{
