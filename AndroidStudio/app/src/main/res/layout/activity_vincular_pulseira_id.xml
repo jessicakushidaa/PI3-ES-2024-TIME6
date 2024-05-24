@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".VincularPulseiraIdActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    >
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvVinculando"

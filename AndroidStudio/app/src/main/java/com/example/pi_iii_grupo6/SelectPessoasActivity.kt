@@ -24,6 +24,9 @@ class SelectPessoasActivity : BasicaActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
+
         //Voltando o numero escolhido para 0
         numPessoas = 0
 
@@ -65,6 +68,14 @@ class SelectPessoasActivity : BasicaActivity() {
         binding?.btnEnviar?.setOnClickListener {
             avancarIntent()
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
 
 

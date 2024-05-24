@@ -41,7 +41,7 @@ class MostrarInfosActivity : BasicaActivity() {
                     Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
                             " - $message")
                     if (status == "ERROR"){
-                        Toast.makeText(baseContext,message,Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Não há armários livres no momento.",Toast.LENGTH_LONG).show()
                         val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
                         startActivity(intent)
                     }else{
@@ -60,6 +60,7 @@ class MostrarInfosActivity : BasicaActivity() {
         }
         //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
+
     }
     //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
     private fun confirmarLoc(): Task<Map<String, String>> {

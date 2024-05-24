@@ -48,6 +48,14 @@ class ConfirmarFotosActivity : BasicaActivity() {
             if(SelectPessoasActivity.numPessoas == 2) intent.putExtra("dupla","true") else intent.putExtra("dupla","false")
             startActivity(intent)
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
     //Função que carrega as fotos de acordo com o nuero de fotos
     private fun carregarInfos() {

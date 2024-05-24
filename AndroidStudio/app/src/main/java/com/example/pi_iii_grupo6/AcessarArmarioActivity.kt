@@ -36,6 +36,20 @@ class AcessarArmarioActivity : BasicaActivity() {
             //Abrir dialog para perguntar se deseja mesmo encerrar locacao
             mostrarDialog()
         }
+
+        binding?.btnHome?.setOnClickListener{
+            //botão home volta pro menu do gerente
+            val intentHome = Intent(this@AcessarArmarioActivity, MainViewGerenteActivity::class.java)
+            startActivity(intentHome)
+        }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
     //Função que mostra a dialog dizendo que o armario está aberto
     private fun mostrarDialogAberto() {

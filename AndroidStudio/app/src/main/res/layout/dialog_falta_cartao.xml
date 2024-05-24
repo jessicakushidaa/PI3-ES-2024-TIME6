@@ -48,11 +48,11 @@
             android:layout_height="wrap_content"
             android:text="@string/cadastrarCartaoText"
             android:textSize="18sp"
-            android:background="@color/grey"
-            android:elevation="20dp"
-            android:padding="8dp"            android:gravity="center"
+            android:background="@color/yellowbtn"
+            android:elevation="10dp"
+            android:padding="10dp"            android:gravity="center"
             android:textStyle="bold"
-            android:textColor="@color/blue_nav"
+            android:textColor="@color/white"
             android:layout_marginTop="10dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

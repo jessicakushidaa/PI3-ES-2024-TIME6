@@ -38,7 +38,8 @@
             android:exported="false" />
         <activity
             android:name=".ConfirmarFotosActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".TirarFotoActivity"/>
         <activity
             android:name=".ExcluirLocActivity"
             android:exported="false" />
@@ -56,7 +57,8 @@
             android:exported="false" />
         <activity
             android:name=".VincularPulseiraActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".AcessarArmarioActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -81,13 +83,16 @@
         </activity>
         <activity
             android:name=".TirarFotoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SelectPessoasActivity"/>
         <activity
             android:name=".SelectPessoasActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LiberarLocacaoActivity"/>
         <activity
             android:name=".AcessarArmarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MostrarLocacaoActivity"/>
         <activity
             android:name=".LiberarLocacaoActivity"
             android:exported="false" />

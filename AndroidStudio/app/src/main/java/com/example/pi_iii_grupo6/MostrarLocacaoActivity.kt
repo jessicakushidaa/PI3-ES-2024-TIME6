@@ -26,6 +26,7 @@ class MostrarLocacaoActivity : BasicaActivity() {
         }
 
         carregarImagem()
+
     }
 
     //Função responsavel por decodificar a String vinda em base64
