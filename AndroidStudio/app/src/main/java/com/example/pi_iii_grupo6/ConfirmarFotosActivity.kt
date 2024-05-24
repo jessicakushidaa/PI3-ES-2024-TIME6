@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -105,5 +106,9 @@ class ConfirmarFotosActivity : AppCompatActivity() {
             Log.e("Base64ToBitmap", "Erro inesperado ao converter Base64 para Bitmap", e)
             null
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }
