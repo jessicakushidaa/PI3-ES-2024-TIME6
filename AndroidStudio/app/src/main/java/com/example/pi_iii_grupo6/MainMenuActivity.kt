@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -362,5 +363,9 @@ class MainMenuActivity : AppCompatActivity() {
                 }
 
             }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }

@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,5 +43,9 @@ class MainViewGerenteActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Logout feito com sucesso", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
     }
 }
