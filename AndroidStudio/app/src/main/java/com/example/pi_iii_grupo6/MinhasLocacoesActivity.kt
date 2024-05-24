@@ -7,15 +7,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pi_iii_grupo6.MainMenuActivity.Companion.idDocumentPessoa
 import com.example.pi_iii_grupo6.databinding.ActivityMinhasLocacoesBinding
-import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesConfirmadas
-import com.example.pi_iii_grupo6.MainViewActivity.Companion.locacoesPendentes
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
@@ -29,7 +28,6 @@ import com.google.gson.Gson
 
 class MinhasLocacoesActivity : AppCompatActivity() {
     private var binding: ActivityMinhasLocacoesBinding? = null
-    private var gson = Gson()
     private lateinit var recyclerView: RecyclerView
     private lateinit var locList: ArrayList<LocacaoItem>
     private lateinit var locacaoAdapter: LocacaoAdapter
@@ -37,6 +35,7 @@ class MinhasLocacoesActivity : AppCompatActivity() {
     var user: FirebaseUser? = null
     private lateinit var functions: FirebaseFunctions
     private lateinit var handler: Handler
+    private lateinit var progressBar: ProgressBar
 
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +47,7 @@ class MinhasLocacoesActivity : AppCompatActivity() {
         user = auth.currentUser
         functions = Firebase.functions("southamerica-east1")
         handler = Handler(Looper.myLooper()!!)
+        progressBar = findViewById(R.id.progressBar)
 
 
         //Setar as variáveis da Recycler View
@@ -57,8 +57,10 @@ class MinhasLocacoesActivity : AppCompatActivity() {
 
         locList = ArrayList()
         locacaoAdapter = LocacaoAdapter(locList)
-        
-        //Adicionando exemplo
+
+        //Setando progressBar
+        showProgressBar()
+        //Chamando função que busca as locações confirmadas do usuário
         buscarConfirmadas().addOnCompleteListener { task->
             if (task.isSuccessful){
                 Log.i("BUSCARCONFIRMADAS","${task.result}")
@@ -70,9 +72,11 @@ class MinhasLocacoesActivity : AppCompatActivity() {
 
                         recyclerView.adapter = locacaoAdapter
                         parentViewGroup.removeView(tvNenhum)
+                        hideProgressBar()
                     }
                 },3500)
             }else{
+                hideProgressBar()
                 Log.e("BUSCARCONFIRMADAS","Error: ${task.exception}")
             }
         }
@@ -154,20 +158,14 @@ class MinhasLocacoesActivity : AppCompatActivity() {
                 nome
             }
     }
-
-    //Função que chama a function que retorna as locações confirmadas do cliente
-    private fun adicionarElementosLista(lista: ArrayList<LocacaoItem>) {
-        //Implementar function que retorna as locações confirmadas do cliente
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
     }
 
-    fun confirmacao(locacao: MainViewActivity.Locacao){
-        var intentQrCode = Intent(this@MinhasLocacoesActivity, CodeActivity::class.java)
-
-        var infosJson = gson.toJson(locacao)
-
-        intentQrCode.putExtra("infosJson",infosJson)
-        startActivity(intentQrCode)
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
+
     override fun onDestroy() {
         super.onDestroy()
         binding = null
