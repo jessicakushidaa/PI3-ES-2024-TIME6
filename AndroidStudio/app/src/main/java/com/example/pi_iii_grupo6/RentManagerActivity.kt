@@ -32,11 +32,13 @@ class RentManagerActivity : BasicaActivity() {
             startActivity(irMinhasLocs)
         }
 
-        binding?.btnHome?.setOnClickListener{
-            //botão home volta pro menu do gerente
-            val intentHome = Intent(this@RentManagerActivity, ActivityMainMenuBinding::class.java)
-            startActivity(intentHome)
-        }
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
 
         //Direcionando o bottomNavigation
         val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
