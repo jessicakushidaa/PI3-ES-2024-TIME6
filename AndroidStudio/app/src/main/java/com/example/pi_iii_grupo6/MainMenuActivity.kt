@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
@@ -27,7 +28,7 @@ class Pendente(
     var preco: MainViewActivity.Preco,
     var idUnidade: String?
 )
-class MainMenuActivity : AppCompatActivity() {
+class MainMenuActivity : BasicaActivity() {
     private var binding: ActivityMainMenuBinding? = null
     private lateinit var functions: FirebaseFunctions
     private var gson = Gson()

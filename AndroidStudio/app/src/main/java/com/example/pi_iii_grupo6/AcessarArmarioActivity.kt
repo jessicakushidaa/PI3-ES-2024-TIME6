@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,7 +21,7 @@ import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
 
-class AcessarArmarioActivity : AppCompatActivity() {
+class AcessarArmarioActivity : BasicaActivity() {
     private var binding: ActivityAcessarArmarioBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

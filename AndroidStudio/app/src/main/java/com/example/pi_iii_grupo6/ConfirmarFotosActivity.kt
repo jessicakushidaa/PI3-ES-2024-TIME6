@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,7 +15,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityConfirmarFotosBinding
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class ConfirmarFotosActivity : AppCompatActivity() {
+class ConfirmarFotosActivity : BasicaActivity() {
     private var binding: ActivityConfirmarFotosBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

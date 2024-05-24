@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -18,7 +19,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
-class LiberarLocacaoActivity : AppCompatActivity() {
+class LiberarLocacaoActivity : BasicaActivity() {
     private var binding: ActivityLiberarLocacaoBinding? = null
     private lateinit var gson: Gson
 

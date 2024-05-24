@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.pi_iii_grupo6.databinding.ActivityVincularPulseiraIdBinding
 
-class VincularPulseiraIdActivity : AppCompatActivity() {
+class VincularPulseiraIdActivity : BasicaActivity() {
     private var binding: ActivityVincularPulseiraIdBinding? = null
     private lateinit var meuHandler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
