@@ -33,6 +33,7 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+    <!--Titulo Tela-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
         app:drawableStartCompat="@drawable/settings_1390_svgrepo_com"
         app:layout_constraintBottom_toTopOf="@+id/locker_container"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
     <!-- Armário ilustrativo -->
     <RelativeLayout
         android:id="@+id/locker_container"
@@ -79,6 +81,7 @@
             android:src="@drawable/logovetor_locker" />
     </RelativeLayout>
 
+    <!--Nome Tag-->
     <TextView
         android:id="@+id/lockerTag"
         android:layout_width="wrap_content"
@@ -95,6 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/locker_container" />
+
     <!--Botões-->
     <LinearLayout
         android:id="@+id/btn_container"
