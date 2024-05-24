@@ -228,7 +228,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_marginBottom="30dp">
 
         <androidx.appcompat.widget.AppCompatButton
