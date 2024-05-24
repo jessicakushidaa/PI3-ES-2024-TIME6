@@ -20,8 +20,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:padding="12dp"
+            android:padding="20dp"
             android:text="Tem certeza que deseja encerar a locação?"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -34,30 +33,28 @@
             android:gravity="center">
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEncerrar"
-            android:layout_width="140dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/yellowbtn"
-            android:elevation="5dp"
-            android:gravity="center"
-            android:padding="10dp"
             android:text="Encerrar"
-            android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:background="@color/yellowbtn"
+            android:elevation="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCancelar"
-                android:layout_width="140dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@color/white"
-                android:elevation="5dp"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="Cancelar"
-                android:textColor="@color/blue_nav"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/blue_nav"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
