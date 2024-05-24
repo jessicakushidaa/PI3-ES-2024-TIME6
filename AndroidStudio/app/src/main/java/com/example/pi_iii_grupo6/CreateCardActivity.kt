@@ -86,11 +86,6 @@ class CreateCardActivity : AppCompatActivity() {
         binding?.btnCadastrar?.setOnClickListener {
             // Verifica se recebeu o ID corretamente
             if (idDocumentPessoa.isNotEmpty()) {
-                // Mostra a ProgressBar
-                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-                progressBar.isIndeterminate = true
-                progressBar.visibility = View.VISIBLE
-
                 // Chama a função verificarPreenchidos para cadastrar o cartão
                 verificarPreenchidos(idDocumentPessoa)
             } else {
@@ -125,10 +120,16 @@ class CreateCardActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
             else{
+                // Mostra a ProgressBar
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.isIndeterminate = true
+                progressBar.visibility = View.VISIBLE
+
                 //Campos preenchidos! criar instancia cartão e chamar function
                 val cartao = Cartao(nomeTitular,numeroCartao,dataVal)
                 cadastrarCartaoFirestore(cartao,idPessoa).addOnSuccessListener {
                     mostrarDialogCreated()
+                    progressBar.visibility = View.GONE
                 }
             }
 

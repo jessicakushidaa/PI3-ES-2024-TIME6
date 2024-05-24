@@ -98,10 +98,11 @@
     <string name="liberar_locs">Liberar locação</string>
     <string name="abrir_temporariamente">Abrir armário</string>
     <string name="encerrar_loc">encerrar locação</string>
-    <string name="aproxime_a_pulseira"> <b>Aproxime</b> a pulseira \n ao dispositivo</string>
+    <string name="aproxime_a_pulseira"> <b>Aproxime</b> a pulseira \n à parte traseira do dispositivo</string>
     <string name="connection_icon_animation">connection icon animation</string>
     <string name="btnEnviar">Enviar</string>
     <string name="btnRefazer">Refazer</string>
     <string name="confirmar_envio">Confirmar Envio</string>
+    <string name="armario_aberto">Armário aberto!\nPeça ao cliente que feche-o \nao terminar de usar.</string>
 
 </resources>

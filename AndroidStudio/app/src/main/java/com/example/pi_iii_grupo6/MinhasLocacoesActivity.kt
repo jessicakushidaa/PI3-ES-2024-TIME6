@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.os.Bundle
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pi_iii_grupo6.databinding.ActivityMinhasLocacoesBinding
@@ -17,11 +18,13 @@ import com.google.gson.Gson
 class MinhasLocacoesActivity : AppCompatActivity() {
     private var binding: ActivityMinhasLocacoesBinding? = null
     private var gson = Gson()
+
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMinhasLocacoesBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
 
         //Seta Retorno
         val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
@@ -57,9 +60,6 @@ class MinhasLocacoesActivity : AppCompatActivity() {
 
             }
         }
-
-
-
     checarLocacoes()
     }
 

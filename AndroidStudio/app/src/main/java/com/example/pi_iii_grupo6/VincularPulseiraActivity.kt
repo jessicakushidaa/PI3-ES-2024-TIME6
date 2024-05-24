@@ -22,6 +22,7 @@ import java.nio.charset.Charset
 import kotlin.properties.Delegates
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.nfc.NdefRecord
+import androidx.core.content.ContextCompat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat // classe do android framework
 import com.example.pi_iii_grupo6.LiberarLocacaoActivity.Companion.atualLocacao
 
@@ -50,6 +51,12 @@ class VincularPulseiraActivity : AppCompatActivity() {
 
         val animationList = listOf(drawableConn1, drawableConn2)
         animationList.forEach { it?.start() }
+
+        // Receber o extra do intent
+        val btnClicado = intent.getStringExtra("Activity")
+
+        // Chamar função para mudar text view do título da tela
+        definirTitulo(btnClicado)
 
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE
@@ -147,6 +154,26 @@ class VincularPulseiraActivity : AppCompatActivity() {
         )
     }
 
+    // Função para definir o titulo e o drawable da text view
+    private fun definirTitulo(btnClicado: String?){
+        if (btnClicado == "buscar") {
+            binding?.tvAcessarArmario!!.text = "Acessar Armário"
+            binding?.tvAcessarArmario?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.settings_1390_svgrepo_com,
+                0,
+                0,
+                0
+            )
+        } else {
+            binding?.tvAcessarArmario!!.text = "Liberar Locação"
+            binding?.tvAcessarArmario?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.open_padlock,
+                0,
+                0,
+                0
+            )
+        }
+    }
     //Função que pega a Activity que veio pela intent e avança, passando o id da pulseira também via intent;
     private fun avancarIntent(id: String) {
         //Verificando se são duas pessoas ou uma.

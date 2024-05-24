@@ -40,7 +40,7 @@ class MostrarInfosActivity : AppCompatActivity() {
                     Log.d("FUN CONFIRMARLOC", "String recebida: status - $status ;  message " +
                             " - $message")
                     if (status == "ERROR"){
-                        Toast.makeText(baseContext,"",Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext,message,Toast.LENGTH_LONG).show()
                         val intent = Intent(this@MostrarInfosActivity, MainViewGerenteActivity::class.java)
                         startActivity(intent)
                     }else{
@@ -104,7 +104,7 @@ class MostrarInfosActivity : AppCompatActivity() {
             ivImage2?.setImageBitmap(bitmap2)
 
             //Setando o texto da pulseira
-            tvPulseiras?.text = "Pulseiras: ${atualLocacao.pulseiras[0]}, ${atualLocacao.pulseiras[1]}"
+            tvPulseiras?.text = " ${atualLocacao.pulseiras[0]}, ${atualLocacao.pulseiras[1]}"
         }else if(numPessoas == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
             var ivImage2 = binding?.ivImagem2
@@ -122,10 +122,10 @@ class MostrarInfosActivity : AppCompatActivity() {
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto da pulseira
-            tvPulseiras?.text = "Pulseira: ${atualLocacao.pulseiras[0]}"
+            tvPulseiras?.text = " ${atualLocacao.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${atualLocacao.preco?.preco}"
-        tvTempo?.text = "Tempo: ${atualLocacao.preco?.tempo}"
+        tvPreco?.text = " ${atualLocacao.preco?.preco}"
+        tvTempo?.text = " ${atualLocacao.preco?.tempo}"
     }
     //Função que recebe uma string base64 e decodifica a mesma para Bitmap
 

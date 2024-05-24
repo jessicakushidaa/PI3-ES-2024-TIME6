@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:padding="20dp"
             android:layout_height="wrap_content"
-            android:text="Pronto, o armário está aberto, peça ao cliente que feche-o ao terminar de usar."
+            android:text="@string/armario_aberto"
             android:textSize="17sp"
             android:layout_gravity="center"
             />

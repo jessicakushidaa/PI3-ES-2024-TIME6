@@ -114,42 +114,104 @@
 
     <LinearLayout
         android:id="@+id/Lineartxt"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="@id/shape_info"
-        app:layout_constraintEnd_toEndOf="@+id/shape_info"
-        app:layout_constraintStart_toStartOf="@+id/shape_info"
+        app:layout_constraintEnd_toEndOf="@id/shape_info"
+        app:layout_constraintStart_toStartOf="@id/shape_info"
         app:layout_constraintTop_toTopOf="@id/shape_info">
 
-        <TextView
-            android:id="@+id/tvPreco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/textbox_custom_outline">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Preço : "
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+                <TextView
+                    android:id="@+id/tvPreco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvTempo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="15dp"
+                    android:text="Tempo : "
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+                <TextView
+                    android:id="@+id/tvTempo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="10dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvPulseira"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:maxLines="2"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="17dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Pulseira(s) : "
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPulseiras"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="10dp"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -163,7 +225,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="20dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAvancar"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
