@@ -62,10 +62,12 @@ class AcessarArmarioActivity : AppCompatActivity() {
         val tvCancelar: TextView = dialog.findViewById(R.id.tvCancelar)
 
         tvCancelar.setOnClickListener {
+            // Fecha o diálogo quando tvCancelar é clicado
             dialog.dismiss()
         }
 
         tvEncerrar.setOnClickListener {
+            //iniciar a ExcluirLocActivity
             var intentExcluir = Intent(this@AcessarArmarioActivity, ExcluirLocActivity::class.java)
             startActivity(intentExcluir)
 

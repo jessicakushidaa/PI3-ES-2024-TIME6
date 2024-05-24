@@ -23,6 +23,7 @@ import io.opencensus.stats.View
 import java.util.Date
 
 class BuscarLocIdActivity : AppCompatActivity() {
+    // Declaração de variáveis
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
@@ -38,7 +39,9 @@ class BuscarLocIdActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
 
+        // Mostra a ProgressBar
         showProgressBar(true)
+        // Chama a buscarLocacao
         buscarLocacao()?.addOnCompleteListener { task->
             if(task.result == null){
                 Log.e("BUSCARLOC","ERRO AO BUSCAR: ${task.exception}")
@@ -135,6 +138,7 @@ class BuscarLocIdActivity : AppCompatActivity() {
                 }
             }
     }
+    // Função para mostrar um diálogo quando a locação não é encontrada
     private fun mostrarDialogNaoEncontrou() {
         var dialog = Dialog(this)
         dialog.setCancelable(false)
