@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import com.example.pi_iii_grupo6.BuscarLocIdActivity.Companion.locRecebida
@@ -15,12 +17,15 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class MostrarLocacaoActivity : BasicaActivity() {
     private var binding: ActivityMostrarLocacaoBinding? = null
+    private lateinit var meuHandler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMostrarLocacaoBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        meuHandler = Handler(Looper.getMainLooper())
 
         binding?.btnAvancar?.setOnClickListener {
+            //Avançar para tela de mostrar infos da locacao
             val intent = Intent(this@MostrarLocacaoActivity, AcessarArmarioActivity::class.java)
             startActivity(intent)
         }
@@ -59,8 +64,8 @@ class MostrarLocacaoActivity : BasicaActivity() {
 
     private fun carregarImagem() {
         var numRecebido = locRecebida.foto.size
-        val tvPreco = binding?.tvPreco
-        val tvTempo = binding?.tvTempo
+        val tvPreco = binding?.tvPreco1
+        val tvTempo = binding?.tvTempo1
         val tvPulseiras = binding?.tvPulseiras
 
         if(numRecebido == 2){

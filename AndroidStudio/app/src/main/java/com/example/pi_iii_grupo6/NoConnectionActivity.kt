@@ -1,6 +1,7 @@
 package com.example.pi_iii_grupo6
 
 import BasicaActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.lifecycle.Observer
 
@@ -19,4 +20,6 @@ class NoConnectionActivity : BasicaActivity() {
             }
         })
     }
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed(){}
 }

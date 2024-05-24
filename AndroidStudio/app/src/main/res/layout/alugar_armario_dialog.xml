@@ -89,6 +89,8 @@
                     android:gravity="center"
                     android:text="@string/tempo_1"
                     android:textSize="16sp"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textStyle="bold" />
 
                 <TextView
