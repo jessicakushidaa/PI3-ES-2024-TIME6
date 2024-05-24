@@ -10,7 +10,6 @@ class LocacaoAdapter(private val locacaoList: ArrayList<LocacaoItem>) : Recycler
 {
     class LocacaoViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
         val textView: TextView = itemView.findViewById(R.id.tvArmarioId)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocacaoViewHolder {
