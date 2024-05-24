@@ -35,6 +35,11 @@ class AcessarArmarioActivity : AppCompatActivity() {
             //Abrir dialog para perguntar se deseja mesmo encerrar locacao
             mostrarDialog()
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
     //Função que mostra a dialog dizendo que o armario está aberto
     private fun mostrarDialogAberto() {

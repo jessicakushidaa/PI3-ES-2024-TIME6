@@ -61,6 +61,11 @@ class VincularPulseiraActivity : AppCompatActivity() {
 
         //instanciando o Adapter do NFC (Conexão código -> hardware)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
         
     }
 

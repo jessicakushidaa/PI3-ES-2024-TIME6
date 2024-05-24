@@ -41,10 +41,16 @@
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+
+        <!--Texto titulo-->
+        <TextView
+            android:id="@+id/TextInfo"
+            style="@style/TextInfoStyle" />
+
         <!--texto-->
         <TextView
             android:id="@+id/TextSelect"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -65,18 +71,14 @@
             android:layout_marginTop="50dp" />
 
         <!--botão tirar foto-->
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageButton
             android:id="@+id/btnFoto"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
-            android:layout_width="200dp"
-            android:backgroundTint="@color/blue_nav"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:text="Tirar foto"
-            />
-
-
+            android:src="@drawable/camera_svgrepo_com__4_"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/button_photo"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

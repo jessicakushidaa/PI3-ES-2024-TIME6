@@ -25,6 +25,11 @@ class MostrarLocacaoActivity : AppCompatActivity() {
         }
 
         carregarImagem()
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
 
     //Função responsavel por decodificar a String vinda em base64

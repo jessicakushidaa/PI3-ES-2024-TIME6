@@ -81,6 +81,7 @@ class LiberarLocacaoActivity : AppCompatActivity() {
         gson = Gson()
         
         checkPermissionCamera(this)
+
     }
 
     //Função que checa as permissões da câmera do usuário

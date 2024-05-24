@@ -59,6 +59,11 @@ class MostrarInfosActivity : AppCompatActivity() {
         }
         //Chamar função que carrega as informações da locação que está sendo feita.
         carregarImagem()
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
     //Função que chama a function de mudar o status da locação, e adiciona as fotos e as tags na locação do banco.
     private fun confirmarLoc(): Task<Map<String, String>> {

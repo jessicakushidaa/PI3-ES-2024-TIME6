@@ -64,6 +64,11 @@ class SelectPessoasActivity : AppCompatActivity() {
         binding?.btnEnviar?.setOnClickListener {
             avancarIntent()
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
     }
 
 
