@@ -47,6 +47,8 @@ class MainMenuActivity : BasicaActivity() {
 
         functions = Firebase.functions("southamerica-east1")
 
+        checarLocacaoPendente()
+        
         //pegando o id do docmuento do usuário no banco de dados
         pegarId().addOnSuccessListener { id->
             idDocumentPessoa = id
@@ -82,9 +84,6 @@ class MainMenuActivity : BasicaActivity() {
                 }
         }
 
-
-
-
         //Chamar funcao que busca todos os armarios
         buscarArmarios().addOnCompleteListener { task->
             if (task.isSuccessful){
@@ -95,7 +94,6 @@ class MainMenuActivity : BasicaActivity() {
                 Log.e("LOGARMARIOS", "Erro ao buscar armarios: ${task.exception}")
             }
         }
-
 
         //Setando o clique em MAPA que vai abrir o mapa
         binding?.llMapa?.setOnClickListener{
