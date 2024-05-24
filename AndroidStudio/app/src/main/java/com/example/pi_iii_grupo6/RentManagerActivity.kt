@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.pi_iii_grupo6.databinding.ActivityMainMenuBinding
 import com.example.pi_iii_grupo6.databinding.ActivityRentManagerBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -32,7 +33,7 @@ class RentManagerActivity : AppCompatActivity() {
 
         binding?.btnHome?.setOnClickListener{
             //botão home volta pro menu do gerente
-            val intentHome = Intent(this@RentManagerActivity, MainViewGerenteActivity::class.java)
+            val intentHome = Intent(this@RentManagerActivity, ActivityMainMenuBinding::class.java)
             startActivity(intentHome)
         }
 
