@@ -103,5 +103,6 @@
     <string name="btnEnviar">Enviar</string>
     <string name="btnRefazer">Refazer</string>
     <string name="confirmar_envio">Confirmar Envio</string>
+    <string name="armario_aberto">Armário aberto!\nPeça ao cliente que feche-o \nao terminar de usar.</string>
 
 </resources>
