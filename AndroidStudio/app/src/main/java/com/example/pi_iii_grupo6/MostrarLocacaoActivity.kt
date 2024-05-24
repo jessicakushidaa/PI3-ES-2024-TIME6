@@ -26,13 +26,6 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
         carregarImagem()
 
-        //Seta Voltar
-        setSupportActionBar(binding?.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
-
-        // Define o ícone da seta como o drawable customizado
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
 
     //Função responsavel por decodificar a String vinda em base64

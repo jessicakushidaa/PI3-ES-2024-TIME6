@@ -30,6 +30,12 @@ class RentManagerActivity : AppCompatActivity() {
             startActivity(irMinhasLocs)
         }
 
+        binding?.btnHome?.setOnClickListener{
+            //botão home volta pro menu do gerente
+            val intentHome = Intent(this@RentManagerActivity, MainViewGerenteActivity::class.java)
+            startActivity(intentHome)
+        }
+
         //Direcionando o bottomNavigation
         val bottomNavigation : BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
