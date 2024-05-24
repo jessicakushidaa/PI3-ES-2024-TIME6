@@ -13,20 +13,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="@color/grey">
+        app:cardBackgroundColor="@color/blue_nav">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:padding="15dp"
-            >
-
+            android:layout_width="298dp"
+            android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/tvArmarioId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Guarde e Deus te Guarde!"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="fill"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/round_arrow_forward_ios_24"
+                android:text=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
