@@ -65,25 +65,23 @@
             android:id="@+id/linearFoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_horizontal">
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayout2"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/rounded_button"
-                android:backgroundTint="@color/blue_nav"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingStart="25dp"
+                android:paddingStart="20dp"
                 android:paddingEnd="20dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginVertical="15dp"
                     android:orientation="horizontal"
                     android:gravity="center"
@@ -91,16 +89,16 @@
 
                     <ImageView
                         android:id="@+id/ivImagem1"
-                        android:layout_width="120dp"
-                        android:layout_height="250dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_width="190dp"
+                        android:layout_height="260dp"
                         android:layout_marginVertical="10dp" />
 
                     <ImageView
                         android:id="@+id/ivImagem2"
-                        android:layout_width="120dp"
-                        android:layout_height="250dp"
-                        android:layout_marginVertical="10dp" />
+                        android:layout_width="190dp"
+                        android:layout_height="260dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginLeft="20dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -113,7 +111,7 @@
         android:id="@+id/shape_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/infos_rectangle"
         app:layout_constraintEnd_toEndOf="@id/linearSelect"
         app:layout_constraintStart_toStartOf="@id/linearSelect"
@@ -125,7 +123,6 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="@id/shape_info"
         app:layout_constraintEnd_toEndOf="@id/shape_info"
         app:layout_constraintStart_toStartOf="@id/shape_info"
@@ -136,8 +133,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="10dp"
-            android:paddingVertical="10dp"
-            android:background="@drawable/textbox_custom_outline">
+            android:paddingVertical="10dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="2"
                     android:paddingStart="15dp"
-                    android:text="Preço : "
+                    android:text="Preço da Locação : R$"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="17dp" />
@@ -173,7 +169,7 @@
                     android:maxLines="2"
                     android:layout_marginTop="10dp"
                     android:paddingStart="15dp"
-                    android:text="Tempo : "
+                    android:text="Tempo Escolhido : "
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="17dp" />
@@ -226,14 +222,14 @@
         android:id="@+id/linearBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/shape_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="5dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="30dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFinalizar"

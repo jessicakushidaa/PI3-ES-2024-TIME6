@@ -73,7 +73,6 @@ class BuscarLocIdActivity : AppCompatActivity() {
                 if (status=="ERROR"){
                     null
                 }else {
-
                     val payload = res["payload"] as Map<String, Any>
                     //Id da locação
                     val id = payload["idLocacao"] as String
