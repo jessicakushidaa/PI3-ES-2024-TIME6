@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.app.Dialog
 import android.graphics.Color
@@ -17,7 +18,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import java.util.Date
 
-class ExcluirLocActivity : AppCompatActivity() {
+class ExcluirLocActivity : BasicaActivity() {
     private lateinit var functions: FirebaseFunctions
 
     override fun onCreate(savedInstanceState: Bundle?) {

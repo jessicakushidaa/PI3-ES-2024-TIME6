@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.functions
 import com.google.gson.Gson
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BasicaActivity() {
     private lateinit var functions: FirebaseFunctions
     private var gson = Gson()
     //criando variável de autenticação do firebase

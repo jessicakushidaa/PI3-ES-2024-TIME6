@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -32,7 +33,7 @@ import java.util.logging.SimpleFormatter
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 
-class CreateCardActivity : AppCompatActivity() {
+class CreateCardActivity : BasicaActivity() {
     //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
     private var binding: ActivityCreateCardBinding? = null

@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 
 
-class MinhasLocacoesActivity : AppCompatActivity() {
+class MinhasLocacoesActivity : BasicaActivity() {
     private var binding: ActivityMinhasLocacoesBinding? = null
     private var gson = Gson()
 

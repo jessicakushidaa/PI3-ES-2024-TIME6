@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -22,7 +23,7 @@ import com.google.gson.Gson
 import io.opencensus.stats.View
 import java.util.Date
 
-class BuscarLocIdActivity : AppCompatActivity() {
+class BuscarLocIdActivity : BasicaActivity() {
     private var binding: ActivityBuscarLocIdBinding? = null
     private lateinit var gson: Gson
     private lateinit var functions: FirebaseFunctions
