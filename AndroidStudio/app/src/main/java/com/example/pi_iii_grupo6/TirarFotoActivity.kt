@@ -135,6 +135,7 @@ class TirarFotoActivity : AppCompatActivity() {
         }
     }
 
+    // Função que converte uma imagem bitmap para uma string Base64
     private fun convertToBase64(bitmapImage: Bitmap): String {
             val stream = ByteArrayOutputStream()
             bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, stream)
@@ -142,6 +143,7 @@ class TirarFotoActivity : AppCompatActivity() {
             return Base64.encodeToString(byteArray, Base64.NO_WRAP)
     }
 
+    // Função que rotaciona uma imagem bitmap pelo número de graus especificado
     fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap {
         if (degree == 0) {
             return bitmap

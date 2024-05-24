@@ -26,6 +26,7 @@ class ExcluirLocActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
 
 
+        // Chama a função buscarVetorHorarios() que retorna uma Task e adiciona um listener para a conclusão da tarefa
         buscarVetorHorarios().addOnCompleteListener { task->
             if (task.isSuccessful){
                 Log.i("BUSCARHORARIOS","${task.result}")

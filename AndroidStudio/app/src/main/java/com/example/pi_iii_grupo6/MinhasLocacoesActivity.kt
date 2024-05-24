@@ -63,6 +63,7 @@ class MinhasLocacoesActivity : AppCompatActivity() {
     checarLocacoes()
     }
 
+    //função que verifica a situação das locações
     fun checarLocacoes(){
         var numLocs = locacoesConfirmadas.count()
         if (locacoesPendentes.isNotEmpty()){
