@@ -3,7 +3,7 @@ package com.example.pi_iii_grupo6
 import android.os.Parcel
 import android.os.Parcelable
 
-data class LocacaoItem(val nomeUnidade: String, val horaLocacao: String, val tagArmario: String, val preco: String): Parcelable {
+data class LocacaoItem(val nomeUnidade: String, val horaLocacao: String, val tagArmario: String, val tempo: String): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
@@ -16,7 +16,7 @@ data class LocacaoItem(val nomeUnidade: String, val horaLocacao: String, val tag
         parcel.writeString(nomeUnidade)
         parcel.writeString(horaLocacao)
         parcel.writeString(tagArmario)
-        parcel.writeString(preco)
+        parcel.writeString(tempo)
     }
 
     override fun describeContents(): Int {
