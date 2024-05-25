@@ -25,6 +25,14 @@ unidadesLocacao, ao adicionar um documento de unidade, o campo **TabelaPrecos** 
 espera uma string ou number.
 É possível consultar os tipos esperados na pasta **models**, na qual as interfaces estão definidas.
 
+## Acesso à área do GERENTE
+**LOGIN**
+- **email**: mateus@gerente.com
+- **senha**: mateus1234
+
+- **email**: renata@gerente.com
+- **renata** : renata1234
+
 ### Estrutura de Pastas
 
 - **functions**: Contém o código-fonte das funções Firebase. Dividido entre: lib, node_modules, src
