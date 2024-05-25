@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -35,7 +36,7 @@ import com.google.firebase.functions.functions
 import com.google.gson.Gson
 import java.util.Calendar
 
-class RentActivity : AppCompatActivity() {
+class RentActivity : BasicaActivity() {
     private var binding: ActivityRentBinding? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var userLocation: LatLng
@@ -46,8 +47,6 @@ class RentActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var locAtual: MainViewActivity.Locacao
     private lateinit var functions: FirebaseFunctions
-
-
 
     class Info(
         var userId: String?,
@@ -79,6 +78,14 @@ class RentActivity : AppCompatActivity() {
                 dialogFaltaCartao()
             }
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
     private fun dialogNaoChegou(){
         var dialog = Dialog(this)
@@ -92,13 +99,6 @@ class RentActivity : AppCompatActivity() {
             val intentMapa = Intent(this@RentActivity, MainViewActivity::class.java)
             startActivity(intentMapa)
         }
-
-        //Seta Voltar
-        val toolbar : Toolbar = findViewById(R.id.toolbar) //achando id da toolbar
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
 
         dialog.show()
     }
@@ -362,6 +362,8 @@ class RentActivity : AppCompatActivity() {
                         .addOnCompleteListener { task->
                             if (task.isSuccessful){
                                 Log.d("ADDLOC","Locacao adicionada com sucesso! ${task.result}")
+                                locAtual.locId = task.result
+                                confirmacao(locAtual)
                             }else{
                                 Log.e("ERROR","erro ao adicionar loc: ${task.exception}")
                             }
@@ -371,7 +373,6 @@ class RentActivity : AppCompatActivity() {
                 }
             }
             locacoesPendentes.add(locAtual)
-            confirmacao(locAtual)
         }
     }
     //Essa função passa o Id do documento e o nome da colecction, e retorna o ID do armário dessa unidade de locação.
@@ -415,7 +416,7 @@ class RentActivity : AppCompatActivity() {
                 //Lidar com o retorno, se houver.
                 val res = task.result.data as Map<String, Any>
                 val payload = res["payload"] as Map<String, Any>
-                val docId = payload["docId"] as String
+                val docId = payload["locId"] as String
 
                 docId
             }
@@ -424,6 +425,7 @@ class RentActivity : AppCompatActivity() {
     }
     //Função chamada ao clicar no botão de confirmar a solicitação de locação.
     fun confirmacao(locacao: MainViewActivity.Locacao){
+        Log.i("LOCACAO","ADICIONAR LOC: ${locacao.locId}")
         var intentQrCode = Intent(this@RentActivity, CodeActivity::class.java)
 
         //Se a pessoa não tiver selecionado nenhuma das opções, avisar que é preciso selecionar ao menos uma.

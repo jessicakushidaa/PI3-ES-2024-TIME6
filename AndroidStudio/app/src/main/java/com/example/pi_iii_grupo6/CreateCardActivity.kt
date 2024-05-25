@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -32,7 +33,7 @@ import java.util.logging.SimpleFormatter
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 
-class CreateCardActivity : AppCompatActivity() {
+class CreateCardActivity : BasicaActivity() {
     //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
     private var binding: ActivityCreateCardBinding? = null
@@ -86,11 +87,6 @@ class CreateCardActivity : AppCompatActivity() {
         binding?.btnCadastrar?.setOnClickListener {
             // Verifica se recebeu o ID corretamente
             if (idDocumentPessoa.isNotEmpty()) {
-                // Mostra a ProgressBar
-                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-                progressBar.isIndeterminate = true
-                progressBar.visibility = View.VISIBLE
-
                 // Chama a função verificarPreenchidos para cadastrar o cartão
                 verificarPreenchidos(idDocumentPessoa)
             } else {
@@ -112,7 +108,7 @@ class CreateCardActivity : AppCompatActivity() {
         val nomeTitular = binding?.etName?.text.toString()
         val numeroCartao = binding?.etCardNumber?.text.toString()
         val dataVal = binding?.etValidade?.text.toString()
-
+        val anoVal = dataVal.substring(3)
 
         if(nomeTitular.isEmpty() || numeroCartao.isEmpty() || dataVal.isEmpty()){
             Toast.makeText(baseContext,"Preencha todos os campos!",Toast.LENGTH_SHORT).show()
@@ -123,12 +119,21 @@ class CreateCardActivity : AppCompatActivity() {
             }else if(numeroCartao.count() != 16){
                 Toast.makeText(baseContext,"Numero do cartão inválido, utilize apenas numeros",
                     Toast.LENGTH_SHORT).show()
+            }else if (anoVal.toInt() < 24){
+                Toast.makeText(baseContext,"Data de validade incorreta",
+                    Toast.LENGTH_SHORT).show()
             }
             else{
+                // Mostra a ProgressBar
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.isIndeterminate = true
+                progressBar.visibility = View.VISIBLE
+
                 //Campos preenchidos! criar instancia cartão e chamar function
                 val cartao = Cartao(nomeTitular,numeroCartao,dataVal)
                 cadastrarCartaoFirestore(cartao,idPessoa).addOnSuccessListener {
                     mostrarDialogCreated()
+                    progressBar.visibility = View.GONE
                 }
             }
 

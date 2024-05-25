@@ -63,7 +63,7 @@
             android:drawablePadding="5dp"
             android:hint="@string/locacao_title"
             android:textColor="@color/black"
-            android:backgroundTint="@color/greyGuardian"
+            android:backgroundTint="@color/white"
             android:textSize="40sp"
             app:drawableLeftCompat="@drawable/location_pin" />
     </androidx.appcompat.widget.LinearLayoutCompat>

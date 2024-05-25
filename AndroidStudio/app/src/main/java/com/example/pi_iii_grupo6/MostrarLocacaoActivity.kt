@@ -1,25 +1,37 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import com.example.pi_iii_grupo6.BuscarLocIdActivity.Companion.locRecebida
 import com.example.pi_iii_grupo6.databinding.ActivityMostrarLocacaoBinding
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
-class MostrarLocacaoActivity : AppCompatActivity() {
+class MostrarLocacaoActivity : BasicaActivity() {
     private var binding: ActivityMostrarLocacaoBinding? = null
+    private lateinit var meuHandler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMostrarLocacaoBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        meuHandler = Handler(Looper.getMainLooper())
 
         binding?.btnAvancar?.setOnClickListener {
+            //Avançar para tela de mostrar infos da locacao
             val intent = Intent(this@MostrarLocacaoActivity, AcessarArmarioActivity::class.java)
             startActivity(intent)
         }
+
         carregarImagem()
+
     }
 
     //Função responsavel por decodificar a String vinda em base64
@@ -52,9 +64,9 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
     private fun carregarImagem() {
         var numRecebido = locRecebida.foto.size
-        val tvPreco = binding?.tvPreco
-        val tvTempo = binding?.tvTempo
-        val tvPulseiras = binding?.tvPulseira
+        val tvPreco = binding?.tvPreco1
+        val tvTempo = binding?.tvTempo1
+        val tvPulseiras = binding?.tvPulseiras
 
         if(numRecebido == 2){
             val string1 = locRecebida.foto[0]
@@ -65,8 +77,8 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA","duas: $string2")
 
-            var ivImage1 = binding?.ivImage
-            var ivImage2 = binding?.ivImage2
+            var ivImage1 = binding?.ivImagem1
+            var ivImage2 = binding?.ivImagem2
             ivImage1?.setImageBitmap(bitmap1)
             ivImage2?.setImageBitmap(bitmap2)
 
@@ -74,7 +86,7 @@ class MostrarLocacaoActivity : AppCompatActivity() {
             tvPulseiras?.text = "Pulseiras: ${locRecebida.pulseiras[0]}, ${locRecebida.pulseiras[1]}"
         }else if(numRecebido == 1){
             //Excluir a ivImage2 (nao existe uma segunda foto)
-            var ivImage2 = binding?.ivImage2
+            var ivImage2 = binding?.ivImagem2
             val parentViewGroup = ivImage2?.parent as ViewGroup
 
             parentViewGroup.removeView(ivImage2)
@@ -85,14 +97,13 @@ class MostrarLocacaoActivity : AppCompatActivity() {
 
             Log.d("RECEBIDA",string)
 
-            var ivImage = binding?.ivImage
+            var ivImage = binding?.ivImagem1
             ivImage?.setImageBitmap(bitmap)
 
             //Setando o texto das pulseiras
-            tvPulseiras?.text = "Pulseira: ${locRecebida.pulseiras[0]}"
+            tvPulseiras?.text = " ${locRecebida.pulseiras[0]}"
         }
-        tvPreco?.text = "Preço: ${locRecebida.preco?.preco}"
-        tvTempo?.text = "Tempo: ${locRecebida.preco?.tempo}"
-
+        tvPreco?.text = " ${locRecebida.preco?.preco}"
+        tvTempo?.text = " ${locRecebida.preco?.tempo}"
     }
 }

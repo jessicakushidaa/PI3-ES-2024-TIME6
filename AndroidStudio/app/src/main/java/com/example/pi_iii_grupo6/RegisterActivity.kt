@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +17,7 @@ import com.google.firebase.functions.functions
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BasicaActivity() {
     //criando variável de autenticação do firebase
     private lateinit var auth: FirebaseAuth
     //criando variável de functions do firebase
@@ -60,48 +61,68 @@ class RegisterActivity : AppCompatActivity() {
             var dataNascimento = binding?.etBirth?.text.toString()
             var phone = binding?.etPhone?.text.toString()
 
-            var formatoRecebido = SimpleDateFormat("dd/MM/yyyy")
-            var dataRecebida = formatoRecebido.parse(dataNascimento)
-            var formatoAmericano = SimpleDateFormat("yyyy-MM-dd")
 
-            var dataNascimentoFinal = formatoAmericano.format(dataRecebida);
+            if(dataNascimento.isEmpty()){
+                Toast.makeText(this@RegisterActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+            }else{
+                var formatoRecebido = SimpleDateFormat("dd/MM/yyyy")
+                var dataRecebida = formatoRecebido.parse(dataNascimento)
+                var formatoAmericano = SimpleDateFormat("yyyy-MM-dd")
 
-            Log.d("DATAFINAL","$dataNascimentoFinal")
-            //Checando se os campos foram preenchidos
-            if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimentoFinal,phone)){
-                //Checando se as senhas coincidem
-                if(senha == senhaConfirmation){
-                    //Se está tudo certo, chamar função de criação do usuário, retorna o userId
-                    createUserWithEmailAndPassword(email, senha) { userId ->
-                        if (userId != null) {
-                            // Criando instância da classe Pessoa com os dados do usuário
-                            var p = Pessoa(userId,nome,sobrenome,dataNascimentoFinal,cpf,phone,false)
+                var dataNascimentoFinal = formatoAmericano.format(dataRecebida);
+                if (possuiLetras(dataNascimento)){
+                    Toast.makeText(this@RegisterActivity, "Data de Nascimento não aceita", Toast.LENGTH_SHORT).show()
+                }else{
+                    Log.d("DATAFINAL","$dataNascimentoFinal")
+                    val dataNascimentoSplit = dataNascimento.split("/")
+                    if(dataNascimentoSplit[0].toInt() > 31 || dataNascimentoSplit[1].toInt() > 12 || dataNascimentoSplit[2].toInt() > 2024){
+                        Toast.makeText(this@RegisterActivity, "Data de Nascimento não aceita", Toast.LENGTH_SHORT).show()
+                    }else{
+                        //Checando se os campos foram preenchidos
+                        if(checkValues(email,senha,senhaConfirmation,nome,sobrenome,cpf,dataNascimentoFinal,phone)){
+                            //Checando se as senhas coincidem
+                            if(senha == senhaConfirmation){
+                                //Se está tudo certo, chamar função de criação do usuário, retorna o userId
+                                createUserWithEmailAndPassword(email, senha) { userId ->
+                                    if (userId != null) {
+                                        // Criando instância da classe Pessoa com os dados do usuário
+                                        var p = Pessoa(userId,nome,sobrenome,dataNascimentoFinal,cpf,phone,false)
 
-                            // Lidar com a criação do usuário bem-sucedida
-                            Log.d(TAG, "Usuário criado com sucesso. UID: $userId")
+                                        // Lidar com a criação do usuário bem-sucedida
+                                        Log.d(TAG, "Usuário criado com sucesso. UID: $userId")
 
-                            //Chamando a função que verifica se o usuário é um gerente, se for, muda
-                            // isGerente para true
-                            checarGerente(email, p)
+                                        //Chamando a função que verifica se o usuário é um gerente, se for, muda
+                                        // isGerente para true
+                                        checarGerente(email, p)
 
-                            //Chamando função para guardar infos no database
-                            createUserDataBase(p, userId).addOnCompleteListener { task ->
-                                if(!task.isSuccessful){
-                                    Log.e("Register","Error on Function: ${task.exception}")
+                                        //Chamando função para guardar infos no database
+                                        createUserDataBase(p, userId).addOnCompleteListener { task ->
+                                            if(!task.isSuccessful){
+                                                Log.e("Register","Error on Function: ${task.exception}")
+                                            }
+                                        }
+                                    } else {
+                                        // Lidar com a falha na criação do usuário
+                                        Log.e(TAG, "Falha ao criar o usuário.")
+                                    }
                                 }
+                            }else{
+                                Toast.makeText(this@RegisterActivity, "Senhas não coincidem", Toast.LENGTH_SHORT).show()
                             }
-                        } else {
-                            // Lidar com a falha na criação do usuário
-                            Log.e(TAG, "Falha ao criar o usuário.")
+                        }else{
+                            Toast.makeText(this@RegisterActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }else{
-                    Toast.makeText(this@RegisterActivity, "Senhas não coincidem", Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                Toast.makeText(this@RegisterActivity, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
+
+
+
         }
+    }
+
+    private fun possuiLetras(dataNascimento: String): Boolean {
+        return dataNascimento.any { it.isLetter() }
     }
 
     //Função para validar se campos foram preenchidos

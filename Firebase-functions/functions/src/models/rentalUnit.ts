@@ -8,6 +8,7 @@ interface Coordenadas {
 
 interface Armario {
     tagArmario: string,
+    status: string
 }
 
 export interface PrecoTempo {

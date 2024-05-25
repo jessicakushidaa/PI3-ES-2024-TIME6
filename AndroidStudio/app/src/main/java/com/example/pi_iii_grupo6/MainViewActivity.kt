@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -40,8 +41,9 @@ import com.google.firebase.functions.functions
 import com.google.gson.Gson
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
+import java.util.Date
 
-class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
+class MainViewActivity : BasicaActivity(), OnMapReadyCallback{
     //Declarando as variáveis que serão utilizadas
     private var binding: ActivityMainViewBinding? = null
     private lateinit var mMap: GoogleMap
@@ -74,6 +76,7 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
         var pulseiras: MutableList<String> = mutableListOf(),
         var locId: String = "",
         var unidadeId: String = "",
+        var horaLocacao: Date = Date()
     )
     class Preco (
         var tempo: Any?,
@@ -110,6 +113,9 @@ class MainViewActivity : AppCompatActivity(), OnMapReadyCallback{
 
         setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
 
         //Seta Retorno aparece na ToolBar caso o usuário esteja logado
         if (user != null) {

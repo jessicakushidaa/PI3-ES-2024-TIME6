@@ -1,5 +1,6 @@
 package com.example.pi_iii_grupo6
 
+import BasicaActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.pi_iii_grupo6.databinding.ActivitySelectPessoasBinding
 
-class SelectPessoasActivity : AppCompatActivity() {
+class SelectPessoasActivity : BasicaActivity() {
     private var binding: ActivitySelectPessoasBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,9 @@ class SelectPessoasActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //Botão voltar
         supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
 
         //Voltando o numero escolhido para 0
         numPessoas = 0
@@ -64,6 +68,14 @@ class SelectPessoasActivity : AppCompatActivity() {
         binding?.btnEnviar?.setOnClickListener {
             avancarIntent()
         }
+
+        //Seta Voltar
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Remove o texto do nome do aplicativo
+
+        // Define o ícone da seta como o drawable customizado
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
     }
 
 
