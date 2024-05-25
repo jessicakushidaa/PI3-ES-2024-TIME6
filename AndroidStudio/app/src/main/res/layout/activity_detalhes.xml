@@ -4,45 +4,205 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalhesActivity">
+    tools:context=".DetalhesActivity"
+    android:background="@color/white"
+    android:backgroundTint="@color/white">
+
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_nav"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/logovetor" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/locker_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="@id/toolbar">
+
+        <!-- Primeira ImageView - Armario -->
+
+        <!-- Segunda ImageView - Logo (sobreposta à primeira) -->
+        <ImageView
+            android:id="@+id/imgArm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vector_locker" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/imgArm"
+            android:layout_alignTop="@id/imgArm"
+            android:layout_marginStart="121dp"
+            android:layout_marginTop="79dp"
+            android:src="@drawable/logovetor_locker" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tvTagArmario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tag Armario"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/textbox_custom_outline"
+        android:gravity="center"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="5dp"
+        android:text=""
+        android:textColor="@color/blue_nav"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/shape_loc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/locker_container" />
 
-    <TextView
-        android:id="@+id/tvNomeUnidade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="nome unidade"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTagArmario" />
+    <ImageView
+        android:id="@+id/shape_loc"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rectangle_locacoes"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="@id/locker_container"
+        app:layout_constraintStart_toStartOf="@id/locker_container"
+        app:layout_constraintTop_toBottomOf="@id/locker_container" />
 
-    <TextView
-        android:id="@+id/tvHorarioLoc"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/Lineartxt"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="horario Loc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNomeUnidade" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/shape_loc"
+        app:layout_constraintStart_toStartOf="@id/shape_loc"
+        app:layout_constraintTop_toTopOf="@id/shape_loc">
 
-    <TextView
-        android:id="@+id/tvTempoEscolhido"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:paddingVertical="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="15dp"
+                    android:text="Unidade : "
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvNomeUnidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Horário Locação : "
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHorarioLoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:maxLines="2"
+                    android:paddingStart="15dp"
+                    android:text="Tempo Locação : "
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTempoEscolhido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--Bottom Navigation-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tempo escolhido"
+        android:background="@color/blue_nav"
+        app:itemIconSize="25dp"
+        app:itemTextColor="@color/yellow"
+        app:itemIconTint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHorarioLoc" />
+        app:menu="@menu/bottom_nav"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
