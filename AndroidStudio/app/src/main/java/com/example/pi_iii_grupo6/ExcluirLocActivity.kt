@@ -117,6 +117,7 @@ class ExcluirLocActivity : BasicaActivity() {
         val textView: TextView = dialog.findViewById(R.id.tvTextoTempoLocEscolhido)
         val btnClose: Button = dialog.findViewById(R.id.btnClosePopupAberto)
 
+        // Define o texto do tempo de uso
         if (hora == 1){
             tvTempo.text = "O cliente utilizou o armário por $hora hora e $minutos minutos."
         }else if (hora == 0){

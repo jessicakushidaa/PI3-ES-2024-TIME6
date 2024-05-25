@@ -50,6 +50,16 @@ class AcessarArmarioActivity : BasicaActivity() {
 
         // Define o ícone da seta como o drawable customizado
         supportActionBar?.setHomeAsUpIndicator(R.drawable.round_arrow_back_24)
+
+        carregarNumeroArmario()
+    }
+
+    // Mostra o número/tag do armário na tela, embaixo do imageview do armário
+    private fun carregarNumeroArmario() {
+        var tagRecebida = BuscarLocIdActivity.locRecebida.tagArmario
+        val tvTag = binding?.lockerTag
+
+        tvTag?.text = tagRecebida
     }
     //Função que mostra a dialog dizendo que o armario está aberto
     private fun mostrarDialogAberto() {
@@ -87,5 +97,9 @@ class AcessarArmarioActivity : BasicaActivity() {
         }
 
         dialog.show()
+    }
+
+    companion object{
+        lateinit var locRecebida: MainViewActivity.Locacao
     }
 }

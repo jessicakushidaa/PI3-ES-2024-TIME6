@@ -144,6 +144,11 @@ class BuscarLocIdActivity : BasicaActivity() {
                         val segmentsArmario = pathArmario["segments"] as ArrayList<*>
                         val idUnidade = segmentsArmario[1] as String
 
+                        //Pegando a tag (nome/numero) do Armário
+                        val tagArmarioNome =  data["tagArmario"] as Map<String, Any>
+                        val tagArmario = tagArmarioNome["tagArmario"] as String
+
+                        Log.d("BUSCARLOC",": $tagArmario")
                         //Adicionando na classe
                         locRecebida = MainViewActivity.Locacao(
                             userId,
@@ -153,7 +158,8 @@ class BuscarLocIdActivity : BasicaActivity() {
                             vetorTags,
                             id,
                             idUnidade,
-                            datetime
+                            datetime,
+                            tagArmario,
                         )
 
                         locRecebida
@@ -179,7 +185,6 @@ class BuscarLocIdActivity : BasicaActivity() {
         dialog.show()
     }
 
-    //TEMPORARIA
     private fun avancarTela() {
         meuHandler = Handler(Looper.getMainLooper())
 
@@ -190,10 +195,8 @@ class BuscarLocIdActivity : BasicaActivity() {
         }, 3500)
     }
 
-    //IMPLEMENTAR FUNCTION QUE BUSCA A LOCAÇÃO NO BANCO, BASEADO NO ID DA PULSEIRA.
 
     companion object{
-        //Variavel de TESTE
         lateinit var locRecebida: MainViewActivity.Locacao
     }
 }
