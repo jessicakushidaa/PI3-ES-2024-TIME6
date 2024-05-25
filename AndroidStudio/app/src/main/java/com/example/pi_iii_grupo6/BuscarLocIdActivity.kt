@@ -145,10 +145,12 @@ class BuscarLocIdActivity : BasicaActivity() {
                         val idUnidade = segmentsArmario[1] as String
 
                         //Pegando a tag (nome/numero) do Armário
-                        val tagArmarioNome =  data["tagArmario"] as Map<String, Any>
-                        val tagArmario = tagArmarioNome["tagArmario"] as String
+                        Log.d("","$payload")
+                        Log.d("","TAGARMARIO")
+                        val tagArmarioNome =  payload["tagArmario"] as String
 
-                        Log.d("BUSCARLOC",": $tagArmario")
+
+                        Log.d("BUSCARLOC",": $tagArmarioNome")
                         //Adicionando na classe
                         locRecebida = MainViewActivity.Locacao(
                             userId,
@@ -159,7 +161,7 @@ class BuscarLocIdActivity : BasicaActivity() {
                             id,
                             idUnidade,
                             datetime,
-                            tagArmario,
+                            tagArmarioNome,
                         )
 
                         locRecebida
