@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalhesActivity">
+
+    <TextView
+        android:id="@+id/tvTagArmario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tag Armario"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNomeUnidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nome unidade"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTagArmario" />
+
+    <TextView
+        android:id="@+id/tvHorarioLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="horario Loc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNomeUnidade" />
+
+    <TextView
+        android:id="@+id/tvTempoEscolhido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tempo escolhido"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHorarioLoc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

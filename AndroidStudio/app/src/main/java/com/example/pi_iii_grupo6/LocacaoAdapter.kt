@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class LocacaoAdapter(private val locacaoList: ArrayList<LocacaoItem>) : RecyclerView.Adapter<LocacaoAdapter.LocacaoViewHolder>()
 {
+    var onItemClick : ((LocacaoItem) -> Unit)? = null
     class LocacaoViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
         val textView: TextView = itemView.findViewById(R.id.tvArmarioId)
     }
@@ -24,5 +25,9 @@ class LocacaoAdapter(private val locacaoList: ArrayList<LocacaoItem>) : Recycler
     override fun onBindViewHolder(holder: LocacaoViewHolder, position: Int) {
         val loc = locacaoList[position]
         holder.textView.text = loc.nomeUnidade
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(loc)
+        }
     }
 }
