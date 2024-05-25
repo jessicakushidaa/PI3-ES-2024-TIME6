@@ -388,15 +388,28 @@ export const buscarLoc = functions
         // Sucesso - Atribui 1o resultado da busca à variável
         const locacao =locSnapshot.docs[0];
 
-        result = {
-          status: "SUCCESS",
-          message: "Locacao encontrada via tag.",
-          payload: JSON.parse(JSON.stringify({
-            idLocacao: locacao.id,
-            data: locacao.data()})),
-        };
-        functions.logger.info("buscarLoc " +
+        const data = locacao.data();
+        const armario = data.armario;
+        const idUnidade = armario?._path?.segments[1];
+        const idArmario = armario?._path?.segments[3];
+
+        // Chamando funcao de buscar armário para pegar a tag dele
+        const funBuscar = await buscarArmario(idUnidade, idArmario);
+
+        if (funBuscar.status === "SUCCESS") {
+          const tagArmario = funBuscar.payload.tagArmario;
+          result = {
+            status: "SUCCESS",
+            message: "Locacao encontrada via tag.",
+            payload: JSON.parse(JSON.stringify({
+              idLocacao: locacao.id,
+              data: locacao.data(), tagArmario})),
+          };
+          functions.logger.info("buscarLoc " +
          "- Locação encontrada com sucesso.");
+        } else {
+          throw new Error(`Erro ao buscar armário: ${funBuscar.message}`);
+        }
         functions.logger.info("Function buscarLoc - finalizando.");
       } else {
         result = {
