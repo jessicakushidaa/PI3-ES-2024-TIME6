@@ -584,21 +584,32 @@ export const buscarConfirmadas = functions
       // caso nao haja confirmadas
       if (!locSnapshot.empty) {
         // Processar os documentos retornados - itera sobre cada doc
-        const locsConfirmadas = locSnapshot.docs.map((doc) => {
-          const data = doc.data();
-          const armario = data.armario;
-          const idUnidade = armario?._path?.segments[1];
-          const tempoEscolhido = data.precoTempoEscolhido["tempo"];
+        const locsConfirmadas = await Promise
+          .all(locSnapshot.docs.map(async (doc) => {
+            const data = doc.data();
+            const armario = data.armario;
+            const idUnidade = armario?._path?.segments[1];
+            const idArmario = armario?._path?.segments[3];
+            const tempoEscolhido = data.precoTempoEscolhido["tempo"];
 
-          return {
-            id: doc.id,
-            data: {
-              idUnidade: idUnidade,
-              horaLocacao: data.horaLocacao,
-              tempoEscolhido: tempoEscolhido,
-            },
-          };
-        });
+            const funBuscar = await buscarArmario(idUnidade, idArmario);
+
+            if (funBuscar.status === "SUCCESS") {
+              const tagArmario = funBuscar.payload.tagArmario;
+              return {
+                id: doc.id,
+                data: {
+                  idUnidade: idUnidade,
+                  horaLocacao: data.horaLocacao,
+                  tempoEscolhido: tempoEscolhido,
+                  tagArmario: tagArmario,
+                },
+              };
+            } else {
+              throw new Error(`Erro ao buscar armário: ${funBuscar.message}`);
+            }
+          }));
+
         // Definir resultado para o cliente
         result = {
           status: "SUCCESS",
@@ -641,3 +652,50 @@ export const buscarConfirmadas = functions
     // Retornar resposta
     return result;
   });
+
+async function buscarArmario(idUnidade:string, idArmario: string) {
+  let res;
+
+  functions.logger.info("Function buscarArmario - iniciada.");
+  // Caso não conste o parametro esperado
+  if (!idArmario) {
+    functions.logger.error("buscarConfirmadas " +
+            "- Erro ao buscar armario: Dados não recebidos corretamente " +
+             idArmario),
+    res = {
+      status: "ERROR",
+      message: "Parâmetros não recebidos corretamente",
+    };
+    throw new functions.https.HttpsError("invalid-argument", res.message);
+  }
+  try {
+    // referenciando documentos do bd e collections
+    const unitRef = colUnidades.doc(idUnidade); // doc UnidadeLocacao
+    const colArmarios = unitRef.collection("armarios");
+    const armarioRef = colArmarios.doc(idArmario); // doc armario
+    const armarioSnapshot = await armarioRef.get();
+
+    const tagArmario = armarioSnapshot.get("tag");
+
+    res = {
+      status: "SUCCESS",
+      message: "Armário liberado com sucesso.",
+      payload: {
+        tagArmario: tagArmario,
+      },
+    };
+
+    functions.logger.info("buscarConfirmadas " + res.message);
+  } catch (error:any) {
+    // Lidar com erros e preparar resposta de retorno
+    functions.logger.error("Erro ao buscar  armário.", +
+    error.message);
+    res = {
+      status: "ERROR",
+      message: "Erro ao buscar armário.",
+    };
+    throw new functions.https.HttpsError("not-found",
+      "Documento não encontrado.");
+  }
+  return res;
+}
