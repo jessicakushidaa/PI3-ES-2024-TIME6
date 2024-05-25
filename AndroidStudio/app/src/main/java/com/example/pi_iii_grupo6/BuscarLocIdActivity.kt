@@ -77,98 +77,103 @@ class BuscarLocIdActivity : BasicaActivity() {
             .getHttpsCallable("buscarLoc")
             .call(data)
             .continueWith{task ->
-                Log.d("BUSCARLOC","Dentro da task")
-                if (task.result.data == null){
-                    Log.d("BUSCARLOC","Resultado null")
-                    null
-                }else {
-                    Log.d("BUSCARLOC","Resultado nao null")
-                    Log.d("BUSCARLOC","pegou res")
-                    val res = task.result.data as Map<String, Any>
-                    val status = res["status"] as String
-                    if (status == "ERROR"){
-                        Log.d("BUSCARLOC","NAO TEM")
+                if (task.isSuccessful){
+                    Log.d("BUSCARLOC","Dentro da task")
+                    if (task.result == null){
+                        Log.d("BUSCARLOC","Resultado null")
                         null
-                    }else{
-                        Log.d("BUSCARLOC","payload")
-                        val payload = res["payload"] as Map<String, Any>
-                        //Id da locação
-                        Log.d("BUSCARLOC","idloc")
-                        val id = payload["idLocacao"] as String
-                        //Informações da locação
-                        Log.d("BUSCARLOC","infosLoc")
-                        val data = payload["data"] as Map<String, Any>
+                    }else {
+                        Log.d("BUSCARLOC","Resultado nao null")
+                        Log.d("BUSCARLOC","pegou res")
+                        val res = task.result.data as Map<String, Any>
+                        val status = res["status"] as String
+                        if (status == "ERROR"){
+                            Log.d("BUSCARLOC","NAO TEM")
+                            null
+                        }else{
+                            Log.d("BUSCARLOC","payload")
+                            val payload = res["payload"] as Map<String, Any>
+                            //Id da locação
+                            Log.d("BUSCARLOC","idloc")
+                            val id = payload["idLocacao"] as String
+                            //Informações da locação
+                            Log.d("BUSCARLOC","infosLoc")
+                            val data = payload["data"] as Map<String, Any>
 
-                        //Pegando o preco escolhido
-                        Log.d("BUSCARLOC","precotempo")
-                        val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
-                        val preco = precoEscolhido["preco"] as Double
-                        val tempo = precoEscolhido["tempo"]
+                            //Pegando o preco escolhido
+                            Log.d("BUSCARLOC","precotempo")
+                            val precoEscolhido = data["precoTempoEscolhido"] as Map<String, Any>
+                            val preco = precoEscolhido["preco"] as Double
+                            val tempo = precoEscolhido["tempo"]
 
-                        //Pegando as fotos
-                        Log.d("BUSCARLOC","fotos")
-                        val vetFotos = data["foto"] as ArrayList<String>
-                        val size = vetFotos.size
-                        val vetorFotos: MutableList<String> = mutableListOf()
-                        vetorFotos.add(vetFotos[0])
-                        if (size == 2) vetorFotos.add(vetFotos[1])
+                            //Pegando as fotos
+                            Log.d("BUSCARLOC","fotos")
+                            val vetFotos = data["foto"] as ArrayList<String>
+                            val size = vetFotos.size
+                            val vetorFotos: MutableList<String> = mutableListOf()
+                            vetorFotos.add(vetFotos[0])
+                            if (size == 2) vetorFotos.add(vetFotos[1])
 
-                        //Pegando a hora da locacao
-                        Log.d("BUSCARLOC","lcoacao")
-                        val horaLoc = data["horaLocacao"] as Map<String, Any>
-                        val segundos = (horaLoc["_seconds"] as Number).toLong()
-                        val nanosegundos = horaLoc["_nanoseconds"] as Int
-                        val timestamp = Timestamp(segundos,nanosegundos)
-                        val datetime = timestamp.toDate()
+                            //Pegando a hora da locacao
+                            Log.d("BUSCARLOC","lcoacao")
+                            val horaLoc = data["horaLocacao"] as Map<String, Any>
+                            val segundos = (horaLoc["_seconds"] as Number).toLong()
+                            val nanosegundos = horaLoc["_nanoseconds"] as Int
+                            val timestamp = Timestamp(segundos,nanosegundos)
+                            val datetime = timestamp.toDate()
 
-                        //Pegando as tags
-                        Log.d("BUSCARLOC","tags")
-                        val tags = data["tags"] as ArrayList<String>
-                        val vetorTags: MutableList<String> = mutableListOf()
-                        val sizeTags = tags.size
-                        vetorTags.add(tags[0])
-                        if (sizeTags == 2) vetorTags.add(tags[1])
+                            //Pegando as tags
+                            Log.d("BUSCARLOC","tags")
+                            val tags = data["tags"] as ArrayList<String>
+                            val vetorTags: MutableList<String> = mutableListOf()
+                            val sizeTags = tags.size
+                            vetorTags.add(tags[0])
+                            if (sizeTags == 2) vetorTags.add(tags[1])
 
-                        //Pegando o id do usuário
-                        Log.d("BUSCARLOC","usuario")
-                        val cliente = data["cliente"] as ArrayList<*>
-                        val cliente1 = cliente[0] as Map<String, Any>
-                        val path = cliente1["_path"] as Map<String, Any>
-                        val segments = path["segments"] as ArrayList<*>
-                        val userId = segments[1] as String
+                            //Pegando o id do usuário
+                            Log.d("BUSCARLOC","usuario")
+                            val cliente = data["cliente"] as ArrayList<*>
+                            val cliente1 = cliente[0] as Map<String, Any>
+                            val path = cliente1["_path"] as Map<String, Any>
+                            val segments = path["segments"] as ArrayList<*>
+                            val userId = segments[1] as String
 
-                        //Pegando o id da Unidade de Locação
-                        Log.d("BUSCARLOC","armario")
-                        val armario = data["armario"] as Map<String, Any>
-                        val pathArmario = armario["_path"] as Map<String, Any>
-                        val segmentsArmario = pathArmario["segments"] as ArrayList<*>
-                        val idUnidade = segmentsArmario[1] as String
+                            //Pegando o id da Unidade de Locação
+                            Log.d("BUSCARLOC","armario")
+                            val armario = data["armario"] as Map<String, Any>
+                            val pathArmario = armario["_path"] as Map<String, Any>
+                            val segmentsArmario = pathArmario["segments"] as ArrayList<*>
+                            val idUnidade = segmentsArmario[1] as String
 
-                        //Pegando a tag (nome/numero) do Armário
-                        Log.d("","$payload")
-                        Log.d("","TAGARMARIO")
-                        val tagArmarioNome =  payload["tagArmario"] as String
+                            //Pegando a tag (nome/numero) do Armário
+                            Log.d("","$payload")
+                            Log.d("","TAGARMARIO")
+                            val tagArmarioNome =  payload["tagArmario"] as String
 
 
-                        Log.d("BUSCARLOC",": $tagArmarioNome")
-                        //Adicionando na classe
-                        locRecebida = MainViewActivity.Locacao(
-                            userId,
-                            null,
-                            MainViewActivity.Preco(tempo, preco),
-                            vetorFotos,
-                            vetorTags,
-                            id,
-                            idUnidade,
-                            datetime,
-                            tagArmarioNome,
-                        )
+                            Log.d("BUSCARLOC",": $tagArmarioNome")
+                            //Adicionando na classe
+                            locRecebida = MainViewActivity.Locacao(
+                                userId,
+                                null,
+                                MainViewActivity.Preco(tempo, preco),
+                                vetorFotos,
+                                vetorTags,
+                                id,
+                                idUnidade,
+                                datetime,
+                                tagArmarioNome,
+                            )
 
-                        locRecebida
+                            locRecebida
+                        }
+
+
                     }
-
-
+                }else{
+                    null
                 }
+                
             }
     }
     private fun mostrarDialogNaoEncontrou() {
