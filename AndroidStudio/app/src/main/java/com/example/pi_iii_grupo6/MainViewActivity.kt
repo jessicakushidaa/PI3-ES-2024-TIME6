@@ -76,7 +76,8 @@ class MainViewActivity : BasicaActivity(), OnMapReadyCallback{
         var pulseiras: MutableList<String> = mutableListOf(),
         var locId: String = "",
         var unidadeId: String = "",
-        var horaLocacao: Date = Date()
+        var horaLocacao: Date = Date(),
+        var tagArmario: String = ""
     )
     class Preco (
         var tempo: Any?,

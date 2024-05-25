@@ -20,6 +20,7 @@ import com.example.pi_iii_grupo6.databinding.ActivityMinhasLocacoesBinding
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
@@ -75,6 +76,13 @@ class MinhasLocacoesActivity : BasicaActivity() {
 
                         recyclerView.adapter = locacaoAdapter
                         parentViewGroup.removeView(tvNenhum)
+
+                        locacaoAdapter.onItemClick = {
+                            val intent = Intent(this@MinhasLocacoesActivity, DetalhesActivity::class.java)
+                            intent.putExtra("loc",it)
+                            startActivity(intent)
+                        }
+
                         hideProgressBar()
                     }
                 },3500)
@@ -135,9 +143,24 @@ class MinhasLocacoesActivity : BasicaActivity() {
                 for (item in locSnapshot){
                     val dataItem = item["data"] as Map<String, Any>
                     val unidade = dataItem["idUnidade"] as String
+                    val tagArmario = dataItem["tagArmario"] as String
+                    val tempoEscolhido = dataItem["tempoEscolhido"]
+                    val tempoString = tempoEscolhido.toString()
+
+                    //Pegando a hora da locacao
+                    val horaLoc = dataItem["horaLocacao"] as Map<String, Any>
+                    val segundos = (horaLoc["_seconds"] as Number).toLong()
+                    val nanosegundos = horaLoc["_nanoseconds"] as Int
+                    val timestamp = Timestamp(segundos,nanosegundos)
+                    val datetime = timestamp.toDate()
+                    val hours = datetime.hours
+                    val minutes = datetime.minutes
+                    val stringData = "$hours h $minutes min"
+
                     buscarNomeUnidade(unidade).addOnCompleteListener {task->
-                        locList.add(LocacaoItem(task.result))
+                        locList.add(LocacaoItem(task.result, stringData, tempoString,tagArmario))
                     }
+
                 }
                 locList
             }

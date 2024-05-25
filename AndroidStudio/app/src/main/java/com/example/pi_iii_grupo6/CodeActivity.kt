@@ -33,24 +33,6 @@ class CodeActivity : BasicaActivity() {
     }
 
 
-
-    //Função que diz para o usuário que a cobrança foi feita
-    private fun mostrarDialog() {
-        var dialog = Dialog(this)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_cobrar_cartao)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnClose: Button = dialog.findViewById(R.id.btnClosePopup)
-
-        btnClose.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
-
     fun receberDados(){
         infoString = intent.getStringExtra("infosJson")
     }

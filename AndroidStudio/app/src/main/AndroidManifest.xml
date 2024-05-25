@@ -31,6 +31,10 @@
         android:theme="@style/Theme.PIIII_Grupo6"
         tools:targetApi="31">
         <activity
+            android:name=".DetalhesActivity"
+            android:exported="false"
+            android:parentActivityName=".MinhasLocacoesActivity"/>
+        <activity
             android:name=".BasicaActivity"
             android:exported="false" />
         <activity
@@ -39,7 +43,7 @@
         <activity
             android:name=".ConfirmarFotosActivity"
             android:exported="false"
-            android:parentActivityName=".TirarFotoActivity"/>
+            android:parentActivityName=".TirarFotoActivity" />
         <activity
             android:name=".ExcluirLocActivity"
             android:exported="false" />
@@ -84,15 +88,15 @@
         <activity
             android:name=".TirarFotoActivity"
             android:exported="false"
-            android:parentActivityName=".SelectPessoasActivity"/>
+            android:parentActivityName=".SelectPessoasActivity" />
         <activity
             android:name=".SelectPessoasActivity"
             android:exported="false"
-            android:parentActivityName=".LiberarLocacaoActivity"/>
+            android:parentActivityName=".LiberarLocacaoActivity" />
         <activity
             android:name=".AcessarArmarioActivity"
             android:exported="false"
-            android:parentActivityName=".MostrarLocacaoActivity"/>
+            android:parentActivityName=".MostrarLocacaoActivity" />
         <activity
             android:name=".LiberarLocacaoActivity"
             android:exported="false" />
@@ -117,7 +121,7 @@
         <activity
             android:name=".RentManagerActivity"
             android:exported="false"
-            android:parentActivityName=".MainMenuActivity"/>
+            android:parentActivityName=".MainMenuActivity" />
         <activity
             android:name=".CreateCardActivity"
             android:exported="false"
