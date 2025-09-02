@@ -45,7 +45,7 @@ espera uma string ou number.
 
 1. Abra o projeto no Android Studio.
 2. Faça as modificações necessárias no código-fonte e nos recursos.
-     - abra o arquivo local.properties na visão de Projeto e adicione a referência à API do mapa: "MAPS_API_KEY = AIzaSyAol2dJabESlpiblrTmbN6XHeg8MyOKREM"
+     - abra o arquivo local.properties na visão de Projeto e adicione a referência à Key API do mapa: "MAPS_API_KEY = [SUA KEY]"
 3. Execute o aplicativo em um emulador ou dispositivo Android.
 
 ### Firebase Functions
