@@ -1,5 +1,5 @@
 # GUARDIAN LOCKER APP
-
+** Software Engineering applied 2024 project for Third Semester course, might contain outdated dependecies version **
 Este é o repositório do **Guardian Locker App**, que consiste em duas partes principais: a parte Android Studio e as funções do Firebase.
 
 ## Android Studio
